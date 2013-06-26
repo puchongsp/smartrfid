@@ -1,6 +1,6 @@
 package sushil.luc.ticket;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import sushil.luc.item.Item;
@@ -8,7 +8,7 @@ import sushil.luc.msc.Client;
 
 public class Ticket {
 
-	private int TicketID;
+	private long TicketID;
 	private Client TicketClient;
 	private List<Item> Items;
 	private TicketStatus Status;
@@ -29,11 +29,11 @@ public class Ticket {
 		
 	}
 	
-	public int getTicketID() {
+	public long getTicketID() {
 		return TicketID;
 	}
 
-	public void setTicketID(int ticketID) {
+	public void setTicketID(Long ticketID) {
 		TicketID = ticketID;
 	}
 

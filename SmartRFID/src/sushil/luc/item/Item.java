@@ -1,10 +1,10 @@
 package sushil.luc.item;
 
-import java.sql.Date;
 import java.util.List;
+import java.util.Date;
 
-public class Item {
-	private int ItemID;
+public class Item{
+	private long ItemID;
 	private String ItemName;
 	private String ContainerId;
 	private String RFID;
@@ -18,10 +18,10 @@ public class Item {
 		
 	}
 	
-	public int getItemID() {
+	public long getItemID() {
 		return ItemID;
 	}
-	public void setItemID(int itemID) {
+	public void setItemID(long itemID) {
 		ItemID = itemID;
 	}
 	public String getItemName() {
