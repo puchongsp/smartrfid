@@ -1,5 +1,6 @@
 package sushil.luc.item;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ public class Item{
 	
 	public Item()
 	{
-		
+		this.RepairLogs = new LinkedList<String>();
 	}
 	
 	public long getItemID() {

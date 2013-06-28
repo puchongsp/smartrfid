@@ -42,7 +42,7 @@ public class Ticket {
 			if (this.Items.get(i).getRFID().equals(check))
 			{
 				result =true;
-				this.Items.get(i).setStatus(ItemStatus.COLLECTED);
+				this.Items.get(i).setStatus(ItemStatus.Collected);
 			}
 			i++;
 		}
