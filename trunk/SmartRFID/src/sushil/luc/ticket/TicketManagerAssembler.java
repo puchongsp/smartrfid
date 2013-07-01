@@ -8,4 +8,10 @@ public class TicketManagerAssembler implements TicketManager{
 		
 	}
 
+
+    public void fetchTickets()
+    {
+
+    }
+
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Date;
 
 public class Item{
-	private long ItemID;
+	private String ItemID;
 	private String ItemName;
 	private String ContainerId;
 	private String RFID;
@@ -19,10 +19,10 @@ public class Item{
 		this.RepairLogs = new LinkedList<String>();
 	}
 	
-	public long getItemID() {
+	public String getItemID() {
 		return ItemID;
 	}
-	public void setItemID(long itemID) {
+	public void setItemID(String itemID) {
 		ItemID = itemID;
 	}
 	public String getItemName() {

@@ -3,7 +3,7 @@ package sushil.luc.msc;
 import android.location.Location;
 
 public class Client {
-	private int ClientID;
+	private String ClientID;
 	private String Name;
 	private String Adress;
 	private String Phone;
@@ -14,11 +14,11 @@ public class Client {
 		
 	}
 
-	public int getClientID() {
+	public String getClientID() {
 		return ClientID;
 	}
 
-	public void setClientID(int clientID) {
+	public void setClientID(String clientID) {
 		ClientID = clientID;
 	}
 
