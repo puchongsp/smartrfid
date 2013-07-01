@@ -1,7 +1,7 @@
 package sushil.luc.ticket;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import sushil.luc.item.Item;
@@ -10,7 +10,7 @@ import sushil.luc.msc.Client;
 
 public class Ticket {
 
-	private long TicketID;
+	private String TicketID;
 	private Client TicketClient;
 	private List<Item> Items;
 	private TicketStatus Status;
@@ -18,14 +18,9 @@ public class Ticket {
 	
 	public Ticket()
 	{
-		this.Items = new LinkedList<Item>();
-		fetchAllItems();
+		this.Items = new ArrayList<Item>();
 	}
-	
-	private void fetchAllItems()
-	{
-		
-	}
+
 	
 	/**
 	 * Checks if the given RFID is contained in this ticket 
@@ -68,12 +63,12 @@ public class Ticket {
 	}
 	
 	
-	public long getTicketID() {
+	public String getTicketID() {
 
 		return TicketID;
 	}
 
-	public void setTicketID(Long ticketID) {
+	public void setTicketID(String ticketID) {
 		TicketID = ticketID;
 	}
 
