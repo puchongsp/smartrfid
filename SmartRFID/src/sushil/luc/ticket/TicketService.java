@@ -164,12 +164,14 @@ public class TicketService {
         item.setItemName("Item_ABC");
         item.setStatus(ItemStatus.Available);
         item.setItemID("ITM001");
+        item.setWarehouseLocation("Colum 10 Row 12");
         items.add(item);
         
         item = new Item();
         item.setItemName("Item_XYZ");
         item.setStatus(ItemStatus.Available);
         item.setItemID("ITM002");
+        item.setWarehouseLocation("Colum 10 Row 15");
         items.add(item);
 
         ticket.setItems(items);
@@ -196,12 +198,14 @@ public class TicketService {
         item.setItemName("Item_ABC");
         item.setStatus(ItemStatus.Collected);
         item.setItemID("ITM001");
+        item.setWarehouseLocation("Colum 09 Row 12");
         items.add(item);
         
         item = new Item();
         item.setItemName("Item_XYZ");
         item.setStatus(ItemStatus.Collected);
         item.setItemID("ITM002");
+        item.setWarehouseLocation("Colum 15 Row 1");
         items.add(item);
 
         ticket.setItems(items);
@@ -228,12 +232,14 @@ public class TicketService {
         item.setItemName("Item_ABC");
         item.setStatus(ItemStatus.Collected);
         item.setItemID("ITM001");
+         item.setWarehouseLocation("Colum 5 Row 7");
         items.add(item);
         
         item = new Item();
         item.setItemName("Item_XYZ");
         item.setStatus(ItemStatus.Available);
         item.setItemID("ITM002");
+        item.setWarehouseLocation("Colum 6 Row 12");
         items.add(item);
 
         ticket.setItems(items);

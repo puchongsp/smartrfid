@@ -3,27 +3,26 @@ package sushil.luc.gui;
 import java.util.List;
 import java.util.Map;
 
-import sushil.luc.ticket.Ticket;
-import sushil.luc.ticket.TicketStatus;
+import sushil.luc.item.Item;
+import sushil.luc.item.ItemStatus;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
-public class MyListAdapter extends SimpleAdapter {
+public class MyItemListAdapter extends SimpleAdapter {
 
-	private List<Ticket> alltickets;
-	private static String MyLog = "MyListAdapter";
+	private List<Item> allItems;
+	private static String MyLog = "MyItemListAdapter";
 	
 	
-	public MyListAdapter(Context context, List<? extends Map<String, ?>> data,
-			int resource, String[] from, int[] to, List<Ticket> alltickets) {
+	public MyItemListAdapter(Context context, List<? extends Map<String, ?>> data,
+			int resource, String[] from, int[] to, List<Item> allItems) {
 		super(context, data, resource, from, to);
 
-		this.alltickets =alltickets;
+		this.allItems =allItems;
 	}
 	
     @Override
@@ -39,22 +38,22 @@ public class MyListAdapter extends SimpleAdapter {
     {
     	int res =-1;
     	
-    	TicketStatus status = alltickets.get(position).getStatus();
+    	ItemStatus status = allItems.get(position).getStatus();
 
 		switch (status)
 		{
-			case Closed:
+			case Collected:
 				res =Color.GREEN;
 				Log.d(MyLog, "Closed == Green");
 				break;
-			case InProgress:
-				res =Color.YELLOW;
-				Log.d(MyLog, "InProgress == Yellow");
-				break;
-			case Open:
+			case Available:
 				res =Color.RED;
 				Log.d(MyLog, "Open == RED");
 				break;
+			default:
+				res =Color.YELLOW;
+				Log.d(MyLog, "Repair, RenttoClient, Transport == Yellow");
+			
 		}
     	
     	return res;

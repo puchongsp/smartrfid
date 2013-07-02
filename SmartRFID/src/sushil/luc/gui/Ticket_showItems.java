@@ -1,0 +1,97 @@
+package sushil.luc.gui;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import sushil.luc.item.Item;
+import sushil.luc.smartrfid.R;
+import sushil.luc.ticket.Ticket;
+import sushil.luc.ticket.TicketManagerAssembler;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+
+public class Ticket_showItems extends Activity{
+	
+	private ListView ItemList;
+	private int positioninListview;
+	private Ticket current;
+	private Context myparent;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.ticket_show_items);
+		
+		myparent = this;
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			positioninListview = extras.getInt("Position_InList",-1);
+		 }
+		
+		if (positioninListview == -1)
+			finish();
+		else
+		{
+			this.ItemList = (ListView)findViewById(R.id.ItemsList);
+			
+			current = TicketManagerAssembler.ticketlist.get(positioninListview);
+			
+			fillItems2List(this);
+			
+			this.ItemList.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					//Toast.makeText(myparent, "Hallo", Toast.LENGTH_LONG).show();
+					Intent i = new Intent(myparent,ShowItemDetails.class);
+					i.putExtra("positionInItemListview", position);
+					i.putExtra("positionInTicketList", positioninListview);
+					startActivity(i);
+				}
+			});
+		}
+	}
+	
+	private void fillItems2List (Context con)
+    {
+    	List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
+    	
+    	String KEY_LABEL ="Big Text";
+    	String KEY_HELP ="Help Text";
+    	
+    	// -- list item hash re-used
+    	Map<String, String> group;
+    	
+    	TicketManagerAssembler assembler = new TicketManagerAssembler(myparent);
+    	
+    	List<Item> allItems = assembler.getShortestRoute(current);
+    	
+    	for (int i =0; i<allItems.size();i++)
+    	{
+        	group = new HashMap<String, String>();
+        	
+        	Item tmp = allItems.get(i);
+        	
+        	group.put( KEY_LABEL,  tmp.getItemName() );
+        	group.put( KEY_HELP, "Location "+tmp.getWarehouseLocation() );
+
+
+        	groupData.add(group);
+    	}
+    	
+    	// -- create an adapter, takes care of binding hash objects in our list to actual row views
+    	MyItemListAdapter adapter = new MyItemListAdapter( con, groupData, android.R.layout.simple_list_item_2, 
+    	                                                   new String[] { KEY_LABEL, KEY_HELP },
+    	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , allItems);
+    	ItemList.setAdapter(adapter);
+    }
+}
