@@ -12,8 +12,6 @@ import java.util.List;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.Customer;
-import sushil.luc.network.Callback;
-import sushil.luc.network.GetTask;
 import sushil.luc.utils.DateUtil;
 
 public class TicketService {
@@ -62,19 +60,19 @@ public class TicketService {
         }
         */
 
-       //tickets.addAll(getMockupData());
+       tickets.addAll(getMockupData());
 
-        new GetTask(context, URL, new Callback<JSONObject>() {
-            @Override
-            public void callback(JSONObject jsonObject) {
-                try{
-                    tickets.addAll(convertToTicket(jsonObject));
-                } catch(Exception e) {
-
-                }
-
-            }
-        }).execute();
+//        new GetTask(context, URL, new Callback<JSONObject>() {
+//            @Override
+//            public void callback(JSONObject jsonObject) {
+//                try{
+//                    tickets.addAll(convertToTicket(jsonObject));
+//                } catch(Exception e) {
+//
+//                }
+//
+//            }
+//        }).execute();
 
         return tickets;
 	}
