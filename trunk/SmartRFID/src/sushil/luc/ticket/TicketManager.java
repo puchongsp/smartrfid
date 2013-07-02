@@ -1,7 +1,9 @@
 package sushil.luc.ticket;
 
+import java.util.List;
+
 public interface TicketManager {
 
-	public void orderTickets();
+	public  List<Ticket> orderTickets(List<Ticket> alltickets);
 
 }

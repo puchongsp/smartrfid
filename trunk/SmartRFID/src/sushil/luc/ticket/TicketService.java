@@ -133,7 +133,7 @@ public class TicketService {
         ticket.setTicketID(String.valueOf("00"+i));
         ticket.setStatus(TicketStatus.Open);
         ticket.setCreationDate(DateUtil.stringToDate("01-07-2013"));
-        ticket.setDeliveryDate(DateUtil.stringToDate("10-07-2013"));
+        ticket.setDeliveryDate(DateUtil.stringToDate((10-i)+"-07-2013"));
 
         Customer client = new Customer();
         client.setName("James Bond");
