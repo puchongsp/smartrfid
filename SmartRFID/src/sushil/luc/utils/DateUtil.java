@@ -24,6 +24,21 @@ public class DateUtil {
 
         return date;
     }
+    
+    public static Date stringToDateDDMM(Date input){
+        DateFormat dateFormat = new SimpleDateFormat("dd-mm");
+        String str = input.toString();
+        
+        Date date = null;
+        try {
+            date = dateFormat.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
+    }
+    
 
     public static Date timestampToDate(Long timestamp){
         Date date = new Date();
