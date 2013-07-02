@@ -1,5 +1,7 @@
 package sushil.luc.ticket;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,13 +12,17 @@ import java.util.List;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.Customer;
+import sushil.luc.network.Callback;
+import sushil.luc.network.GetTask;
 import sushil.luc.utils.DateUtil;
 
 public class TicketService {
 
     private static final String TICKET = "ticket";
     private static final String CLIENT = "client";
-    private static final String ITEM = "item";
+    private static final String ITEM = "items";
+
+    private final String URL = "http://192.168.0.102/smartrfid/api/tickets.html";
 
 
 	public TicketService()
@@ -29,7 +35,7 @@ public class TicketService {
      * and return after converting it to Ticket model
      * @return
      */
-	public List<Ticket> fetchAllTickets()
+	public List<Ticket> fetchAllTickets(Context context)
 	{
 //        RemoteDBService dbService = new RemoteDBService();
 //        String sql = "SELECT * FROM tickets WHERE status = 0 and date = '26-06-2013'";
@@ -46,7 +52,7 @@ public class TicketService {
 
         //fetch HTTP with asynctask here
 
-        List<Ticket> tickets = new ArrayList<Ticket>();
+        final List<Ticket> tickets = new ArrayList<Ticket>();
         /*
         try {
             tickets = convertToTicket("");
@@ -56,7 +62,19 @@ public class TicketService {
         }
         */
 
-       tickets = getMockupData();
+       //tickets.addAll(getMockupData());
+
+        new GetTask(context, URL, new Callback<JSONObject>() {
+            @Override
+            public void callback(JSONObject jsonObject) {
+                try{
+                    tickets.addAll(convertToTicket(jsonObject));
+                } catch(Exception e) {
+
+                }
+
+            }
+        }).execute();
 
         return tickets;
 	}
@@ -71,15 +89,15 @@ public class TicketService {
      * we will implement proper strings
      * once we get proper API and documentation
      */
-    private List<Ticket> convertToTicket(String jsonTickets) throws JSONException {
+    private List<Ticket> convertToTicket(JSONObject jsonTickets) throws JSONException {
         List<Ticket> tickets = new ArrayList<Ticket>();
 
         /*
          * From json object to Ticket object
          * manipulate data if necessary
          */
-        JSONObject jObject = new JSONObject(jsonTickets);
-        JSONArray jTickets = jObject.getJSONArray(TICKET);
+        //JSONObject jObject = new JSONObject(jsonTickets);
+        JSONArray jTickets = jsonTickets.getJSONArray(TICKET);
 
         for(int i = 0; i<jTickets.length(); i++){
             JSONObject jTicket = jTickets.getJSONObject(i);

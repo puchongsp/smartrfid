@@ -30,7 +30,7 @@ public class GetTask extends AsyncTask<String, String, JSONObject> {
     private String json = "";
     private JSONObject jObj = null;
 
-    GetTask(Context context, String url, Callback<JSONObject> callback){
+    public GetTask(Context context, String url, Callback<JSONObject> callback){
 		this.url = url;
 		this.callback = callback;
         this.context = context;
@@ -49,7 +49,6 @@ public class GetTask extends AsyncTask<String, String, JSONObject> {
             HttpResponse httpResponse = httpCustomer.execute(httpGetRequest);
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
-
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -71,8 +70,9 @@ public class GetTask extends AsyncTask<String, String, JSONObject> {
             }
             is.close();
             json = sb.toString();
+            Log.i("GETTask: JSON DATA ###",json);
         } catch (Exception e) {
-            Log.e("GetTast: Buffer Error", "Error converting result " + e.toString());
+            Log.e("GetTask: Buffer Error", "Error converting result " + e.toString());
         }
 
         // Parsing string into jsonObject

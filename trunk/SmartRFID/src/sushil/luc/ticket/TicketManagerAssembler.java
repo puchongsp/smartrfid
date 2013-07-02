@@ -1,10 +1,22 @@
 package sushil.luc.ticket;
 
+import android.content.Context;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class TicketManagerAssembler implements TicketManager{
+
+    Context context;
+
+    private TicketManagerAssembler(){
+
+    }
+
+    public TicketManagerAssembler(Context context){
+        this.context = context;
+    }
 
 	@Override
 	public List<Ticket> orderTickets(List<Ticket> alltickets) {
@@ -24,7 +36,7 @@ public class TicketManagerAssembler implements TicketManager{
     {
     	TicketService ticketserv = new TicketService();
     	
-    	List<Ticket> alltickets = ticketserv.fetchAllTickets();
+    	List<Ticket> alltickets = ticketserv.fetchAllTickets(context);
     	
     	return orderTickets(alltickets);
     }

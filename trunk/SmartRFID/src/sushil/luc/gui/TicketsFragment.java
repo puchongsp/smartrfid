@@ -1,21 +1,5 @@
 package sushil.luc.gui;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import sushil.luc.item.Item;
-import sushil.luc.item.ItemStatus;
-import sushil.luc.msc.Customer;
-import sushil.luc.smartrfid.R;
-import sushil.luc.ticket.Ticket;
-import sushil.luc.ticket.TicketManagerAssembler;
-import sushil.luc.ticket.TicketService;
-import sushil.luc.ticket.TicketStatus;
-import sushil.luc.utils.DateUtil;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,6 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import sushil.luc.item.Item;
+import sushil.luc.item.ItemStatus;
+import sushil.luc.msc.Customer;
+import sushil.luc.smartrfid.R;
+import sushil.luc.ticket.Ticket;
+import sushil.luc.ticket.TicketManagerAssembler;
+import sushil.luc.ticket.TicketStatus;
+import sushil.luc.utils.DateUtil;
 
 public class TicketsFragment extends Fragment {
 	 
@@ -55,7 +53,7 @@ public class TicketsFragment extends Fragment {
     	// -- list item hash re-used
     	Map<String, String> group;
     	
-    	TicketManagerAssembler assembler = new TicketManagerAssembler();
+    	TicketManagerAssembler assembler = new TicketManagerAssembler(getActivity().getApplicationContext());
     	
     	List<Ticket> alltickets = assembler.fetchTickets();
     	
