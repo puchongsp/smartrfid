@@ -1,17 +1,32 @@
 package sushil.luc.ticket;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class TicketManagerAssembler implements TicketManager{
 
 	@Override
-	public void orderTickets() {
-		// TODO Auto-generated method stub
-		
+	public List<Ticket> orderTickets(List<Ticket> alltickets) {
+		Comparator<Ticket> comp = new Comparator<Ticket>() {			
+			@Override
+			public int compare(Ticket lhs, Ticket rhs) {
+				return lhs.getDeliveryDate().compareTo(rhs.getDeliveryDate());
+			}
+		};
+    	
+    	Collections.sort(alltickets,comp);
+    	return alltickets;
 	}
 
 
-    public void fetchTickets()
+    public  List<Ticket> fetchTickets()
     {
-
+    	TicketService ticketserv = new TicketService();
+    	
+    	List<Ticket> alltickets = ticketserv.fetchAllTickets();
+    	
+    	return orderTickets(alltickets);
     }
 
 }
