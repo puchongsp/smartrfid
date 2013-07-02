@@ -86,44 +86,10 @@ public class TicketsFragment extends Fragment {
     	}
     	
     	// -- create an adapter, takes care of binding hash objects in our list to actual row views
-    	SimpleAdapter adapter = new SimpleAdapter( parent.getContext(), groupData, android.R.layout.simple_list_item_2, 
+    	MyListAdapter adapter = new MyListAdapter( parent.getContext(), groupData, android.R.layout.simple_list_item_2, 
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
-    	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } );
+    	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , alltickets);
     	TicketList.setAdapter(adapter);
-    	
-    	colorListItems(alltickets);
     }
-    
-    private void colorListItems(List<Ticket> alltickets)
-    {
-    	Log.d(MyLog, "");
-    	
-    	for (int i =0; i<TicketList.getChildCount();i++)
-    	{
-    		Log.d(MyLog, "inside loop");
-    		View tmp =TicketList.getChildAt(i);
-    		
-    		TicketStatus status = alltickets.get(i).getStatus();
 
-    		switch (status)
-    		{
-    			case Closed:
-    				tmp.setBackgroundResource(Color.GREEN);
-    				Log.d(MyLog, "Closed == Green");
-    				break;
-    			case InProgress:
-    				tmp.setBackgroundResource(Color.YELLOW);
-    				Log.d(MyLog, "InProgress == Yellow");
-    				break;
-    			case Open:
-    				tmp.setBackgroundResource(Color.RED);
-    				Log.d(MyLog, "Open == RED");
-    				break;
-    		}
-    		
-    		tmp.refreshDrawableState();
-    	}
-    	
-    	TicketList.refreshDrawableState();
-    }
 }

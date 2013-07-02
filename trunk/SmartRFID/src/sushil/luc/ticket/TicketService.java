@@ -127,7 +127,9 @@ public class TicketService {
          * MockupData
          */
         
-        for (int i=0;i<5;i++)
+        int i=0;
+        
+        for (;i<3;i++)
         {
         Ticket ticket = new Ticket();
         ticket.setTicketID(String.valueOf("00"+i));
@@ -147,7 +149,8 @@ public class TicketService {
         item.setStatus(ItemStatus.Available);
         item.setItemID("ITM001");
         items.add(item);
-
+        
+        item = new Item();
         item.setItemName("Item_XYZ");
         item.setStatus(ItemStatus.Available);
         item.setItemID("ITM002");
@@ -157,6 +160,71 @@ public class TicketService {
         tickets.add(ticket);
         
         }
+        
+        for (;i<6;i++)
+        {
+        Ticket ticket = new Ticket();
+        ticket.setTicketID(String.valueOf("00"+i));
+        ticket.setStatus(TicketStatus.Closed);
+        ticket.setCreationDate(DateUtil.stringToDate("01-07-2013"));
+        ticket.setDeliveryDate(DateUtil.stringToDate((30-i)+"-07-2013"));
+
+        Customer client = new Customer();
+        client.setName("James Bond");
+        client.setCustomerID("007");
+        client.setAddress("Texas");
+        ticket.setTicketCustomer(client);
+
+        List<Item> items = new ArrayList<Item>();
+        Item item = new Item();
+        item.setItemName("Item_ABC");
+        item.setStatus(ItemStatus.Collected);
+        item.setItemID("ITM001");
+        items.add(item);
+        
+        item = new Item();
+        item.setItemName("Item_XYZ");
+        item.setStatus(ItemStatus.Collected);
+        item.setItemID("ITM002");
+        items.add(item);
+
+        ticket.setItems(items);
+        tickets.add(ticket);
+        
+        }
+        
+        for (;i<9;i++)
+        {
+        Ticket ticket = new Ticket();
+        ticket.setTicketID(String.valueOf("00"+i));
+        ticket.setStatus(TicketStatus.InProgress);
+        ticket.setCreationDate(DateUtil.stringToDate("01-07-2013"));
+        ticket.setDeliveryDate(DateUtil.stringToDate((20-i)+"-07-2013"));
+
+        Customer client = new Customer();
+        client.setName("James Bond");
+        client.setCustomerID("007");
+        client.setAddress("Texas");
+        ticket.setTicketCustomer(client);
+
+        List<Item> items = new ArrayList<Item>();
+        Item item = new Item();
+        item.setItemName("Item_ABC");
+        item.setStatus(ItemStatus.Collected);
+        item.setItemID("ITM001");
+        items.add(item);
+        
+        item = new Item();
+        item.setItemName("Item_XYZ");
+        item.setStatus(ItemStatus.Available);
+        item.setItemID("ITM002");
+        items.add(item);
+
+        ticket.setItems(items);
+        tickets.add(ticket);
+        
+        }
+        
         return tickets;
     }
 }
