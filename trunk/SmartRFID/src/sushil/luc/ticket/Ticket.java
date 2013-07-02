@@ -18,6 +18,7 @@ public class Ticket {
     public static final String _ITEMS = "items";
     public static final String _STATUS = "status";
     public static final String _CREATED_DATE = "created_date";
+    public static final String _DELIVERY_DATE = "delivery_date";
 
 
 	private String TicketID;
@@ -25,6 +26,7 @@ public class Ticket {
 	private List<Item> Items;
 	private TicketStatus Status;
 	private Date CreationDate;
+	private Date DeliveryDate;
 	
 	public Ticket()
 	{
@@ -112,6 +114,16 @@ public class Ticket {
 
 	public void setCreationDate(Date creationDate) {
 		CreationDate = creationDate;
+	}
+
+
+	public Date getDeliveryDate() {
+		return DeliveryDate;
+	}
+
+
+	public void setDeliveryDate(Date deliveryDate) {
+		DeliveryDate = deliveryDate;
 	}
 	
 }

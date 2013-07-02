@@ -126,10 +126,14 @@ public class TicketService {
         /**
          * MockupData
          */
+        
+        for (int i=0;i<5;i++)
+        {
         Ticket ticket = new Ticket();
-        ticket.setTicketID("001");
+        ticket.setTicketID(String.valueOf("00"+i));
         ticket.setStatus(TicketStatus.Open);
         ticket.setCreationDate(DateUtil.stringToDate("01-07-2013"));
+        ticket.setDeliveryDate(DateUtil.stringToDate("10-07-2013"));
 
         Customer client = new Customer();
         client.setName("James Bond");
@@ -151,9 +155,8 @@ public class TicketService {
 
         ticket.setItems(items);
         tickets.add(ticket);
-
-        ticket.setTicketID("002");
-        tickets.add(ticket);
+        
+        }
         return tickets;
     }
 }
