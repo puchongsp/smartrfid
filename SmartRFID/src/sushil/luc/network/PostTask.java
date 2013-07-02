@@ -31,7 +31,7 @@ public class PostTask extends AsyncTask<JSONObject, String, JSONObject> {
     private String json = "";
     private JSONObject jObj = null;
 
-    PostTask(Context context, String url, Callback<JSONObject> callback){
+    public PostTask(Context context, String url, Callback<JSONObject> callback){
         this.url = url;
         this.callback = callback;
         this.context = context;

@@ -9,12 +9,12 @@ public class Item{
     /*
      * to map models vars with fields in json
      */
-    public static final String _ID = "id";
-    public static final String _NAME = "name";
+    public static final String _ID = "itemIdentifier";
+    public static final String _NAME = "description";
     public static final String _RFID = "rfid";
     public static final String _LOCATION = "location";
     public static final String _STATUS = "status";
-    public static final String _DATE = "date";
+    //public static final String _DATE = "date";
 
 	private String ItemID;
 	private String ItemName;
