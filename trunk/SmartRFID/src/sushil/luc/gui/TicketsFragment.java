@@ -21,23 +21,41 @@ import sushil.luc.msc.Customer;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
-import sushil.luc.ticket.TicketStatus;
+
 import sushil.luc.utils.DateUtil;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+
 
 public class TicketsFragment extends Fragment {
 	 
 	private ListView TicketList;
 	private static String MyLog ="TicketsFragment";
+	private Context myparent;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+    	View view = inflater.inflate(R.layout.tickets_fragment, container, false);
     	
-    	 View view = inflater.inflate(R.layout.tickets_fragment, container, false);
+    	myparent = container.getContext();
     	
     	this.TicketList = (ListView) view.findViewById(R.id.TicketList);
     	
     	fillTickets2List(container);
+    	
+    	this.TicketList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				//Toast.makeText(myparent, "Hallo", Toast.LENGTH_LONG).show();
+				Intent i = new Intent(myparent,Ticket_showItems.class);
+				i.putExtra("Position_InList", position);
+				startActivity(i);
+			}
+		});
     	
     	return view;
     }
@@ -84,7 +102,7 @@ public class TicketsFragment extends Fragment {
     	}
     	
     	// -- create an adapter, takes care of binding hash objects in our list to actual row views
-    	MyListAdapter adapter = new MyListAdapter( parent.getContext(), groupData, android.R.layout.simple_list_item_2, 
+    	MyTicketListAdapter adapter = new MyTicketListAdapter( parent.getContext(), groupData, android.R.layout.simple_list_item_2, 
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , alltickets);
     	TicketList.setAdapter(adapter);

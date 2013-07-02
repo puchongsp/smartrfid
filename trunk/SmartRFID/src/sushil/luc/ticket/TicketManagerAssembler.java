@@ -6,8 +6,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class TicketManagerAssembler implements TicketManager{
+import sushil.luc.item.Item;
 
+public class TicketManagerAssembler implements TicketManager{
+	
+	public static List<Ticket> ticketlist;
+	
     Context context;
 
     private TicketManagerAssembler(){
@@ -38,7 +42,14 @@ public class TicketManagerAssembler implements TicketManager{
     	
     	List<Ticket> alltickets = ticketserv.fetchAllTickets(context);
     	
-    	return orderTickets(alltickets);
+    	ticketlist = orderTickets(alltickets);
+    	
+    	return ticketlist;
+    }
+    
+    public List<Item> getShortestRoute(Ticket t)
+    {
+    	return t.getItems();
     }
 
 }
