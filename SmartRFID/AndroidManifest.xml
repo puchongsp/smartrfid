@@ -24,6 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        	<activity android:label="Ticket Overview"  
+        	    	android:name="sushil.luc.gui.Ticket_showItems" 
+        	    	android:screenOrientation="portrait"></activity>
+        	
+        	<activity android:label="Item Details"  
+        	    	android:name="sushil.luc.gui.ShowItemDetails" 
+        	    	android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
