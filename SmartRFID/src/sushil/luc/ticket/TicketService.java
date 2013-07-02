@@ -9,7 +9,7 @@ import java.util.List;
 
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemStatus;
-import sushil.luc.msc.Client;
+import sushil.luc.msc.Customer;
 import sushil.luc.utils.DateUtil;
 
 public class TicketService {
@@ -46,7 +46,7 @@ public class TicketService {
 
         //fetch HTTP with asynctask here
 
-        List<Ticket> tickets = new ArrayList<Ticket>();;
+        List<Ticket> tickets = new ArrayList<Ticket>();
         /*
         try {
             tickets = convertToTicket("");
@@ -84,18 +84,18 @@ public class TicketService {
         for(int i = 0; i<jTickets.length(); i++){
             JSONObject jTicket = jTickets.getJSONObject(i);
             Ticket ticket = new Ticket();
-            ticket.setTicketID(jTicket.getString(""));
-            ticket.setStatus(TicketStatus.valueOf(jTicket.getString("")));
-            ticket.setCreationDate(DateUtil.stringToDate(jTicket.getString("")));
+            ticket.setTicketID(jTicket.getString(Ticket._ID));
+            ticket.setStatus(TicketStatus.valueOf(jTicket.getString(Ticket._STATUS)));
+            ticket.setCreationDate(DateUtil.stringToDate(jTicket.getString(Ticket._CREATED_DATE)));
 
-            JSONObject jClient = jTicket.getJSONObject(CLIENT);
-            Client client = new Client();
-            client.setClientID(jClient.getString("clientId"));
-            client.setName(jClient.getString(""));
-            client.setAdress(jClient.getString(""));
-            //client.setGPSLocation("");
-            client.setPhone(jClient.getString(""));
-            ticket.setTicketClient(client);
+            JSONObject jCustomer = jTicket.getJSONObject(CLIENT);
+            Customer customer = new Customer();
+            customer.setCustomerID(jCustomer.getString(Customer._ID));
+            customer.setName(jCustomer.getString(Customer._NAME));
+            customer.setAddress(jCustomer.getString(Customer._ADDRESS));
+            //customer.setGPSLocation("");
+            customer.setPhone(jCustomer.getString(Customer._PHONE));
+            ticket.setTicketCustomer(customer);
 
 
             JSONArray jItems = jTicket.getJSONArray(ITEM);
@@ -104,10 +104,10 @@ public class TicketService {
                 JSONObject jItem = jItems.getJSONObject(i);
                 Item item = new Item();
                 //item.setDate(jItem.getString(""));
-                item.setStatus(ItemStatus.valueOf(jItem.getString("")));
-                item.setItemName(jItem.getString(""));
-                item.setItemID(jItem.getString(""));
-                item.setWarehouseLocation("");
+                item.setStatus(ItemStatus.valueOf(jItem.getString(Item._STATUS)));
+                item.setItemName(jItem.getString(Item._NAME));
+                item.setItemID(jItem.getString(Item._ID));
+                item.setWarehouseLocation(jItem.getString(Item._LOCATION));
             }
             ticket.setItems(items);
         }
@@ -131,11 +131,11 @@ public class TicketService {
         ticket.setStatus(TicketStatus.Open);
         ticket.setCreationDate(DateUtil.stringToDate("01-07-2013"));
 
-        Client client = new Client();
+        Customer client = new Customer();
         client.setName("James Bond");
-        client.setClientID("007");
-        client.setAdress("Texas");
-        ticket.setTicketClient(client);
+        client.setCustomerID("007");
+        client.setAddress("Texas");
+        ticket.setTicketCustomer(client);
 
         List<Item> items = new ArrayList<Item>();
         Item item = new Item();

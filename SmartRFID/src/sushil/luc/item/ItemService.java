@@ -40,7 +40,7 @@ public class ItemService {
 
     private Item convertToItem(HashMap<String, String> map) {
         Item item = new Item();
-        item.setItemID(map.get("id"));
+        item.setItemID(String.valueOf(map.get("id")));
         item.setItemName(map.get("name"));
         item.setRFID(map.get("rfid"));
         item.setStatus(ItemStatus.valueOf(map.get("status")));

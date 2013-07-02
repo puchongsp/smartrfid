@@ -44,9 +44,9 @@ public class GetTask extends AsyncTask<String, String, JSONObject> {
     @Override
 	protected JSONObject doInBackground(String... params) {
         try{
-            final DefaultHttpClient httpClient = new DefaultHttpClient();
+            final DefaultHttpClient httpCustomer = new DefaultHttpClient();
             HttpGet httpGetRequest = new HttpGet(url);
-            HttpResponse httpResponse = httpClient.execute(httpGetRequest);
+            HttpResponse httpResponse = httpCustomer.execute(httpGetRequest);
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
 
@@ -72,7 +72,7 @@ public class GetTask extends AsyncTask<String, String, JSONObject> {
             is.close();
             json = sb.toString();
         } catch (Exception e) {
-            Log.e("Buffer Error", "Error converting result " + e.toString());
+            Log.e("GetTast: Buffer Error", "Error converting result " + e.toString());
         }
 
         // Parsing string into jsonObject

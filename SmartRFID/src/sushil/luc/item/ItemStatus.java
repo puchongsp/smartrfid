@@ -5,7 +5,7 @@ package sushil.luc.item;
 //	public static String AVAILABLE = "Availabe";
 //	public static String REPAIR = "Repair";
 //	public static String TRANSPORT = "Transport";
-//	public static String RENTTOCLIENT = "RentToClient";
+//	public static String RENTTOCLIENT = "RentToCustomer";
 //	public static String COLLECTED = "Collected";
 	
 	/*}
@@ -16,7 +16,7 @@ public enum ItemStatus {
 		Available("Availabe",0),
 		Repair("Repair",1),
 		Transport("Transport",2),
-		RentToClient("RentToClient",3),
+		RentToCustomer("RentToCustomer",3),
 		Collected ("Collected",4);
 		
 		private String stringvalue;

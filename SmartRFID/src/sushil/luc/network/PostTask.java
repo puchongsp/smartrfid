@@ -45,13 +45,13 @@ public class PostTask extends AsyncTask<JSONObject, String, JSONObject> {
     @Override
     protected JSONObject doInBackground(JSONObject... jObjects) {
         try{
-            final HttpClient httpClient = new DefaultHttpClient();
+            final HttpClient httpCustomer = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
 
             StringEntity entity = new StringEntity(jObjects[0].toString());
             httpPost.setEntity(entity);
 
-            HttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpResponse httpResponse = httpCustomer.execute(httpPost);
 
             if(httpResponse != null){
                is = httpResponse.getEntity().getContent();
