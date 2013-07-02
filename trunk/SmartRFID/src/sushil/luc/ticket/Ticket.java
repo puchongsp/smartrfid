@@ -6,12 +6,22 @@ import java.util.List;
 
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemStatus;
-import sushil.luc.msc.Client;
+import sushil.luc.msc.Customer;
 
 public class Ticket {
 
+    /*
+     * to map models vars with fields in json
+     */
+    public static final String _ID = "id";
+    public static final String _CUSTOMER = "customer";
+    public static final String _ITEMS = "items";
+    public static final String _STATUS = "status";
+    public static final String _CREATED_DATE = "created_date";
+
+
 	private String TicketID;
-	private Client TicketClient;
+	private Customer TicketCustomer;
 	private List<Item> Items;
 	private TicketStatus Status;
 	private Date CreationDate;
@@ -72,12 +82,12 @@ public class Ticket {
 		TicketID = ticketID;
 	}
 
-	public Client getTicketClient() {
-		return TicketClient;
+	public Customer getTicketCustomer() {
+		return TicketCustomer;
 	}
 
-	public void setTicketClient(Client ticketClient) {
-		TicketClient = ticketClient;
+	public void setTicketCustomer(Customer ticketCustomer) {
+		TicketCustomer = ticketCustomer;
 	}
 
 	public List<Item> getItems() {

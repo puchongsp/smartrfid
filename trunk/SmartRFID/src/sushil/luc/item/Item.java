@@ -5,10 +5,20 @@ import java.util.List;
 import java.util.Date;
 
 public class Item{
+
+    /*
+     * to map models vars with fields in json
+     */
+    public static final String _ID = "id";
+    public static final String _NAME = "name";
+    public static final String _RFID = "rfid";
+    public static final String _LOCATION = "location";
+    public static final String _STATUS = "status";
+    public static final String _DATE = "date";
+
 	private String ItemID;
 	private String ItemName;
-	private String ContainerId;
-	private String RFID;
+    private String RFID;
 	private String WarehouseLocation;
 	private ItemStatus Status;
 	private Date Date;
@@ -31,13 +41,8 @@ public class Item{
 	public void setItemName(String itemName) {
 		ItemName = itemName;
 	}
-	public String getContainerId() {
-		return ContainerId;
-	}
-	public void setContainerId(String containerId) {
-		ContainerId = containerId;
-	}
-	public String getRFID() {
+
+    public String getRFID() {
 		return RFID;
 	}
 	public void setRFID(String rFID) {
