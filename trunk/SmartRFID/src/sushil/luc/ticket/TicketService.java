@@ -21,11 +21,19 @@ public class TicketService {
     private static final String ITEM = "items";
 
     private final String URL = "http://192.168.0.102/smartrfid/api/tickets.html";
+    private static List<Ticket> Tickets ;
 
 
 	public TicketService()
 	{
-
+		if (Tickets!=null)
+		{
+			
+		}
+		else
+		{
+			Tickets=null;
+		}
 	}
 
     /**
@@ -50,7 +58,7 @@ public class TicketService {
 
         //fetch HTTP with asynctask here
 
-        final List<Ticket> tickets = new ArrayList<Ticket>();
+		
         /*
         try {
             tickets = convertToTicket("");
@@ -59,8 +67,11 @@ public class TicketService {
             e.printStackTrace();
         }
         */
-
-       tickets.addAll(getMockupData());
+		if (Tickets==null)
+		{
+			Tickets = new ArrayList<Ticket>();
+			Tickets.addAll(getMockupData());
+		}	
 
 //        new GetTask(context, URL, new Callback<JSONObject>() {
 //            @Override
@@ -74,12 +85,24 @@ public class TicketService {
 //            }
 //        }).execute();
 
-        return tickets;
+        return Tickets;
 	}
 	
-	public void saveToRemote(int TicketID)
+	public void saveToRemote(Ticket t)
 	{
-		
+		int i =0;
+		boolean found=false;
+		while ( (i< Tickets.size()) && !(found))
+		{
+			if (Tickets.get(i).getTicketID().equals(t.getTicketID()))
+				found =true;
+			else
+				i++;
+		}
+		if (found)
+		{
+			Tickets.set(i, t);
+		}
 	}
 
     /**
@@ -164,6 +187,7 @@ public class TicketService {
         item.setItemName("Item_ABC");
         item.setStatus(ItemStatus.Available);
         item.setItemID("ITM001");
+        item.setRFID("072E24F3");
         item.setWarehouseLocation("Colum 10 Row 12");
         items.add(item);
         
@@ -171,6 +195,7 @@ public class TicketService {
         item.setItemName("Item_XYZ");
         item.setStatus(ItemStatus.Available);
         item.setItemID("ITM002");
+        item.setRFID("515BD227");
         item.setWarehouseLocation("Colum 10 Row 15");
         items.add(item);
 
@@ -249,4 +274,6 @@ public class TicketService {
         
         return tickets;
     }
+    
+
 }
