@@ -46,7 +46,8 @@ public class Ticket {
 		int i =0;
 		while (i<this.Items.size() && !result)
 		{
-			if (this.Items.get(i).getRFID().equals(check))
+			String rfid = this.Items.get(i).getRFID();
+			if (rfid!=null && rfid.equals(check))
 			{
 				result =true;
 				this.Items.get(i).setStatus(ItemStatus.Collected);
@@ -62,19 +63,39 @@ public class Ticket {
 	 * Checks if the given RFID is contained in the current Itemlist of the Ticket
 	 * @param RFID
 	 */
-	public void checkRFIDInTicket (String RFID)
+	public boolean checkRFIDInTicket (String RFID)
 	{
-		if (checkItem(RFID))
+		boolean res= checkItem(RFID);
+		if (res)
 		{
-			System.out.println("Positive Feedback");
+			calcTicketStatus ();
 		}
-		else
-		{
-			System.out.println("Negative Feedback");
-		}
+		
+		return res;
 	}
 	
 	
+	private void calcTicketStatus ()
+	{
+		boolean res =true;
+		for(int i=0; i<this.Items.size();i++)
+		{
+			Item tmp = this.Items.get(i);
+			if (tmp.getStatus().equals(ItemStatus.Collected))
+			{
+				res = res && true;
+			}
+			else
+			{
+				res = res && false;
+			}
+		}
+		
+		if (res)
+		{
+			this.setStatus(TicketStatus.Closed);
+		}
+	}
 	public String getTicketID() {
 
 		return TicketID;

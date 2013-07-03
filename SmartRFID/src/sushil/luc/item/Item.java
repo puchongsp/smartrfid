@@ -43,13 +43,19 @@ public class Item{
 	}
 
     public String getRFID() {
-		return RFID;
+    	if (RFID==null)
+    		return "Not available";
+    	else
+    		return RFID;
 	}
 	public void setRFID(String rFID) {
 		RFID = rFID;
 	}
 	public String getWarehouseLocation() {
-		return WarehouseLocation;
+    	if (WarehouseLocation==null)
+    		return "Not available";
+    	else
+    		return WarehouseLocation;
 	}
 	public void setWarehouseLocation(String warehouseLocation) {
 		WarehouseLocation = warehouseLocation;

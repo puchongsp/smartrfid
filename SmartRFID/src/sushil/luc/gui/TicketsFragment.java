@@ -44,7 +44,7 @@ public class TicketsFragment extends Fragment {
     	
     	this.TicketList = (ListView) view.findViewById(R.id.TicketList);
     	
-    	fillTickets2List(container);
+    	
     	
     	this.TicketList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -59,10 +59,18 @@ public class TicketsFragment extends Fragment {
     	
     	return view;
     }
+    
+    public void onResume()
+    {
+    	super.onResume();
+    	fillTickets2List(myparent);
+    }
 
     
-    private void fillTickets2List (ViewGroup parent)
+    private void fillTickets2List (Context parent)
     {
+    	TicketList.setAdapter(null);
+    	
     	List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
     	
     	String KEY_LABEL ="Big Text";
@@ -102,7 +110,7 @@ public class TicketsFragment extends Fragment {
     	}
     	
     	// -- create an adapter, takes care of binding hash objects in our list to actual row views
-    	MyTicketListAdapter adapter = new MyTicketListAdapter( parent.getContext(), groupData, android.R.layout.simple_list_item_2, 
+    	MyTicketListAdapter adapter = new MyTicketListAdapter( parent, groupData, android.R.layout.simple_list_item_2, 
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , alltickets);
     	TicketList.setAdapter(adapter);

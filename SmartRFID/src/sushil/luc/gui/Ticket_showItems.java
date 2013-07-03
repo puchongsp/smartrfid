@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import sushil.luc.item.Item;
+import sushil.luc.msc.RFIDActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
@@ -17,13 +18,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
-public class Ticket_showItems extends Activity{
+public class Ticket_showItems extends RFIDActivity{
 	
 	private ListView ItemList;
 	private int positioninListview;
-	private Ticket current;
+	private Ticket currentTicket;
 	private Context myparent;
+	private TicketManagerAssembler assembler ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,9 @@ public class Ticket_showItems extends Activity{
 		{
 			this.ItemList = (ListView)findViewById(R.id.ItemsList);
 			
-			current = TicketManagerAssembler.ticketlist.get(positioninListview);
+			assembler = new TicketManagerAssembler(myparent);
+			
+			currentTicket = TicketManagerAssembler.ticketlist.get(positioninListview);
 			
 			fillItems2List(this);
 			
@@ -63,7 +68,9 @@ public class Ticket_showItems extends Activity{
 	
 	private void fillItems2List (Context con)
     {
-    	List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
+		ItemList.setAdapter(null);
+		
+		List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
     	
     	String KEY_LABEL ="Big Text";
     	String KEY_HELP ="Help Text";
@@ -71,15 +78,15 @@ public class Ticket_showItems extends Activity{
     	// -- list item hash re-used
     	Map<String, String> group;
     	
-    	TicketManagerAssembler assembler = new TicketManagerAssembler(myparent);
     	
-    	List<Item> allItems = assembler.getShortestRoute(current);
+    	
+    	List<Item> allItems = assembler.getShortestRoute(currentTicket);
     	
     	for (int i =0; i<allItems.size();i++)
     	{
-        	group = new HashMap<String, String>();
-        	
-        	Item tmp = allItems.get(i);
+    		Item tmp = allItems.get(i);
+    		
+    		group = new HashMap<String, String>();
         	
         	group.put( KEY_LABEL,  tmp.getItemName() );
         	group.put( KEY_HELP, "Location "+tmp.getWarehouseLocation() );
@@ -94,4 +101,26 @@ public class Ticket_showItems extends Activity{
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , allItems);
     	ItemList.setAdapter(adapter);
     }
+	
+	public void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		
+		boolean result =currentTicket.checkRFIDInTicket(super.TagId);
+		
+		if (result)
+		{
+			fillItems2List(this);
+		}
+		else
+		{
+			Toast.makeText(this, "Item not in the Ticket", Toast.LENGTH_LONG).show();
+		}
+		
+	}
+	
+	public void onDestroy()
+	{
+		assembler.saveTicket(currentTicket);
+		super.onDestroy();
+	}
 }
