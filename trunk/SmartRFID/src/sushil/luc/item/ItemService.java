@@ -2,9 +2,13 @@ package sushil.luc.item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import sushil.luc.database.RemoteDBService;
+import sushil.luc.msc.Customer;
+import sushil.luc.ticket.Ticket;
+import sushil.luc.ticket.TicketStatus;
 import sushil.luc.utils.DateUtil;
 
 public class ItemService {
@@ -87,5 +91,92 @@ public class ItemService {
     	String sql = "UPDATE table_name SET column1=value1,column2=value2,... WHERE itemid = "+i.getItemID()+" ;";
     	Boolean res = dbService.update(sql);
     	return res;
+    }
+    
+    /**
+     * 
+     * @param RFID
+     * @return order in the list : String ItemId, String ItemName, String ItemRfid, String ItemStatus, String ItemLocation
+     */
+    public List<String> getItemInfo (String RFID)
+    {
+    	List<String> res = new LinkedList<String>();
+    	
+    	Item i = getItemInfoDatabase(RFID);
+    	
+    	if (i ==null)
+    	{
+    		res.add("");
+    		res.add("Not Item found for the scanned RFID");
+    		res.add("");
+    		res.add("");
+    		res.add("");
+    	}
+    	else
+    	{
+    		res.add(i.getItemID());
+    		res.add(i.getItemName());
+    		res.add(i.getRFID());
+    		res.add(i.getStatus().toString());
+    		res.add(i.getWarehouseLocation());
+    	}
+    	
+    	// Ask about a certain RFID 
+    	return res;
+    }
+    
+    private Item getItemInfoDatabase (String RFID)
+    {
+    	List<Item> values = getMockupData();
+    	
+    	for (Item a :values)
+    	{
+    		if (a.getRFID().equals(RFID))
+    			return a;
+    	}
+    	
+    	return null;
+    }
+    /**
+     * Provides mockup data
+     * To be removed
+     * @return List of Items
+     */
+    private List<Item> getMockupData(){
+        List<Item> items = new ArrayList<Item>();
+
+        Item item = new Item();
+        item.setItemName("Item_ABC");
+        item.setStatus(ItemStatus.Available);
+        item.setItemID("ITM001");
+        item.setRFID("072E24F3");
+        item.setWarehouseLocation("Colum 10 Row 12");
+        items.add(item);
+        
+        item = new Item();
+        item.setItemName("Item_XYZ");
+        item.setStatus(ItemStatus.Available);
+        item.setItemID("ITM002");
+        item.setRFID("515BD227");
+        item.setWarehouseLocation("Colum 10 Row 15");
+        items.add(item);
+        
+        item = new Item();
+        item.setItemName("Item_XXX");
+        item.setStatus(ItemStatus.Available);
+        item.setItemID("ITM003");
+       // item.setRFID("515BD227");
+        item.setWarehouseLocation("Colum 1 Row 1");
+        items.add(item);
+        
+        item = new Item();
+        item.setItemName("Item_YYY");
+        item.setStatus(ItemStatus.Available);
+        item.setItemID("ITM004");
+       // item.setRFID("515BD227");
+        item.setWarehouseLocation("Colum 1 Row 5");
+        items.add(item);
+
+        return items;
     }
 }

@@ -1,5 +1,8 @@
 package sushil.luc.gui;
 
+import java.util.List;
+
+import sushil.luc.item.ItemService;
 import sushil.luc.msc.RFIDActivity;
 import sushil.luc.smartrfid.R;
 import android.os.Bundle;
@@ -21,6 +24,13 @@ public class MainActivity extends RFIDActivity {
 	private final String NewItemsTabName ="Tag new Items";
 	private final String ReturnItemsTabName ="Return Items";
 	private final String ItemInfoTabName ="Item Info";
+	private ItemService service;
+	
+	private Fragment ticketsFragment;
+	private Fragment newItemsFragment;
+	private Fragment returnItemsFragment;
+	private ItemInfoFragment itemInfoFragment;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,30 +42,33 @@ public class MainActivity extends RFIDActivity {
         actionbar = getActionBar();
       //Tell the ActionBar we want to use Tabs.
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-      //initiating both tabs and set text to it.
+      //initiating the tabs and set text to it.
         ActionBar.Tab TicketsTab = actionbar.newTab().setText(TicketsTabName);
         ActionBar.Tab NewItemsTab = actionbar.newTab().setText(NewItemsTabName);       
         ActionBar.Tab ReturnItemsTab = actionbar.newTab().setText(ReturnItemsTabName);
         ActionBar.Tab ItemInfoTab = actionbar.newTab().setText(ItemInfoTabName);
  
-     //create the two fragments we want to use for display content
-        Fragment TicketsFragment = new TicketsFragment();
-        Fragment NewItemsFragment = new NewItemFragment();
-        Fragment ReturnItemsFragment = new ReturnItemFragment();
-        Fragment ItemInfoFragment = new ItemInfoFragment();
+     //create the fragments we want to use for display content
+        ticketsFragment = new TicketsFragment();
+        newItemsFragment = new NewItemFragment();
+        returnItemsFragment = new ReturnItemFragment();
+        itemInfoFragment = new ItemInfoFragment();
  
     //set the Tab listener. Now we can listen for clicks.
         
-        TicketsTab.setTabListener(new MyTabsListener(TicketsFragment));
-        NewItemsTab.setTabListener(new MyTabsListener(NewItemsFragment));
-        ReturnItemsTab.setTabListener(new MyTabsListener(ReturnItemsFragment));
-        ItemInfoTab.setTabListener(new MyTabsListener(ItemInfoFragment));
+        TicketsTab.setTabListener(new MyTabsListener(ticketsFragment));
+        NewItemsTab.setTabListener(new MyTabsListener(newItemsFragment));
+        ReturnItemsTab.setTabListener(new MyTabsListener(returnItemsFragment));
+        ItemInfoTab.setTabListener(new MyTabsListener(itemInfoFragment));
  
-   //add the two tabs to the actionbar       
+   //add the tabs to the actionbar       
         actionbar.addTab(TicketsTab);
         actionbar.addTab(NewItemsTab);
         actionbar.addTab(ReturnItemsTab);
         actionbar.addTab(ItemInfoTab);
+        
+        
+        service = new ItemService();
 	}
 
 	@Override
@@ -73,7 +86,9 @@ public class MainActivity extends RFIDActivity {
 			Log.d(log, "onNewIntent");
 			TagId = getTagId(intent);
 			Log.d(log, TagId);
+			List<String> iteminfo = service.getItemInfo(TagId);
 			
+			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4));
 		}
 	}
 
