@@ -1,14 +1,15 @@
 package sushil.luc.gui;
 
 import android.app.Fragment;
-import android.graphics.Color;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,12 +22,7 @@ import sushil.luc.msc.Customer;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
-
 import sushil.luc.utils.DateUtil;
-import android.content.Context;
-import android.content.Intent;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 
 
 public class TicketsFragment extends Fragment {
