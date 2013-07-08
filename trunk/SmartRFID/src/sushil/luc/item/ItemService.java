@@ -5,41 +5,45 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import sushil.luc.database.RemoteDBService;
-import sushil.luc.msc.Customer;
-import sushil.luc.ticket.Ticket;
-import sushil.luc.ticket.TicketStatus;
 import sushil.luc.utils.DateUtil;
 
 public class ItemService {
 	
-	private RemoteDBService dbService;
+	//private RemoteDBService dbService;
 	
 	public ItemService() {
-		dbService = new RemoteDBService();
+		//dbService = new RemoteDBService();
 	}
 	
-	public List<Item> fetchRelevantItems (List<Integer> ticketIDs)
+//	public List<Item> fetchRelevantItems (List<Integer> ticketIDs)
+//	{
+//
+//        String sql = "SELECT * FROM items WHERE ticket_id = 1 and status = 1";
+//
+//        // Convert Hashmap to item
+//        //List <Item> items = (List<Item>)(List<?>)dbService.select(sql);
+//
+//        List<Item> items = new ArrayList<Item>();
+//        List<HashMap<String,String>> rawItems = dbService.select(sql);
+//        for(HashMap<String, String> rawItem : rawItems) {
+//            items.add(convertToItem(rawItem));
+//        }
+//		return items;
+//	}
+	
+	public List<Item> getNewItems()
 	{
-
-        String sql = "SELECT * FROM items WHERE ticket_id = 1 and status = 1";
-
-        // Convert Hashmap to item
-        //List <Item> items = (List<Item>)(List<?>)dbService.select(sql);
-
-        List<Item> items = new ArrayList<Item>();
-        List<HashMap<String,String>> rawItems = dbService.select(sql);
-        for(HashMap<String, String> rawItem : rawItems) {
-            items.add(convertToItem(rawItem));
+//        String sql = "SELECT * FROM items WHERE status = 0";
+//        List <Item> items = (List<Item>)(List<?>)dbService.select(sql);
+//        return items;
+        List <Item> items = getMockupData();
+        List <Item> newItems = new ArrayList<Item>();
+        for(Item item : items) {
+            if(item.getRFID() == null || item.getRFID().equals("")){
+                newItems.add(item);
+            }
         }
-		return items;
-	}
-	
-	public List<Item> fetchNewItems()
-	{
-        String sql = "SELECT * FROM items WHERE status = 0";
-        List <Item> items = (List<Item>)(List<?>)dbService.select(sql);
-        return items;
+        return newItems;
 	}
 
     private Item convertToItem(HashMap<String, String> map) {
@@ -58,40 +62,39 @@ public class ItemService {
      * @param RFIDTag
      * @return true if everything is fine. False error and no change in the database.
      */
-    public boolean TagNewItem(Item i, String RFIDTag)
-    {
-    	boolean res = false;
-    	
-    	if (i.getRFID()!=null || RFIDTag.equals(""))
-    		return res;
-    	
-    	// check if there is an item already tagged with the given RFIDTag
-    	String query ="Select * from items where RFIDTag = "+RFIDTag+" ;";
-    	 List <Item> tmpitems = (List<Item>)(List<?>)dbService.select(query);
-    	 
-    	 if(tmpitems.size()>0)
-    		 return res;
-    	 else
-    	 {
-    		 i.setRFID(RFIDTag);
-    		 
-    		 res = updateItem(i);
-    	
-    		 return res;
-    	 }
-    }
+//    public boolean TagNewItem(Item i, String RFIDTag)
+//    {
+//    	boolean res = false;
+//
+//    	if (i.getRFID()!=null || RFIDTag.equals(""))
+//    		return res;
+//
+//    	// check if there is an item already tagged with the given RFIDTag
+//    	String query ="Select * from items where RFIDTag = "+RFIDTag+" ;";
+//        List <Item> tmpitems = (List<Item>)(List<?>)dbService.select(query);
+//
+//        if(tmpitems.size()>0)
+//         return res;
+//        else {
+//         i.setRFID(RFIDTag);
+//
+//         res = updateItem(i);
+//
+//         return res;
+//        }
+//    }
     
     /**
      * Updates all the attribute of the given Item object in the database
      * @param i
      * @return true if everything is fine. False error and no change in the database.
      */
-    private boolean updateItem (Item i)
-    {
-    	String sql = "UPDATE table_name SET column1=value1,column2=value2,... WHERE itemid = "+i.getItemID()+" ;";
-    	Boolean res = dbService.update(sql);
-    	return res;
-    }
+//    private boolean updateItem (Item i)
+//    {
+//    	String sql = "UPDATE table_name SET column1=value1,column2=value2,... WHERE itemid = "+i.getItemID()+" ;";
+//    	Boolean res = dbService.update(sql);
+//    	return res;
+//    }
     
     /**
      * 
@@ -107,7 +110,7 @@ public class ItemService {
     	if (i ==null)
     	{
     		res.add("");
-    		res.add("Not Item found for the scanned RFID");
+    		res.add("No Item found for the scanned RFID");
     		res.add("");
     		res.add("");
     		res.add("");
