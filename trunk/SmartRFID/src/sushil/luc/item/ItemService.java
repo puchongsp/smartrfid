@@ -201,15 +201,15 @@ public class ItemService {
 
     public void sendToRepair(Item item) {
         if(item.getStatus().equals(ItemStatus.Returned)){
-            if(returnedItems.contains(item)) {
-                returnedItems.remove(item);
-            }
+//            if(returnedItems.contains(item)) {
+//                returnedItems.remove(item);
+//            }
             item.setStatus(ItemStatus.Repair);
         }
     }
 
     public void sendToWarehouse(Item item) {
-        if(item.getStatus().equals(ItemStatus.Returned)){
+        if(item.getStatus().equals(ItemStatus.Returned) || item.getStatus().equals(ItemStatus.Repair) ){
             if(returnedItems.contains(item)) {
                 returnedItems.remove(item);
             }
