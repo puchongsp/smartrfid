@@ -2,14 +2,15 @@ package sushil.luc.item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import sushil.luc.utils.DateUtil;
 
 public class ItemService {
-	
-	//private RemoteDBService dbService;
+
+    private static List<Item> items;
+
+    //private RemoteDBService dbService;
 	
 	public ItemService() {
 		//dbService = new RemoteDBService();
@@ -122,39 +123,41 @@ public class ItemService {
      * @return List of Items
      */
     private List<Item> getMockupData(){
-        List<Item> items = new ArrayList<Item>();
+        if(items == null) {
+            items = new ArrayList<Item>();
 
-        Item item = new Item();
-        item.setItemName("Item_ABC");
-        item.setStatus(ItemStatus.Available);
-        item.setItemID("ITM001");
-        item.setRFID("072E24F3");
-        item.setWarehouseLocation("Colum 10 Row 12");
-        items.add(item);
-        
-        item = new Item();
-        item.setItemName("Item_XYZ");
-        item.setStatus(ItemStatus.Available);
-        item.setItemID("ITM002");
-        item.setRFID("515BD227");
-        item.setWarehouseLocation("Colum 10 Row 15");
-        items.add(item);
-        
-        item = new Item();
-        item.setItemName("Item_XXX");
-        item.setStatus(ItemStatus.Available);
-        item.setItemID("ITM003");
-        //item.setRFID("");
-        item.setWarehouseLocation("Colum 1 Row 1");
-        items.add(item);
-        
-        item = new Item();
-        item.setItemName("Item_YYY");
-        item.setStatus(ItemStatus.Available);
-        item.setItemID("ITM004");
-       // item.setRFID("515BD227");
-        item.setWarehouseLocation("Colum 1 Row 5");
-        items.add(item);
+            Item item = new Item();
+            item.setItemName("Item_ABC");
+            item.setStatus(ItemStatus.Available);
+            item.setItemID("ITM001");
+            item.setRFID("072E24F3");
+            item.setWarehouseLocation("Colum 10 Row 12");
+            items.add(item);
+
+            item = new Item();
+            item.setItemName("Item_XYZ");
+            item.setStatus(ItemStatus.Available);
+            item.setItemID("ITM002");
+            item.setRFID("515BD227");
+            item.setWarehouseLocation("Colum 10 Row 15");
+            items.add(item);
+
+            item = new Item();
+            item.setItemName("Item_XXX");
+            item.setStatus(ItemStatus.Available);
+            item.setItemID("ITM003");
+            //item.setRFID("");
+            item.setWarehouseLocation("Colum 1 Row 1");
+            items.add(item);
+
+            item = new Item();
+            item.setItemName("Item_YYY");
+            item.setStatus(ItemStatus.Available);
+            item.setItemID("ITM004");
+           // item.setRFID("515BD227");
+            item.setWarehouseLocation("Colum 1 Row 5");
+            items.add(item);
+        }
 
         return items;
     }

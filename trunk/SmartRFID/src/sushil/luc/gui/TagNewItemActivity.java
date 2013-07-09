@@ -54,7 +54,7 @@ public class TagNewItemActivity extends RFIDActivity {
         Item_RFID.setText("RFID :");
         Item_Location.setText("Location : "+item.getWarehouseLocation());
         Item_Status.setText("Status : "+item.getStatus().toString());
-        Item_Scanning.setText("Scanning RFID ...");
+        Item_Scanning.setText("Scanning ...");
     }
 
     public void onNewIntent(Intent intent) {
@@ -69,6 +69,8 @@ public class TagNewItemActivity extends RFIDActivity {
         // lookupItem null means the rfid is not yet assigned to any item yet
         if (lookupItem == null) {
             item.setRFID(TagId);
+            Item_Scanning.setText("Item tagged Successfully!");
+            Item_RFID.setText("RFID :"+TagId);
         }
         else {
             Toast.makeText(this, "RFID is already assigned", Toast.LENGTH_LONG).show();
