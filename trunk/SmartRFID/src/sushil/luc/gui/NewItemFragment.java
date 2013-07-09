@@ -28,9 +28,14 @@ public class NewItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.new_item_fragment, container, false);
-        loadNewItems();
+      // loadNewItems();
       //  setRetainInstance(true);
         return view;
+    }
+
+    public void onResume() {
+        super.onResume();
+        loadNewItems();
     }
 
     private void loadNewItems(){
