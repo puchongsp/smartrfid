@@ -51,6 +51,10 @@ public class MyItemListAdapter extends SimpleAdapter {
 				res =Color.RED;
 				Log.d(MyLog, "Open == RED");
 				break;
+            case Repair:
+                res = Color.DKGRAY;
+                Log.d(MyLog, "Repair == DKGRAY");
+                break;
 			default:
 				res =Color.BLUE;
 				Log.d(MyLog, "Repair, RentToClient, Transport == Blue");
