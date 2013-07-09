@@ -168,6 +168,10 @@ public class ItemService {
         return items;
     }
 
+    public List<Item> getAllItems() {
+        return getMockupData();
+    }
+
     public List<Item> getReturnedItems() {
         List<Item> items =  new ArrayList<Item>();
         items.addAll(returnedItems);

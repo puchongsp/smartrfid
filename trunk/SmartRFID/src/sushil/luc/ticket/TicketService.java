@@ -36,6 +36,11 @@ public class TicketService {
 		}
 	}
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     /**
      * This function will fetch json data from exposed REST webservice
      * and return after converting it to Ticket model
