@@ -2,11 +2,9 @@ package sushil.luc.gui;
 
 
 import android.app.ActionBar.Tab;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-
 import android.widget.Toast;
 
 public class MyTabsListener<T extends Fragment> implements android.app.ActionBar.TabListener
@@ -29,7 +27,7 @@ public class MyTabsListener<T extends Fragment> implements android.app.ActionBar
     @Override
     public void onTabReselected(Tab tab, FragmentTransaction ft)
     {
-    	Toast.makeText(MainActivity.appContext, "Reselected!", Toast.LENGTH_LONG).show();
+    	Toast.makeText(getFragment().getActivity().getApplicationContext(), "Reselected!", Toast.LENGTH_LONG).show();
     }
     
     @Override

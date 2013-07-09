@@ -35,9 +35,15 @@
         	<activity android:label="Item Details"  
         	    	android:name="sushil.luc.gui.ShowItemDetails" 
         	    	android:screenOrientation="portrait"></activity>
+
             <activity android:label="Tag New Item"
                   android:name="sushil.luc.gui.TagNewItemActivity"
                   android:screenOrientation="portrait"></activity>
+
+            <activity android:label="Return Item Options"
+                  android:name="sushil.luc.gui.ReturnedItemOptionsActivity"
+                  android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>
