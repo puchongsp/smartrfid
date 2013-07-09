@@ -1,5 +1,14 @@
 package sushil.luc.gui;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,15 +16,6 @@ import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.msc.RFIDActivity;
 import sushil.luc.smartrfid.R;
-import android.os.Bundle;
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.view.Menu;
 
 public class MainActivity extends RFIDActivity {
 	
@@ -109,7 +109,15 @@ public class MainActivity extends RFIDActivity {
 	    	}
 			
 			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4));
-		}
+        } else if (currenttab.getText().equals(ReturnItemsTabName)) {
+            Log.d(log, "Return Items");
+            TagId = getTagId(intent);
+            Log.d(log, TagId);
+            Item item = service.getItemInfo(TagId);
+            if(item != null) {
+                ((ReturnItemFragment)returnItemsFragment).returnItem(item);
+            }
+        }
 	}
 
 }

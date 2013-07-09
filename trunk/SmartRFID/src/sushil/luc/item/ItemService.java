@@ -2,17 +2,23 @@ package sushil.luc.item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import sushil.luc.utils.DateUtil;
 
 public class ItemService {
 
     private static List<Item> items;
+    private static Set<Item> returnedItems;
 
     //private RemoteDBService dbService;
 	
 	public ItemService() {
+        if(returnedItems == null) {
+            returnedItems = new HashSet<Item>();
+        }
 		//dbService = new RemoteDBService();
 	}
 	
@@ -160,5 +166,16 @@ public class ItemService {
         }
 
         return items;
+    }
+
+    public List<Item> getReturnedItems() {
+        List<Item> items =  new ArrayList<Item>();
+        items.addAll(returnedItems);
+        return items;
+    }
+
+    public void returnItem(Item item) {
+        item.setStatus(ItemStatus.Returned);
+        returnedItems.add(item);
     }
 }
