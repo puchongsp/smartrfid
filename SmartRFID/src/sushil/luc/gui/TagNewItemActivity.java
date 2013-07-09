@@ -63,13 +63,14 @@ public class TagNewItemActivity extends RFIDActivity {
         //check if RFID already exists
         // make RFId lookup here
         //boolean result = rfidLookup(TagId);
-        boolean result = true;
-        if (!result)
-        {
+        ItemService itemService = new ItemService();
+        Item lookupItem = itemService.getItemInfo(TagId);
+
+        // lookupItem null means the rfid is not yet assigned to any item yet
+        if (lookupItem == null) {
             item.setRFID(TagId);
         }
-        else
-        {
+        else {
             Toast.makeText(this, "RFID is already assigned", Toast.LENGTH_LONG).show();
         }
 
