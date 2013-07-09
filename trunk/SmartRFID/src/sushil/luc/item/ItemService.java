@@ -149,6 +149,22 @@ public class ItemService {
             items.add(item);
 
             item = new Item();
+            item.setItemName("Wooden Log");
+            item.setStatus(ItemStatus.Available);
+            item.setItemID("DL_002");
+            //item.setRFID("515BD227");
+            item.setWarehouseLocation("Column 10 Row 15");
+            items.add(item);
+
+            item = new Item();
+            item.setItemName("Lathe Machine");
+            item.setStatus(ItemStatus.Collected);
+            item.setItemID("DL_002");
+            //item.setRFID("515BD227");
+            item.setWarehouseLocation("Column 10 Row 15");
+            items.add(item);
+
+            item = new Item();
             item.setItemName("Steel Disc");
             item.setStatus(ItemStatus.Available);
             item.setItemID("DC_005_S");
