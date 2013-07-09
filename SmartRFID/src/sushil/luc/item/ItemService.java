@@ -145,23 +145,23 @@ public class ItemService {
             item.setStatus(ItemStatus.Available);
             item.setItemID("DL_002");
             //item.setRFID("515BD227");
-            item.setWarehouseLocation("Column 10 Row 15");
+            item.setWarehouseLocation("Column 11 Row 15");
             items.add(item);
 
             item = new Item();
             item.setItemName("Wooden Log");
             item.setStatus(ItemStatus.Available);
-            item.setItemID("DL_002");
+            item.setItemID("DL_003");
             //item.setRFID("515BD227");
-            item.setWarehouseLocation("Column 10 Row 15");
+            item.setWarehouseLocation("Column 09 Row 15");
             items.add(item);
 
             item = new Item();
             item.setItemName("Lathe Machine");
             item.setStatus(ItemStatus.Collected);
-            item.setItemID("DL_002");
+            item.setItemID("DL_004");
             item.setRFID("515BD227");
-            item.setWarehouseLocation("Column 10 Row 15");
+            item.setWarehouseLocation("Column 10 Row 3");
             items.add(item);
 
             item = new Item();

@@ -177,7 +177,7 @@ public class TicketService {
 
         ticket = new Ticket();
         ticket.setTicketID(String.valueOf("001"));
-        ticket.setStatus(TicketStatus.Open);
+        ticket.setStatus(TicketStatus.InProgress);
         ticket.setCreationDate(DateUtil.stringToDate("01-07-2013"));
         ticket.setDeliveryDate(DateUtil.stringToDate("30-07-2013"));
 
@@ -189,7 +189,7 @@ public class TicketService {
 
         for (int i=0; i< allitems.size();i++)
         {
-        	if (allitems.get(i).getStatus().equals(ItemStatus.Available))
+        	if (allitems.get(i).getStatus().equals(ItemStatus.Available) || allitems.get(i).getStatus().equals(ItemStatus.Collected))
         	{
         		items.add(allitems.get(i));
         	}
@@ -198,7 +198,7 @@ public class TicketService {
         ticket.setItems(items);
         tickets.add(ticket);
         
-        items.clear();
+        items = new LinkedList<Item>();
         ticket = new Ticket();
         ticket.setTicketID(String.valueOf("002"));
         ticket.setStatus(TicketStatus.Open);
@@ -213,7 +213,8 @@ public class TicketService {
 
         for (int i=0; i< allitems.size();i++)
         {
-        	if (allitems.get(i).getStatus().equals(ItemStatus.Available) || allitems.get(i).getStatus().equals(ItemStatus.Collected))
+        	String RFID = allitems.get(i).getRFID();
+        	if (RFID!=null)
         	{
         		items.add(allitems.get(i));
         	}
