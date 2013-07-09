@@ -144,7 +144,7 @@ public class ItemService {
             item.setItemName("Drilling Machine");
             item.setStatus(ItemStatus.Available);
             item.setItemID("DL_002");
-            item.setRFID("515BD227");
+            //item.setRFID("515BD227");
             item.setWarehouseLocation("Column 10 Row 15");
             items.add(item);
 
@@ -160,7 +160,7 @@ public class ItemService {
             item.setItemName("Lathe Machine");
             item.setStatus(ItemStatus.Collected);
             item.setItemID("DL_002");
-            //item.setRFID("515BD227");
+            item.setRFID("515BD227");
             item.setWarehouseLocation("Column 10 Row 15");
             items.add(item);
 
