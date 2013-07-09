@@ -29,6 +29,7 @@ public class NewItemFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.new_item_fragment, container, false);
         loadNewItems();
+      //  setRetainInstance(true);
         return view;
     }
 

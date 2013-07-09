@@ -17,6 +17,7 @@ public class MyTicketListAdapter extends SimpleAdapter {
 
 	private List<Ticket> alltickets;
 	private static String MyLog = "MyTicketListAdapter";
+	private static boolean logging =false;
 	
 	
 	public MyTicketListAdapter(Context context, List<? extends Map<String, ?>> data,
@@ -45,15 +46,18 @@ public class MyTicketListAdapter extends SimpleAdapter {
 		{
 			case Closed:
 				res =Color.GREEN;
-				Log.d(MyLog, "Closed == Green");
+				if (logging)
+					Log.d(MyLog, "Closed == Green");
 				break;
 			case InProgress:
 				res =Color.YELLOW;
-				Log.d(MyLog, "InProgress == Yellow");
+				if (logging)
+					Log.d(MyLog, "InProgress == Yellow");
 				break;
 			case Open:
 				res =Color.RED;
-				Log.d(MyLog, "Open == RED");
+				if (logging)
+					Log.d(MyLog, "Open == RED");
 				break;
 		}
     	

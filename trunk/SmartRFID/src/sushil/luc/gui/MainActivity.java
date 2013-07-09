@@ -28,50 +28,69 @@ public class MainActivity extends RFIDActivity {
 	private final String ItemInfoTabName ="Item Info";
 	private ItemService service;
 	
-	private Fragment ticketsFragment;
-	private Fragment newItemsFragment;
-	private Fragment returnItemsFragment;
+	private TicketsFragment ticketsFragment;
+	private NewItemFragment newItemsFragment;
+	private ReturnItemFragment returnItemsFragment;
 	private ItemInfoFragment itemInfoFragment;
 	
+	private MyTabsListener<TicketsFragment> TabListenerTickets;
+	private MyTabsListener<NewItemFragment> TabListenerNewItems;
+	private MyTabsListener<ReturnItemFragment> TabListenerReturnItems;
+	private MyTabsListener<ItemInfoFragment> TabListenerItemInfo;
+
 	
-	@Override
+
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
-		appContext =this;
-		//ActionBar gets initiated
-        actionbar = getActionBar();
-      //Tell the ActionBar we want to use Tabs.
-        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-      //initiating the tabs and set text to it.
-        ActionBar.Tab TicketsTab = actionbar.newTab().setText(TicketsTabName);
-        ActionBar.Tab NewItemsTab = actionbar.newTab().setText(NewItemsTabName);       
-        ActionBar.Tab ReturnItemsTab = actionbar.newTab().setText(ReturnItemsTabName);
-        ActionBar.Tab ItemInfoTab = actionbar.newTab().setText(ItemInfoTabName);
- 
-     //create the fragments we want to use for display content
-        ticketsFragment = new TicketsFragment();
-        newItemsFragment = new NewItemFragment();
-        returnItemsFragment = new ReturnItemFragment();
-        itemInfoFragment = new ItemInfoFragment();
- 
-    //set the Tab listener. Now we can listen for clicks.
+	 super.onCreate(savedInstanceState);
+	 
+	 service= new ItemService();
+	 
+     // setup action bar for tabs
+	 actionbar = getActionBar();
+	 actionbar.removeAllTabs();
+     if (actionbar.getTabCount() == 0)
+     {
+    	 actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+         
+         ActionBar.Tab TicketsTab = actionbar.newTab().setText(TicketsTabName);
+         ActionBar.Tab NewItemsTab = actionbar.newTab().setText(NewItemsTabName);       
+         ActionBar.Tab ReturnItemsTab = actionbar.newTab().setText(ReturnItemsTabName);
+         ActionBar.Tab ItemInfoTab = actionbar.newTab().setText(ItemInfoTabName);
+         
+         TabListenerTickets = new MyTabsListener<TicketsFragment>(this, TicketsTabName, TicketsFragment.class);
+         TicketsTab.setTabListener(TabListenerTickets);
         
-        TicketsTab.setTabListener(new MyTabsListener(ticketsFragment));
-        NewItemsTab.setTabListener(new MyTabsListener(newItemsFragment));
-        ReturnItemsTab.setTabListener(new MyTabsListener(returnItemsFragment));
-        ItemInfoTab.setTabListener(new MyTabsListener(itemInfoFragment));
- 
-   //add the tabs to the actionbar       
-        actionbar.addTab(TicketsTab);
-        actionbar.addTab(NewItemsTab);
-        actionbar.addTab(ReturnItemsTab);
-        actionbar.addTab(ItemInfoTab);
+         
+         TabListenerNewItems = new MyTabsListener<NewItemFragment>(this, NewItemsTabName, NewItemFragment.class);
+         NewItemsTab.setTabListener(TabListenerNewItems);
         
-        
-        service = new ItemService();
-	}
+         
+         TabListenerReturnItems = new MyTabsListener<ReturnItemFragment>(this, ReturnItemsTabName, ReturnItemFragment.class);
+         ReturnItemsTab.setTabListener(TabListenerReturnItems);
+         
+         
+         TabListenerItemInfo = new MyTabsListener<ItemInfoFragment>(this, ItemInfoTabName, ItemInfoFragment.class);
+         ItemInfoTab.setTabListener(TabListenerItemInfo);
+         
+         
+         actionbar.addTab(TicketsTab);
+         actionbar.addTab(NewItemsTab);
+         actionbar.addTab(ReturnItemsTab);
+         actionbar.addTab(ItemInfoTab);
+     }
+
+     if (savedInstanceState != null)
+     {
+    	 actionbar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
+     }
+ }
+
+ @Override
+ protected void onSaveInstanceState(Bundle outState)
+ {
+     super.onSaveInstanceState(outState);
+     outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+ }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,7 +100,11 @@ public class MainActivity extends RFIDActivity {
 	}
 	
 	public void onNewIntent(Intent intent) {
-
+		returnItemsFragment = TabListenerReturnItems.getFragment();
+		ticketsFragment = TabListenerTickets.getFragment();
+		newItemsFragment = TabListenerNewItems.getFragment();
+		itemInfoFragment = TabListenerItemInfo.getFragment();
+		
 		Tab currenttab = actionbar.getSelectedTab();
 		if (currenttab.getText().equals(ItemInfoTabName))
 		{
@@ -108,6 +131,7 @@ public class MainActivity extends RFIDActivity {
 	    		iteminfo.add(i.getWarehouseLocation());
 	    	}
 			
+	    	
 			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4));
         } else if (currenttab.getText().equals(ReturnItemsTabName)) {
             Log.d(log, "Return Items");
