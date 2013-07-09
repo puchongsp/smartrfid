@@ -99,33 +99,16 @@ public class ItemService {
     /**
      * 
      * @param RFID
-     * @return order in the list : String ItemId, String ItemName, String ItemRfid, String ItemStatus, String ItemLocation
+     * @return Item: if null no entry found
      */
-    public List<String> getItemInfo (String RFID)
+    public Item getItemInfo (String RFID)
     {
     	List<String> res = new LinkedList<String>();
     	
     	Item i = getItemInfoDatabase(RFID);
     	
-    	if (i ==null)
-    	{
-    		res.add("");
-    		res.add("No Item found for the scanned RFID");
-    		res.add("");
-    		res.add("");
-    		res.add("");
-    	}
-    	else
-    	{
-    		res.add(i.getItemID());
-    		res.add(i.getItemName());
-    		res.add(i.getRFID());
-    		res.add(i.getStatus().toString());
-    		res.add(i.getWarehouseLocation());
-    	}
-    	
     	// Ask about a certain RFID 
-    	return res;
+    	return i;
     }
     
     private Item getItemInfoDatabase (String RFID)

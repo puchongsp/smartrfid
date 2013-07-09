@@ -1,7 +1,9 @@
 package sushil.luc.gui;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.msc.RFIDActivity;
 import sushil.luc.smartrfid.R;
@@ -86,7 +88,25 @@ public class MainActivity extends RFIDActivity {
 			Log.d(log, "onNewIntent");
 			TagId = getTagId(intent);
 			Log.d(log, TagId);
-			List<String> iteminfo = service.getItemInfo(TagId);
+			Item i = service.getItemInfo(TagId);
+			List<String> iteminfo = new LinkedList<String>();
+			
+	    	if (i ==null)
+	    	{
+	    		iteminfo.add("");
+	    		iteminfo.add("No Item found for the scanned RFID");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    	}
+	    	else
+	    	{
+	    		iteminfo.add(i.getItemID());
+	    		iteminfo.add(i.getItemName());
+	    		iteminfo.add(i.getRFID());
+	    		iteminfo.add(i.getStatus().toString());
+	    		iteminfo.add(i.getWarehouseLocation());
+	    	}
 			
 			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4));
 		}
