@@ -41,12 +41,6 @@ public class ItemInfoFragment extends Fragment {
         return v;
     }
     
-/*	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-    	
-	}*/
     
     public void displayInfo (String ItemId, String ItemName, String ItemRfid, String ItemStatus, String ItemLocation)
     {

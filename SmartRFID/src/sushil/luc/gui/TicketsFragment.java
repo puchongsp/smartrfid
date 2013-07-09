@@ -53,6 +53,7 @@ public class TicketsFragment extends Fragment {
 			}
 		});
     	
+    	 //setRetainInstance(true);
     	return view;
     }
     
