@@ -7,9 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import sushil.luc.item.Item;
+import sushil.luc.item.ItemService;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.Customer;
 import sushil.luc.utils.DateUtil;
@@ -166,43 +168,61 @@ public class TicketService {
          * MockupData
          */
         
-        int i=0;
         
-        for (;i<3;i++)
-        {
-        Ticket ticket = new Ticket();
-        ticket.setTicketID(String.valueOf("00"+i));
+        ItemService itemservice = new ItemService(); 
+        List<Item> allitems = itemservice.getAllItems();
+        List<Item> items = new LinkedList<Item>();
+        Ticket ticket;
+        Customer client;
+
+        ticket = new Ticket();
+        ticket.setTicketID(String.valueOf("001"));
         ticket.setStatus(TicketStatus.Open);
         ticket.setCreationDate(DateUtil.stringToDate("01-07-2013"));
-        ticket.setDeliveryDate(DateUtil.stringToDate((10-i)+"-07-2013"));
+        ticket.setDeliveryDate(DateUtil.stringToDate("30-07-2013"));
 
-        Customer client = new Customer();
+        client = new Customer();
         client.setName("James Bond");
         client.setCustomerID("007");
         client.setAddress("Texas");
         ticket.setTicketCustomer(client);
 
-        List<Item> items = new ArrayList<Item>();
-        Item item = new Item();
-        item.setItemName("Item_ABC");
-        item.setStatus(ItemStatus.Available);
-        item.setItemID("ITM001");
-        item.setRFID("072E24F3");
-        item.setWarehouseLocation("Colum 10 Row 12");
-        items.add(item);
+        for (int i=0; i< allitems.size();i++)
+        {
+        	if (allitems.get(i).getStatus().equals(ItemStatus.Available))
+        	{
+        		items.add(allitems.get(i));
+        	}
+        }
         
-        item = new Item();
-        item.setItemName("Item_XYZ");
-        item.setStatus(ItemStatus.Available);
-        item.setItemID("ITM002");
-        item.setRFID("515BD227");
-        item.setWarehouseLocation("Colum 10 Row 15");
-        items.add(item);
-
         ticket.setItems(items);
         tickets.add(ticket);
         
+        items.clear();
+        ticket = new Ticket();
+        ticket.setTicketID(String.valueOf("002"));
+        ticket.setStatus(TicketStatus.Open);
+        ticket.setCreationDate(DateUtil.stringToDate("05-07-2013"));
+        ticket.setDeliveryDate(DateUtil.stringToDate("30-08-2013"));
+
+        client = new Customer();
+        client.setName("Luc Weiler");
+        client.setCustomerID("010");
+        client.setAddress("Luxemburg");
+        ticket.setTicketCustomer(client);
+
+        for (int i=0; i< allitems.size();i++)
+        {
+        	if (allitems.get(i).getStatus().equals(ItemStatus.Available) || allitems.get(i).getStatus().equals(ItemStatus.Collected))
+        	{
+        		items.add(allitems.get(i));
+        	}
         }
+        
+        ticket.setItems(items);
+        tickets.add(ticket);
+        
+        /*}
         
         for (;i<6;i++)
         {
@@ -270,7 +290,7 @@ public class TicketService {
         ticket.setItems(items);
         tickets.add(ticket);
         
-        }
+        }*/
         
         return tickets;
     }
