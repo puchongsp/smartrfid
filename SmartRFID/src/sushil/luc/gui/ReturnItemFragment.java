@@ -28,9 +28,13 @@ public class ReturnItemFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.return_items_fragment, container, false);
 
-        populateItems();
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateItems();
     }
 
     public void returnItem(Item item){
