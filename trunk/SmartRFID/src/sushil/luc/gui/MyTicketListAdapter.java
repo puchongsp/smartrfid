@@ -36,6 +36,7 @@ public class MyTicketListAdapter extends SimpleAdapter {
         return row;
     }
     
+    
     private int getColor (int position)
     {
     	int res =-1;

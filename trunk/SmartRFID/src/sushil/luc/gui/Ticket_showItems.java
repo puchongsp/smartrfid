@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import sushil.luc.item.Item;
+import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.RFIDActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
+import sushil.luc.ticket.TicketStatus;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -109,6 +111,7 @@ public class Ticket_showItems extends RFIDActivity{
 		
 		if (result)
 		{
+			evalTicket();
 			fillItems2List(this);
 		}
 		else
@@ -122,5 +125,37 @@ public class Ticket_showItems extends RFIDActivity{
 	{
 		assembler.saveTicket(currentTicket);
 		super.onDestroy();
+	}
+	
+	private void evalTicket()
+	{
+		List<Item> items =currentTicket.getItems();
+		
+		boolean close =true;
+		boolean partial =false;
+		
+		for (int i= 0; i<items.size();i++)
+		{
+			if (items.get(i).getStatus().equals(ItemStatus.Collected))
+			{
+				close = close && true;
+				partial = partial || true;
+			}
+			else
+			{
+				close = close && false;
+				partial = partial || false;
+			}
+		}
+		
+		if (close)
+			currentTicket.setStatus(TicketStatus.Closed);
+		else
+		{
+			if(partial)
+				currentTicket.setStatus(TicketStatus.InProgress);
+			else
+				currentTicket.setStatus(TicketStatus.Open);
+		}
 	}
 }
