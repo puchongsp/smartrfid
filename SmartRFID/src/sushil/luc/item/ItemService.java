@@ -107,7 +107,9 @@ public class ItemService {
     	
     	for (Item a :values)
     	{
-    		if (a.getRFID().equals(RFID))
+    		String b = a.getRFID();
+    		
+    		if (b!=null && b.equals(RFID))
     			return a;
     	}
     	
@@ -142,7 +144,7 @@ public class ItemService {
         item.setItemName("Item_XXX");
         item.setStatus(ItemStatus.Available);
         item.setItemID("ITM003");
-       // item.setRFID("515BD227");
+        //item.setRFID("");
         item.setWarehouseLocation("Colum 1 Row 1");
         items.add(item);
         
