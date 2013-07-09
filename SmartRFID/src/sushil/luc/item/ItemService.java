@@ -133,35 +133,35 @@ public class ItemService {
             items = new ArrayList<Item>();
 
             Item item = new Item();
-            item.setItemName("Item_ABC");
+            item.setItemName("Valve");
             item.setStatus(ItemStatus.Available);
-            item.setItemID("ITM001");
+            item.setItemID("VL_001_L");
             item.setRFID("072E24F3");
-            item.setWarehouseLocation("Colum 10 Row 12");
+            item.setWarehouseLocation("Column 10 Row 12");
             items.add(item);
 
             item = new Item();
-            item.setItemName("Item_XYZ");
+            item.setItemName("Drilling Machine");
             item.setStatus(ItemStatus.Available);
-            item.setItemID("ITM002");
+            item.setItemID("DL_002");
             item.setRFID("515BD227");
-            item.setWarehouseLocation("Colum 10 Row 15");
+            item.setWarehouseLocation("Column 10 Row 15");
             items.add(item);
 
             item = new Item();
-            item.setItemName("Item_XXX");
+            item.setItemName("Steel Disc");
             item.setStatus(ItemStatus.Available);
-            item.setItemID("ITM003");
+            item.setItemID("DC_005_S");
             //item.setRFID("");
-            item.setWarehouseLocation("Colum 1 Row 1");
+            item.setWarehouseLocation("Column 1 Row 1");
             items.add(item);
 
             item = new Item();
-            item.setItemName("Item_YYY");
+            item.setItemName("Iron Board");
             item.setStatus(ItemStatus.Available);
-            item.setItemID("ITM004");
+            item.setItemID("BD_007_P");
            // item.setRFID("515BD227");
-            item.setWarehouseLocation("Colum 1 Row 5");
+            item.setWarehouseLocation("Column 1 Row 5");
             items.add(item);
         }
 
