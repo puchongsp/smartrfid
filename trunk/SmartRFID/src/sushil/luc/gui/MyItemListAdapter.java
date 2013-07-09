@@ -1,16 +1,17 @@
 package sushil.luc.gui;
 
-import java.util.List;
-import java.util.Map;
-
-import sushil.luc.item.Item;
-import sushil.luc.item.ItemStatus;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
+
+import java.util.List;
+import java.util.Map;
+
+import sushil.luc.item.Item;
+import sushil.luc.item.ItemStatus;
 
 public class MyItemListAdapter extends SimpleAdapter {
 
@@ -51,8 +52,8 @@ public class MyItemListAdapter extends SimpleAdapter {
 				Log.d(MyLog, "Open == RED");
 				break;
 			default:
-				res =Color.YELLOW;
-				Log.d(MyLog, "Repair, RenttoClient, Transport == Yellow");
+				res =Color.BLUE;
+				Log.d(MyLog, "Repair, RentToClient, Transport == Blue");
 			
 		}
     	

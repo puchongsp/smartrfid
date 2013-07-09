@@ -178,4 +178,22 @@ public class ItemService {
         item.setStatus(ItemStatus.Returned);
         returnedItems.add(item);
     }
+
+    public void sendToRepair(Item item) {
+        if(item.getStatus().equals(ItemStatus.Returned)){
+            if(returnedItems.contains(item)) {
+                returnedItems.remove(item);
+            }
+            item.setStatus(ItemStatus.Repair);
+        }
+    }
+
+    public void sendToWarehouse(Item item) {
+        if(item.getStatus().equals(ItemStatus.Returned)){
+            if(returnedItems.contains(item)) {
+                returnedItems.remove(item);
+            }
+            item.setStatus(ItemStatus.Available);
+        }
+    }
 }

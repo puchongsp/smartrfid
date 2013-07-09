@@ -1,10 +1,12 @@
 package sushil.luc.gui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class ReturnItemFragment extends Fragment {
     public void returnItem(Item item){
         ItemService itemService = new ItemService();
         itemService.returnItem(item);
+        populateItems();
     }
 
     private void populateItems() {
@@ -64,15 +67,15 @@ public class ReturnItemFragment extends Fragment {
 
         returnItemListView .setAdapter(adapter);
 
-//        returnItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent i = new Intent(getActivity().getApplicationContext(), ReturnedItemOptionsActivity.class);
-//                i.putExtra("position", position);
-//                startActivity(i);
-//            }
-//        });
+        returnItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity().getApplicationContext(), ReturnedItemOptionsActivity.class);
+                i.putExtra("position", position);
+                startActivity(i);
+            }
+        });
     }
  
 }

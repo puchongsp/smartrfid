@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/show_returned_item_options"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,11 +7,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
+    tools:context="sushil.luc.gui.ReturnedItemOptionsActivity"
     android:orientation="vertical">
 
      <LinearLayout
-        android:id="@+id/show_items_details"
+
         android:layout_width="match_parent"
         android:layout_height="232dp"
         android:orientation="vertical" >
@@ -55,15 +56,24 @@
         android:id="@+id/show_items_scan_rfid"
         android:layout_width="match_parent"
         android:layout_height="232dp"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-     <TextView
+
+     <Button
+             android:layout_width="175dp"
+             android:layout_height="87dp"
+             android:text="Needs Repair"
+             android:id="@+id/btn_send_to_repair"
+             android:layout_gravity="center_horizontal|top"
+             />
+
+     <Button
              android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textAppearance="?android:attr/textAppearanceLarge"
-             android:text=""
-             android:id="@+id/item_scanning"
-             android:layout_gravity="center"
-             android:textStyle="bold"/>
+             android:layout_height="87dp"
+             android:text="To Warehouse"
+             android:id="@+id/btn_send_to_warehouse"
+             android:layout_gravity="center_horizontal|top"
+             android:layout_weight="0.27"
+             />
  </LinearLayout>
 </LinearLayout>
