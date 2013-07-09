@@ -103,16 +103,6 @@ public class ItemService {
      */
     public Item getItemInfo (String RFID)
     {
-    	List<String> res = new LinkedList<String>();
-    	
-    	Item i = getItemInfoDatabase(RFID);
-    	
-    	// Ask about a certain RFID 
-    	return i;
-    }
-    
-    private Item getItemInfoDatabase (String RFID)
-    {
     	List<Item> values = getMockupData();
     	
     	for (Item a :values)
@@ -123,6 +113,7 @@ public class ItemService {
     	
     	return null;
     }
+    
     /**
      * Provides mockup data
      * To be removed
