@@ -1,8 +1,11 @@
 package sushil.luc.item;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Date;
+
+import sushil.luc.dtos.ItemDTO;
+import sushil.luc.utils.DateUtil;
 
 public class Item{
 
@@ -28,6 +31,27 @@ public class Item{
 	{
 		this.RepairLogs = new LinkedList<String>();
 	}
+
+    public Item(ItemDTO itemDto){
+        this.ItemID = itemDto.getId();
+        this.ItemName = itemDto.getTicketItemInfo().getDescription();
+
+        try {
+            this.RFID = itemDto.getTicketItemInfo().getRfidInfo().getRfidNumber();
+        } catch (NullPointerException e) {
+            this.RFID = "";
+        }
+
+        this.Status = ItemStatus.Available;
+
+        if(itemDto.getItemStatus().isChecked())
+            this.Status = ItemStatus.RentToCustomer;
+        else if(itemDto.getItemStatus().isReturned())
+            this.Status = ItemStatus.Returned;
+
+
+        this.Date = DateUtil.stringToDate(itemDto.getRentInformation().getReturnDate());
+    }
 	
 	public String getItemID() {
 		return ItemID;

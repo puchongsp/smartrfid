@@ -6,6 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import sushil.luc.dtos.ItemDTO;
+import sushil.luc.dtos.RfidInfoDTO;
+import sushil.luc.network.Callback;
+import sushil.luc.network.NetworkHandler;
 import sushil.luc.utils.DateUtil;
 
 public class ItemService {
@@ -182,6 +186,58 @@ public class ItemService {
         }
 
         return items;
+    }
+
+    /**
+     * Fetches Rfid by item identifier from remote server
+     * @param identifier
+     * @return
+     */
+    public String fetchRfidFromItemIdentifier(String identifier) {
+        String rfid = "";
+        try {
+            final RfidInfoDTO rfidInfoDTO = new RfidInfoDTO();
+            final NetworkHandler networkHandler = NetworkHandler.getInstance();
+            String URL = "";
+            networkHandler.read(URL,RfidInfoDTO.class, new Callback<RfidInfoDTO>() {
+                @Override
+                public void callback(final RfidInfoDTO myRfidInfoDTO) {
+                    rfidInfoDTO.setId(myRfidInfoDTO.getId());
+                    rfidInfoDTO.setRfidNumber(myRfidInfoDTO.getRfidNumber());
+                }
+            });
+
+            rfid = rfidInfoDTO.getRfidNumber();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rfid;
+    }
+
+    /**
+     * Fetches Rfid by item identifier from remote server
+     * @param rfid
+     * @return
+     */
+    public Item fetchItemFromRfid(String rfid) {
+        final List<ItemDTO> itemDtos = new ArrayList<ItemDTO>(1);
+        try {
+            final NetworkHandler networkHandler = NetworkHandler.getInstance();
+            String URL = "";
+            networkHandler.read(URL, ItemDTO.class, new Callback<ItemDTO>() {
+                @Override
+                public void callback(final ItemDTO myItemDto) {
+                    itemDtos.add(myItemDto);
+                }
+            });
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Item(itemDtos.get(0));
     }
 
     public List<Item> getAllItems() {

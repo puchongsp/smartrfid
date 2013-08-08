@@ -2,6 +2,8 @@ package sushil.luc.msc;
 
 import android.location.Location;
 
+import sushil.luc.dtos.CustomerDTO;
+
 public class Customer {
 
     /*
@@ -22,8 +24,13 @@ public class Customer {
 	
 	public Customer()
 	{
-		
+
 	}
+
+    public Customer(CustomerDTO customerDTO) {
+        this.CustomerID = customerDTO.getId();
+        this.Name = customerDTO.getCustomerName();
+    }
 
 	public String getCustomerID() {
 		return CustomerID;
