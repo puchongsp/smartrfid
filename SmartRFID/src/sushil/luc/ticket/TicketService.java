@@ -1,6 +1,8 @@
 package sushil.luc.ticket;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,10 +12,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import sushil.luc.dtos.OrderDTO;
+import sushil.luc.dtos.TicketDTO;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.Customer;
+import sushil.luc.network.Callback;
+import sushil.luc.network.NetworkHandler;
 import sushil.luc.utils.DateUtil;
 
 public class TicketService {
@@ -22,73 +28,81 @@ public class TicketService {
     private static final String CLIENT = "client";
     private static final String ITEM = "items";
 
-    private final String URL = "http://192.168.0.102/smartrfid/api/tickets.html";
-    private static List<Ticket> Tickets ;
+    //private final String URL = "http://192.168.2.69/smartrfid/api/order.json";
+    private final String URL = "http://70.125.157.25/api/orders/query?limit=5";
+    private static List<Ticket> Tickets;
 
 
 	public TicketService()
 	{
 		if (Tickets!=null)
 		{
-			
+
 		}
 		else
 		{
-			Tickets=null;
+            Tickets = new ArrayList<Ticket>();
 		}
 	}
+
+
 
     /**
      * This function will fetch json data from exposed REST webservice
      * and return after converting it to Ticket model
      * @return
      */
-	public List<Ticket> fetchAllTickets(Context context)
-	{
-//        RemoteDBService dbService = new RemoteDBService();
-//        String sql = "SELECT * FROM tickets WHERE status = 0 and date = '26-06-2013'";
-//
-//
-//        //List<Ticket> tickets = (List<Ticket>)(List<?>)dbService.select(sql);
-//        List<Ticket> tickets = new ArrayList<Ticket>();
-//        List<HashMap<String,String>> rawTickets = dbService.select(sql);
-//        for(HashMap<String, String> rawTicket : rawTickets) {
-//            tickets.add(convertToTicket(rawTicket));
-//        }
+	public List<Ticket> fetchAllTickets(final Context context) {
+        Log.i("TS:", "Fetching tickets");
+        final NetworkHandler networkHandler = NetworkHandler.getInstance();
+        networkHandler.setContext(context);
 
+        //
+        // First get order
+        // then get ticket by id
+        //
+        final List<OrderDTO> orderDTOList = new ArrayList<OrderDTO>();
+        //final List<TicketDTO> ticketDTOList = new ArrayList<TicketDTO>();
 
-
-        //fetch HTTP with asynctask here
-
-		
-        /*
         try {
-            tickets = convertToTicket("");
-        } catch (JSONException e) {
-            tickets = null;
-            e.printStackTrace();
-        }
-        */
-		if (Tickets==null)
-		{
-			Tickets = new ArrayList<Ticket>();
-			Tickets.addAll(getMockupData());
-		}	
+            networkHandler.readList(URL,OrderDTO[].class, new Callback<List<OrderDTO>>() {
+                @Override
+                public void callback(final List<OrderDTO> myOrderDTOList) {
+                    Log.i("TS:", "size of orders = "+myOrderDTOList.size());
+                    orderDTOList.addAll(myOrderDTOList);
 
-//        new GetTask(context, URL, new Callback<JSONObject>() {
-//            @Override
-//            public void callback(JSONObject jsonObject) {
-//                try{
-//                    tickets.addAll(convertToTicket(jsonObject));
-//                } catch(Exception e) {
-//
-//                }
-//
-//            }
-//        }).execute();
+                    for(final OrderDTO orderDto:orderDTOList) {
+                        String ticketsUrl = "http://70.125.157.25/api/tickets/query?limit=0&skip=0&orderBy=0&filters=0&addRfids=1&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
+                        //String ticketsUrl = "http://192.168.2.69/smartrfid/api/ticket.json";
+                        try {
+                            networkHandler.read(ticketsUrl,TicketDTO.class, new Callback<TicketDTO>() {
+                                @Override
+                                public void callback(final TicketDTO myTicketDTO) {
+                                    Log.i("TS:", "size of items in ticket = "+myTicketDTO.getItems().size());
+                                    //ticketDTOList.add(myTicketDTO);
+                                    // map each orderdto,ticketdto to Tickets model
+                                    Tickets.add(new Ticket(myTicketDTO, orderDto));
+                                }
+                            });
+                        } catch (Exception e) {
+                            Toast.makeText(context, "Could not connect. Please check your connection.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(context, "Could not connect. Please check your connection.", Toast.LENGTH_LONG).show();
+        }
+
+        /*
+          * If you need mockupdata, disable whole block of code above
+          * and uncomment the statement below this comment
+         */
+        //Tickets = getMockupData();
 
         return Tickets;
 	}
+
 	
 	public void saveToRemote(Ticket t)
 	{

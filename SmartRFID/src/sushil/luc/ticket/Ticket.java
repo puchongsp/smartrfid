@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import sushil.luc.dtos.CustomerDTO;
+import sushil.luc.dtos.ItemDTO;
+import sushil.luc.dtos.OrderDTO;
+import sushil.luc.dtos.TicketDTO;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.Customer;
@@ -32,6 +36,27 @@ public class Ticket {
 	{
 		this.Items = new ArrayList<Item>();
 	}
+
+    public Ticket(TicketDTO ticketDTO, OrderDTO orderDTO){
+        this.Items = new ArrayList<Item>();
+        this.TicketID = String.valueOf(ticketDTO.getIdentifier());
+
+        CustomerDTO customerDto = orderDTO.getCustomer();
+        Customer customer = new Customer(customerDto);
+
+        this.TicketCustomer = customer;
+
+        this.Status = TicketStatus.Open; // Setting default ticket status;
+        this.CreationDate = new Date();
+        this.DeliveryDate = new Date();
+
+        List<ItemDTO> itemDtos = ticketDTO.getItems();
+
+        for(ItemDTO itemDto:itemDtos){
+            Item tmp = new Item(itemDto);
+            Items.add(tmp);
+        }
+    }
 
 	
 	/**
