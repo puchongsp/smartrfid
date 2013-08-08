@@ -81,7 +81,9 @@ public class TicketService {
                                     Log.i("TS:", "size of items in ticket = "+myTicketDTO.getItems().size());
                                     //ticketDTOList.add(myTicketDTO);
                                     // map each orderdto,ticketdto to Tickets model
-                                    Tickets.add(new Ticket(myTicketDTO, orderDto));
+                                    if(!doesTicketExist(myTicketDTO)) {
+                                        Tickets.add(new Ticket(myTicketDTO, orderDto));
+                                    }
                                 }
                             });
                         } catch (Exception e) {
@@ -120,6 +122,17 @@ public class TicketService {
 			Tickets.set(i, t);
 		}
 	}
+
+    public boolean doesTicketExist(TicketDTO myTicketDTO) {
+        boolean ticketExists = false;
+        for(Ticket ticket : Tickets) {
+            if(ticket.getTicketID().equals(String.valueOf(myTicketDTO.getIdentifier()))){
+                ticketExists = true;
+                break;
+            }
+        }
+        return ticketExists;
+    }
 
     /**
      * This method converts Json data to Ticket,
