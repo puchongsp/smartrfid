@@ -140,7 +140,7 @@ public class ItemService {
             item.setItemName("Valve");
             item.setStatus(ItemStatus.Available);
             item.setItemID("VL_001_L");
-            item.setRFID("072E24F3");
+            item.setRFID("000000000000000000000026");
             item.setWarehouseLocation("Column 10 Row 12");
             items.add(item);
 
@@ -148,7 +148,7 @@ public class ItemService {
             item.setItemName("Drilling Machine");
             item.setStatus(ItemStatus.Available);
             item.setItemID("DL_002");
-            //item.setRFID("515BD227");
+            item.setRFID("000000000000000000000001");
             item.setWarehouseLocation("Column 11 Row 15");
             items.add(item);
 
@@ -156,7 +156,7 @@ public class ItemService {
             item.setItemName("Wooden Log");
             item.setStatus(ItemStatus.Available);
             item.setItemID("DL_003");
-            //item.setRFID("515BD227");
+            item.setRFID("000000000000000000000002");
             item.setWarehouseLocation("Column 09 Row 15");
             items.add(item);
 
@@ -164,7 +164,7 @@ public class ItemService {
             item.setItemName("Lathe Machine");
             item.setStatus(ItemStatus.Collected);
             item.setItemID("DL_004");
-            item.setRFID("515BD227");
+         //   item.setRFID("000000000000000000000003");
             item.setWarehouseLocation("Column 10 Row 3");
             items.add(item);
 
@@ -172,7 +172,7 @@ public class ItemService {
             item.setItemName("Steel Disc");
             item.setStatus(ItemStatus.Available);
             item.setItemID("DC_005_S");
-            //item.setRFID("");
+           // item.setRFID("000000000000000000000004");
             item.setWarehouseLocation("Column 1 Row 1");
             items.add(item);
 
@@ -180,7 +180,7 @@ public class ItemService {
             item.setItemName("Iron Board");
             item.setStatus(ItemStatus.Available);
             item.setItemID("BD_007_P");
-           // item.setRFID("515BD227");
+          //  item.setRFID("000000000000000000000005");
             item.setWarehouseLocation("Column 1 Row 5");
             items.add(item);
         }

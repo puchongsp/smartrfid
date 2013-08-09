@@ -8,25 +8,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import com.ugrokit.api.Ugi;
+import com.ugrokit.api.UgiInventoryDelegate;
+import com.ugrokit.api.UgiTag;
+
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.msc.RFIDActivity;
+import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 
-public class MainActivity extends RFIDActivity {
+public class MainActivity extends UgroKitActivity implements
+Ugi.ConnectionStateListener,
+UgiInventoryDelegate.InventoryTagChangedListener{
 	
 	public static Context appContext;
 	private static String log ="MainActivity";
 	private ActionBar actionbar;
-	private final String TicketsTabName ="Tickets";
-	private final String NewItemsTabName ="Tag new Items";
-	private final String ReturnItemsTabName ="Return Items";
-	private final String ItemInfoTabName ="Item Info";
+	public static  final String TicketsTabName ="Tickets";
+	public static final String NewItemsTabName ="Tag new Items";
+	public static final String ReturnItemsTabName ="Return Items";
+	public static final String ItemInfoTabName ="Item Info";
 	private ItemService service;
+	//public static String currentStatus;
 	
 	private TicketsFragment ticketsFragment;
 	private NewItemFragment newItemsFragment;
@@ -39,14 +49,18 @@ public class MainActivity extends RFIDActivity {
 	private MyTabsListener<ItemInfoFragment> TabListenerItemInfo;
 
 	
-
-	protected void onCreate(Bundle savedInstanceState) {
+/**
+ * init the Tabs 
+ */
+	public void onCreate(Bundle savedInstanceState) {
 	 super.onCreate(savedInstanceState);
 	 
 	 service= new ItemService();
 	 
      // setup action bar for tabs
 	 actionbar = getActionBar();
+	 actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
+	 actionbar.setSubtitle(currentStatus);
 	 actionbar.removeAllTabs();
      if (actionbar.getTabCount() == 0)
      {
@@ -83,14 +97,14 @@ public class MainActivity extends RFIDActivity {
      {
     	 actionbar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
      }
- }
+	}
 
- @Override
- protected void onSaveInstanceState(Bundle outState)
- {
-     super.onSaveInstanceState(outState);
-     outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
- }
+	@Override
+ 	protected void onSaveInstanceState(Bundle outState)
+ 	{
+		super.onSaveInstanceState(outState);
+		outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+ 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,9 +113,17 @@ public class MainActivity extends RFIDActivity {
 		return true;
 	}
 	
-	public void onNewIntent(Intent intent) {
-		returnItemsFragment = TabListenerReturnItems.getFragment();
-		ticketsFragment = TabListenerTickets.getFragment();
+	
+/*	@Override
+	public void inventoryTagSubsequentFinds(UgiTag tag, int foundnb) {
+		//Log.d(LogTag, "inventoryTagSubsequentFinds");
+		//mHandler.setTag(tag);
+
+	}*/
+	
+/*	public void onNewIntent(Intent intent) {
+		//returnItemsFragment = TabListenerReturnItems.getFragment();
+		//ticketsFragment = TabListenerTickets.getFragment();
 		newItemsFragment = TabListenerNewItems.getFragment();
 		itemInfoFragment = TabListenerItemInfo.getFragment();
 		
@@ -109,7 +131,9 @@ public class MainActivity extends RFIDActivity {
 		if (currenttab.getText().equals(ItemInfoTabName))
 		{
 			Log.d(log, "onNewIntent");
-			TagId = getTagId(intent);
+			super.doStartStopInventory();
+			TagId = super.mHandler.getLastEpc();
+			super.doStartStopInventory();
 			Log.d(log, TagId);
 			Item i = service.getItemInfo(TagId);
 			List<String> iteminfo = new LinkedList<String>();
@@ -130,18 +154,116 @@ public class MainActivity extends RFIDActivity {
 	    		iteminfo.add(i.getStatus().toString());
 	    		iteminfo.add(i.getWarehouseLocation());
 	    	}
-			
-	    	
+				    	
 			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4));
+			
         } else if (currenttab.getText().equals(ReturnItemsTabName)) {
             Log.d(log, "Return Items");
-            TagId = getTagId(intent);
+            super.doStartStopInventory();
+            TagId = super.mHandler.getLastEpc();
+            super.doStartStopInventory();
             Log.d(log, TagId);
             Item item = service.getItemInfo(TagId);
             if(item != null) {
                 ((ReturnItemFragment)returnItemsFragment).returnItem(item);
             }
         }
+	}*/
+
+	@Override
+	/**
+	 * If the connection from the ugrokit changes, this methode gives feedback to the user
+	 */
+	public void connectionStateChanged(Ugi.ConnectionStates connectionState) {
+		if (connectionState == Ugi.ConnectionStates.NOT_CONNECTED) {
+			Toast.makeText(this, "Not Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
+		} else if (connectionState == Ugi.ConnectionStates.CONNECTING) {
+			Toast.makeText(this, "Connecting + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
+		} else if (connectionState == Ugi.ConnectionStates.INCOMPATIBLE_READER) {
+			Toast.makeText(this, "Incompatible + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
+			
+		} else { 
+			if (connectionState == Ugi.ConnectionStates.CONNECTED)
+			{
+				Toast.makeText(this, "Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
+			}
+		}
+		// update the Status
+		super.calculateStatus();
+		notifiySatusUpdate();
 	}
 
+	@Override
+	/**
+	 * This methode is called as soon as the ugrokit discovers a new Tag. If found the same tag twice immediately after each other, this function is not called
+	 * Has to be handled here, because Tabs implement Fragment and we need an activity
+	 */
+	public void inventoryTagChanged(UgiTag tag, boolean count) {
+		
+		returnItemsFragment = TabListenerReturnItems.getFragment();
+		//ticketsFragment = TabListenerTickets.getFragment();
+		//newItemsFragment = TabListenerNewItems.getFragment();
+		itemInfoFragment = TabListenerItemInfo.getFragment();
+		
+		Log.d(log, "inventoryTagChanged");
+		
+		String currentTagId=null;
+		
+		Tab currenttab = actionbar.getSelectedTab();
+		// if the iteminfo tab is currently open
+		if (currenttab.getText().equals(ItemInfoTabName))
+		{
+			currentTagId = tag.getEpc().toString();
+			
+			// search information about the new tag
+			Log.d(log, currentTagId);
+			Item i = service.getItemInfo(currentTagId);
+			List<String> iteminfo = new LinkedList<String>();
+			
+			
+	    	if (i ==null)
+	    	{
+	    		// if the tag is not yet known yet
+	    		iteminfo.add("");
+	    		iteminfo.add("No Item found for the scanned RFID");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    	}
+	    	else
+	    	{
+	    		// the item is known. Get the data
+	    		iteminfo.add(i.getItemID());
+	    		iteminfo.add(i.getItemName());
+	    		iteminfo.add(i.getRFID());
+	    		iteminfo.add(i.getStatus().toString());
+	    		iteminfo.add(i.getWarehouseLocation());
+	    	}
+			// tell the view to display the data	    	
+			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4));
+			
+        }
+		else 
+			// if the current tab is the Return Item tab
+			if (currenttab.getText().equals(ReturnItemsTabName)) {
+            Log.d(log, "Return Items");
+            // collect infos for the scanned tag
+            currentTagId = tag.getEpc().toString();
+            Log.d(log, currentTagId);
+            Item item = service.getItemInfo(currentTagId);
+          
+            if(item != null) {
+            	  // if we found some infos for the tag, tell the view
+                ((ReturnItemFragment)returnItemsFragment).returnItem(item);
+            }
+        }
+	}
+	/**
+	 * Update the status bar
+	 */
+	public void notifiySatusUpdate()
+	{
+		if (actionbar!=null)
+			actionbar.setSubtitle(currentStatus);
+	}
 }
