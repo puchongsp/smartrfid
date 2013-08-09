@@ -8,6 +8,7 @@ import java.util.Map;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.RFIDActivity;
+import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
@@ -22,7 +23,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class Ticket_showItems extends RFIDActivity{
+public class Ticket_showItems extends UgroKitActivity{
 	
 	private ListView ItemList;
 	private int positioninListview;
@@ -31,7 +32,7 @@ public class Ticket_showItems extends RFIDActivity{
 	private TicketManagerAssembler assembler ;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ticket_show_items);
 		
@@ -52,14 +53,14 @@ public class Ticket_showItems extends RFIDActivity{
 			
 			currentTicket = TicketManagerAssembler.ticketlist.get(positioninListview);
 			
-			fillItems2List(this);
+			fillItems2List();
 			
 			this.ItemList.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					//Toast.makeText(myparent, "Hallo", Toast.LENGTH_LONG).show();
-					Intent i = new Intent(myparent,ShowItemDetails.class);
+					Intent i = new Intent(myparent, ShowItemDetails.class);
 					i.putExtra("positionInItemListview", position);
 					i.putExtra("positionInTicketList", positioninListview);
 					startActivity(i);
@@ -67,8 +68,10 @@ public class Ticket_showItems extends RFIDActivity{
 			});
 		}
 	}
-	
-	private void fillItems2List (Context con)
+	/**
+	 * update the list with the items. Updates the colors
+	 */
+	public void fillItems2List ()
     {
 		ItemList.setAdapter(null);
 		
@@ -79,8 +82,6 @@ public class Ticket_showItems extends RFIDActivity{
     	
     	// -- list item hash re-used
     	Map<String, String> group;
-    	
-    	
     	
     	List<Item> allItems = assembler.getShortestRoute(currentTicket);
     	
@@ -98,36 +99,34 @@ public class Ticket_showItems extends RFIDActivity{
     	}
     	
     	// -- create an adapter, takes care of binding hash objects in our list to actual row views
-    	MyItemListAdapter adapter = new MyItemListAdapter( con, groupData, android.R.layout.simple_list_item_2, 
+    	MyItemListAdapter adapter = new MyItemListAdapter( this, groupData, android.R.layout.simple_list_item_2, 
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , allItems);
     	ItemList.setAdapter(adapter);
     }
 	
-	public void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		
-		boolean result =currentTicket.checkRFIDInTicket(super.TagId);
-		
-		if (result)
-		{
-			evalTicket();
-			fillItems2List(this);
-		}
-		else
-		{
-			Toast.makeText(this, "Item not in the Ticket", Toast.LENGTH_LONG).show();
-		}
-		
+	/**
+	 * Activate the rfid scanner and det the correct handler mode
+	 */
+	public void onResume()
+	{
+		super.onResume();
+		super.StartInventory();
+		super.mHandler.modeTicketItemScan(true, currentTicket, this);
 	}
 	
+	/**
+	 * Save the ticket as soon as the worker wants to leave the screen
+	 */
 	public void onDestroy()
 	{
 		assembler.saveTicket(currentTicket);
 		super.onDestroy();
 	}
-	
-	private void evalTicket()
+	/**
+	 * Checks if there are any items left which need to be collected
+	 */
+	public void evalTicket()
 	{
 		List<Item> items =currentTicket.getItems();
 		
@@ -148,6 +147,7 @@ public class Ticket_showItems extends RFIDActivity{
 			}
 		}
 		
+		// set the result to the ticket
 		if (close)
 			currentTicket.setStatus(TicketStatus.Closed);
 		else

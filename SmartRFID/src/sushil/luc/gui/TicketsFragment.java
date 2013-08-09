@@ -41,7 +41,6 @@ public class TicketsFragment extends Fragment {
     	this.TicketList = (ListView) view.findViewById(R.id.TicketList);
     	
     	
-    	
     	this.TicketList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

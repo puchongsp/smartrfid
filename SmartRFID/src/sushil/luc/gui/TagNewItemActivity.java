@@ -2,6 +2,7 @@ package sushil.luc.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,13 +11,14 @@ import java.util.List;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.msc.RFIDActivity;
+import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 
 /**
  * Enable RFID and scan
  * set rfid to the item if detected
  */
-public class TagNewItemActivity extends RFIDActivity {
+public class TagNewItemActivity extends UgroKitActivity {
 
     private TextView Item_ID;
     private TextView Item_Name;
@@ -29,7 +31,7 @@ public class TagNewItemActivity extends RFIDActivity {
     private int position;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_item_details);
         Bundle extras = getIntent().getExtras();
@@ -56,8 +58,19 @@ public class TagNewItemActivity extends RFIDActivity {
         Item_Status.setText("Status : "+item.getStatus().toString());
         Item_Scanning.setText("Scanning ...");
     }
-
-    public void onNewIntent(Intent intent) {
+/**
+ * start the Rfid scan and set the correct Handler modes
+ */
+   public void onResume()
+   {
+	   super.onResume();
+	   
+	   super.StartInventory();
+	   Log.d("TagNewItemAc", "onResume");
+	   super.mHandler.modeNewItem(true, this, item);
+   }
+    
+  /*  public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
         //check if RFID already exists
@@ -76,5 +89,11 @@ public class TagNewItemActivity extends RFIDActivity {
             Toast.makeText(this, "RFID is already assigned", Toast.LENGTH_LONG).show();
         }
 
+    }*/
+    
+    public void updateView ()
+    {
+    	 Item_Scanning.setText("Item tagged Successfully!");
+         Item_RFID.setText("RFID :"+item.getRFID());
     }
 }
