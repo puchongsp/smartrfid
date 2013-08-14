@@ -23,6 +23,7 @@ public class NewItemFragment extends Fragment {
 
     private ListView mListView;
     private View view;
+   // private L
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class NewItemFragment extends Fragment {
 
     private void loadNewItems(){
         ItemService itemService = new ItemService();
+        //TODO connect to database-> done
         List<Item> newItems = itemService.getNewItems();
         String KEY_LABEL ="Big Text";
         String KEY_HELP ="Help Text";

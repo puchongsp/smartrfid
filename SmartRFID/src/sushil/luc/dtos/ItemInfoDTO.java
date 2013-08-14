@@ -1,21 +1,26 @@
 package sushil.luc.dtos;
 
+import java.sql.Date;
+
 /**
  * Created by sushil
  */
 public class ItemInfoDTO {
-    private String id;
+    private int id;
     private String identifier;
+    private String category;
+    private String subCategory;
+    private String creationDate;
     private String description;
     private String binLocation;
     private RfidInfoDTO rfidInfo;
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -50,4 +55,28 @@ public class ItemInfoDTO {
     public void setRfidInfo(RfidInfoDTO rfidInfo) {
         this.rfidInfo = rfidInfo;
     }
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public String getSubCategory() {
+		return subCategory;
+	}
+
+	public void setSubCategory(String subCategory) {
+		this.subCategory = subCategory;
+	}
 }

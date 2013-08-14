@@ -38,6 +38,7 @@ public class ReturnedItemOptionsActivity extends Activity{
         }
 
         ItemService itemService = new ItemService();
+      //TODO connect to database
         List<Item> returnedItems = itemService.getReturnedItems();
 
         item = returnedItems.get(position);
@@ -60,6 +61,7 @@ public class ReturnedItemOptionsActivity extends Activity{
             public void onClick(View view) {
                 System.out.println ("Repair");
                 ItemService itemService = new ItemService();
+              //TODO connect to database
                 itemService.sendToRepair(item);
                 finish();
             }
@@ -70,6 +72,7 @@ public class ReturnedItemOptionsActivity extends Activity{
             @Override
             public void onClick(View view) {
                 ItemService itemService = new ItemService();
+              //TODO connect to database
                 itemService.sendToWarehouse(item);
                 finish();
             }

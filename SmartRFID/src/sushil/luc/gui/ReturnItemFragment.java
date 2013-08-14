@@ -39,6 +39,7 @@ public class ReturnItemFragment extends Fragment {
 
     public void returnItem(Item item){
         ItemService itemService = new ItemService();
+      //TODO connect to database
         itemService.returnItem(item);
         populateItems();
     }
@@ -46,6 +47,7 @@ public class ReturnItemFragment extends Fragment {
     private void populateItems() {
 
         ItemService itemService = new ItemService();
+      //TODO connect to database
         List<Item> returnedItems = itemService.getReturnedItems();
 
         String KEY_LABEL ="Big Text";

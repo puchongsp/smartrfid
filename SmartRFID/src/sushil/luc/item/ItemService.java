@@ -3,25 +3,40 @@ package sushil.luc.item;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONObject;
+
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
 import sushil.luc.dtos.ItemDTO;
+import sushil.luc.dtos.ItemInfoDTO;
+import sushil.luc.dtos.OrderDTO;
 import sushil.luc.dtos.RfidInfoDTO;
+import sushil.luc.dtos.TicketDTO;
 import sushil.luc.network.Callback;
 import sushil.luc.network.NetworkHandler;
+import sushil.luc.ticket.Ticket;
 import sushil.luc.utils.DateUtil;
 
 public class ItemService {
 
     private static List<Item> items;
     private static Set<Item> returnedItems;
+    private static List<Item> newItems;
 
     //private RemoteDBService dbService;
 	
 	public ItemService() {
         if(returnedItems == null) {
             returnedItems = new HashSet<Item>();
+        }
+        if(newItems == null) {
+        	newItems = new LinkedList<Item>();
         }
 		//dbService = new RemoteDBService();
 	}
@@ -42,7 +57,7 @@ public class ItemService {
 //		return items;
 //	}
 	
-	public List<Item> getNewItems()
+/*	public List<Item> getNewItems()
 	{
 //        String sql = "SELECT * FROM items WHERE status = 0";
 //        List <Item> items = (List<Item>)(List<?>)dbService.select(sql);
@@ -55,9 +70,13 @@ public class ItemService {
             }
         }
         return newItems;
-	}
+	}*/
 
-    private Item convertToItem(HashMap<String, String> map) {
+   /* private Item convertToItem(HashMap<String, String> map) {
+    	//JSONObject jItem = jItems.getJSONObject(i);
+
+    	
+    	
         Item item = new Item();
         item.setItemID(String.valueOf(map.get("id")));
         item.setItemName(map.get("name"));
@@ -65,7 +84,7 @@ public class ItemService {
         item.setStatus(ItemStatus.valueOf(map.get("status")));
         item.setDate(DateUtil.stringToDate(map.get("date")));
         return item;
-    }
+    }*/
     
     /**
      * Connects the RFID Tag and the Item. Does all the necessary checks and updates the database
@@ -112,7 +131,7 @@ public class ItemService {
      * @param RFID
      * @return Item: if null no entry found
      */
-    public Item getItemInfo (String RFID)
+   /* public Item getItemInfo (String RFID)
     {
     	List<Item> values = getMockupData();
     	
@@ -125,14 +144,14 @@ public class ItemService {
     	}
     	
     	return null;
-    }
+    }*/
     
     /**
      * Provides mockup data
      * To be removed
      * @return List of Items
      */
-    private List<Item> getMockupData(){
+  /*  private List<Item> getMockupData(){
         if(items == null) {
             items = new ArrayList<Item>();
 
@@ -186,7 +205,7 @@ public class ItemService {
         }
 
         return items;
-    }
+    }*/
 
     /**
      * Fetches Rfid by item identifier from remote server
@@ -198,7 +217,8 @@ public class ItemService {
         try {
             final RfidInfoDTO rfidInfoDTO = new RfidInfoDTO();
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
-            String URL = "";
+            //String URL = "";
+            String URL ="http://70.125.157.25/api/items/query?identifiers="+identifier;
             networkHandler.read(URL,RfidInfoDTO.class, new Callback<RfidInfoDTO>() {
                 @Override
                 public void callback(final RfidInfoDTO myRfidInfoDTO) {
@@ -224,7 +244,8 @@ public class ItemService {
         final List<ItemDTO> itemDtos = new ArrayList<ItemDTO>(1);
         try {
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
-            String URL = "";
+           // String URL = "";
+            String URL = "http://70.125.157.25/api/items/query?rfids="+rfid;
             networkHandler.read(URL, ItemDTO.class, new Callback<ItemDTO>() {
                 @Override
                 public void callback(final ItemDTO myItemDto) {
@@ -232,17 +253,54 @@ public class ItemService {
                 }
             });
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return new Item(itemDtos.get(0));
     }
+    
+    public List<Item> getNewItems()
+    {
+          try {
+              final NetworkHandler networkHandler = NetworkHandler.getInstance();
 
-    public List<Item> getAllItems() {
-        return getMockupData();
+              String URL = "http://70.125.157.25/api/items/query?limit=1000&skip=0&orderBy=0&filters=2";
+              networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
+
+				@Override
+				public void callback(List<ItemDTO> t) {
+					for (ItemDTO o :t)
+					{
+						Item item = new Item(o);
+						if (!checkItem(item))
+							newItems.add(item);
+					}
+				}
+              });
+
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          
+          Log.d("ItemService", "newItems size :"+newItems.size()); 
+    	  return newItems;
     }
+    
+	private boolean checkItem (Item newItem)
+	{
+		boolean check =false;
+		for (Item i: newItems)
+		{
+			if (i.getItemID() == newItem.getItemID())
+				check=true;
+		}
+		return check;
+	}
+    
+
+ /*   public List<Item> getAllItems() {
+        return getMockupData();
+    }*/
 
     public List<Item> getReturnedItems() {
         List<Item> items =  new ArrayList<Item>();
