@@ -36,7 +36,6 @@ public class RemoteDatabaseConnection implements DatabaseConnection{
 
     @Override
     public void disconnect() {
-        // TODO Auto-generated method stub
 
     }
 

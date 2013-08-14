@@ -123,7 +123,7 @@ public class TicketScanManager {
 		// ask database
 		String id = tag.getEpc().toString();
 		ItemService is = new ItemService();
-		Item i = is.getItemInfo(id);
+		Item i = is.fetchItemFromRfid(id);
 		return i.getItemName();
 	}
 	
@@ -166,6 +166,7 @@ public class TicketScanManager {
 				public void onClick(View v) {
 					Log.d(LogTag, "Button Add to Ticket");
 					//TODO do the magic
+					
 					// update the views and check if ticket is maybe already fully collected
 					currentactivity.evalTicket();
 					currentactivity.fillItems2List();

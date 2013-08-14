@@ -4,19 +4,21 @@ package sushil.luc.dtos;
  * Created by sushil
  */
 public class ItemDTO {
-    private String id;
+    private int $id;
+    private String identifier;
     private double ticketIdentifier;
     private double ticketItemNumber;
     private ItemInfoDTO ticketItemInfo;
+    private ItemInfoDTO itemInfo;
     private RentInformationDTO rentInformation;
     private ItemStatusDTO itemStatus;
 
-    public String getId() {
-        return id;
+    public int getId() {
+        return $id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set$Id(int $id) {
+        this.$id = $id;
     }
 
     public double getTicketIdentifier() {
@@ -58,4 +60,20 @@ public class ItemDTO {
     public void setItemStatus(ItemStatusDTO itemStatus) {
         this.itemStatus = itemStatus;
     }
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+
+	public ItemInfoDTO getItemInfo() {
+		return itemInfo;
+	}
+
+	public void setItemInfo(ItemInfoDTO itemInfo) {
+		this.itemInfo = itemInfo;
+	}
 }

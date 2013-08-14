@@ -217,7 +217,8 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 			
 			// search information about the new tag
 			Log.d(log, currentTagId);
-			Item i = service.getItemInfo(currentTagId);
+			// TODO Here is a connection to the database->done
+			Item i = service.fetchItemFromRfid(currentTagId);
 			List<String> iteminfo = new LinkedList<String>();
 			
 			
@@ -233,7 +234,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	    	else
 	    	{
 	    		// the item is known. Get the data
-	    		iteminfo.add(i.getItemID());
+	    		iteminfo.add(String.valueOf(i.getItemID()));
 	    		iteminfo.add(i.getItemName());
 	    		iteminfo.add(i.getRFID());
 	    		iteminfo.add(i.getStatus().toString());
@@ -250,7 +251,8 @@ UgiInventoryDelegate.InventoryTagChangedListener{
             // collect infos for the scanned tag
             currentTagId = tag.getEpc().toString();
             Log.d(log, currentTagId);
-            Item item = service.getItemInfo(currentTagId);
+         // TODO Here is a connection to the database->done
+            Item item = service.fetchItemFromRfid(currentTagId);
           
             if(item != null) {
             	  // if we found some infos for the tag, tell the view

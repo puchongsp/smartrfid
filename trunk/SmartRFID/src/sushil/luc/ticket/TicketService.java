@@ -174,7 +174,7 @@ public class TicketService {
                 //item.setDate(jItem.getString(""));
                 item.setStatus(ItemStatus.valueOf(jItem.getString(Item._STATUS)));
                 item.setItemName(jItem.getString(Item._NAME));
-                item.setItemID(jItem.getString(Item._ID));
+                item.setItemID(jItem.getInt(Item._ID));
                 item.setWarehouseLocation(jItem.getString(Item._LOCATION));
             }
             ticket.setItems(items);
@@ -189,11 +189,13 @@ public class TicketService {
      * To be removed
      * @return List of tickets
      */
-    private List<Ticket> getMockupData(){
+   /* private List<Ticket> getMockupData(){
         List<Ticket> tickets = new ArrayList<Ticket>();
-        /**
-         * MockupData
-         */
+       
+         
+         // MockupData
+         
+
         
         
         ItemService itemservice = new ItemService(); 
@@ -318,10 +320,10 @@ public class TicketService {
         ticket.setItems(items);
         tickets.add(ticket);
         
-        }*/
+        }
         
         return tickets;
-    }
+    }*/
     
 
 }

@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.util.Log;
+
 import sushil.luc.dtos.ItemDTO;
+import sushil.luc.dtos.ItemInfoDTO;
 import sushil.luc.utils.DateUtil;
 
 public class Item{
@@ -19,7 +22,7 @@ public class Item{
     public static final String _STATUS = "status";
     //public static final String _DATE = "date";
 
-	private String ItemID;
+	private int ItemID;
 	private String ItemName;
     private String RFID;
 	private String WarehouseLocation;
@@ -31,32 +34,58 @@ public class Item{
 	{
 		this.RepairLogs = new LinkedList<String>();
 	}
-
+	
+	
+	
     public Item(ItemDTO itemDto){
         this.ItemID = itemDto.getId();
-        this.ItemName = itemDto.getTicketItemInfo().getDescription();
-
+       // Log.d("Item",  "ID "+this.ItemID);
+        if (itemDto.getItemInfo()==null)
+        	Log.d("ItemInfo", "null");
+        
         try {
-            this.RFID = itemDto.getTicketItemInfo().getRfidInfo().getRfidNumber();
+        	this.ItemName = itemDto.getItemInfo().getDescription();
+        } catch (NullPointerException e) {
+            this.ItemName = "";
+        }
+        //Log.d("Item",  "ItemName "+this.ItemName);
+        
+        try {
+            this.RFID = itemDto.getItemInfo().getRfidInfo().getRfidNumber();
         } catch (NullPointerException e) {
             this.RFID = "";
         }
+        //Log.d("Item",  "RFID "+this.RFID);
 
         this.Status = ItemStatus.Available;
-
-        if(itemDto.getItemStatus().isChecked())
-            this.Status = ItemStatus.RentToCustomer;
-        else if(itemDto.getItemStatus().isReturned())
-            this.Status = ItemStatus.Returned;
-
-
-        this.Date = DateUtil.stringToDate(itemDto.getRentInformation().getReturnDate());
+        
+        if (itemDto.getItemStatus()!=null)
+        {
+        	if(itemDto.getItemStatus().isChecked())
+        		this.Status = ItemStatus.RentToCustomer;
+        	else if(itemDto.getItemStatus().isReturned())
+        		this.Status = ItemStatus.Returned;
+        }
+      //  Log.d("Item",  "Status "+this.Status);
+        
+    /*    else
+        	this.Status=null;*/
+        if (itemDto.getRentInformation()!=null)
+        {
+        	this.Date = DateUtil.stringToDate(itemDto.getRentInformation().getReturnDate());
+        }
+        else
+        	this.Date=new Date();
+       // Log.d("Item",  "Date "+this.Date);
+        Log.d("Item", "ItemId "+this.ItemID+" ItemName "+this.ItemName+
+				" WarehouseLoc "+this.WarehouseLocation+" RFID "+this.RFID
+				+" Status "+this.Status+" RentDate "+this.Date );
     }
 	
-	public String getItemID() {
+	public int getItemID() {
 		return ItemID;
 	}
-	public void setItemID(String itemID) {
+	public void setItemID(int itemID) {
 		ItemID = itemID;
 	}
 	public String getItemName() {

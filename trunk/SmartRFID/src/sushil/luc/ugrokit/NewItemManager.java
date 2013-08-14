@@ -70,7 +70,7 @@ public class NewItemManager {
 	 */
 	private boolean alreadyexitsts(UgiTag tag) {
 		 	ItemService itemService = new ItemService();
-	        Item lookupItem = itemService.getItemInfo(tag.getEpc().toString());
+	        Item lookupItem = itemService.fetchItemFromRfid(tag.getEpc().toString());
 
 	        // lookupItem null means the rfid is not yet assigned to any item yet
 	        if (lookupItem == null) {

@@ -114,7 +114,8 @@ public class UgroKitActivity extends Activity implements
 	 */
 	public void StartInventory ()
 	{
-		if (Ugi.singleton().getIsConnected() && !Ugi.singleton().getInStartInventory())
+		//if (Ugi.singleton().getIsConnected() && !Ugi.singleton().getInStartInventory())
+		if (!Ugi.singleton().getInStartInventory())
 		{
 			Log.d(LogTag, "StartInventory inside");
 			Ugi.singleton().startInventory(this, inventoryType);

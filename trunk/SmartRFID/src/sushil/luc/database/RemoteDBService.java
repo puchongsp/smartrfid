@@ -28,19 +28,19 @@ public class RemoteDBService implements DBService{
 	
 	@Override
 	public List<HashMap<String, String>> select(String sql) {
-        // TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public boolean update(String sql) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 
 	@Override
 	public boolean delete(String sql) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 
