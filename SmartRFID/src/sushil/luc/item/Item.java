@@ -27,7 +27,11 @@ public class Item{
     private String RFID;
 	private String WarehouseLocation;
 	private ItemStatus Status;
-	private Date Date;
+	private String StartRentDate;
+	private String StopRentDate;
+	private String ReturnDateDate;
+	private String OriginalStartRentDate;
+	
 	private List<String> RepairLogs;
 	
 	public Item()
@@ -38,13 +42,67 @@ public class Item{
 	
 	
     public Item(ItemDTO itemDto){
-        this.ItemID = itemDto.getId();
+    	if (itemDto!=null)
+    	{
+    		this.ItemID = itemDto.getId();
+    		if (itemDto.getItemInfo()!=null)
+    		{
+    			this.ItemName = itemDto.getItemInfo().getDescription();
+    			this.WarehouseLocation= itemDto.getItemInfo().getBinLocation();
+    			
+    			if (itemDto.getItemInfo().getRfidInfo()!=null)
+    			{
+    				this.RFID = itemDto.getItemInfo().getRfidInfo().getRfidNumber();
+    			}
+    		}
+    		
+    		if (itemDto.getTicketItemInfo()!=null)
+    		{
+    			this.ItemName = itemDto.getTicketItemInfo().getIdentifier();    	
+    			this.WarehouseLocation= itemDto.getTicketItemInfo().getBinLocation();
+    			
+    			if (itemDto.getTicketItemInfo().getRfidInfo()!=null)
+    			{
+        			this.RFID = itemDto.getTicketItemInfo().getRfidInfo().getRfidNumber();
+    			}
+    		}
+    		
+    		if (itemDto.getItemStatus()!=null)
+    		{
+    			if(itemDto.getItemStatus().isChecked())
+            		this.Status = ItemStatus.RentToCustomer;
+            	else 
+            		if(itemDto.getItemStatus().isReturned())
+            			this.Status = ItemStatus.Returned;
+            		else
+            			this.Status = ItemStatus.Available;
+    		}
+    		
+    		if (itemDto.getRentInformation()!=null)
+    		{
+    			/*this.StartRentDate = DateUtil.stringToDate(itemDto.getRentInformation().getStartRent());
+    			this.StopRentDate = DateUtil.stringToDate(itemDto.getRentInformation().getStopRent());
+    			this.ReturnDateDate = DateUtil.stringToDate(itemDto.getRentInformation().getReturnDate());
+    			this.OriginalStartRentDate= DateUtil.stringToDate(itemDto.getRentInformation().getOriginalStartRent());*/
+    			this.StartRentDate = itemDto.getRentInformation().getStartRent();
+    			this.StopRentDate = itemDto.getRentInformation().getStopRent();
+    			this.ReturnDateDate = itemDto.getRentInformation().getReturnDate();
+    			this.OriginalStartRentDate= itemDto.getRentInformation().getOriginalStartRent();
+    		}
+    		
+    		if (itemDto.getRfidInfo()!=null)
+    		{
+    			this.RFID = itemDto.getRfidInfo().getRfidNumber();
+    		}
+    	}
+    	/*
+        
        // Log.d("Item",  "ID "+this.ItemID);
         if (itemDto.getItemInfo()==null)
         	Log.d("ItemInfo", "null");
         
         try {
-        	this.ItemName = itemDto.getItemInfo().getDescription();
+        	
         } catch (NullPointerException e) {
             this.ItemName = "";
         }
@@ -70,16 +128,16 @@ public class Item{
         
     /*    else
         	this.Status=null;*/
-        if (itemDto.getRentInformation()!=null)
+    /*    if (itemDto.getRentInformation()!=null)
         {
         	this.Date = DateUtil.stringToDate(itemDto.getRentInformation().getReturnDate());
         }
         else
         	this.Date=new Date();
-       // Log.d("Item",  "Date "+this.Date);
+       // Log.d("Item",  "Date "+this.Date);*/
         Log.d("Item", "ItemId "+this.ItemID+" ItemName "+this.ItemName+
 				" WarehouseLoc "+this.WarehouseLocation+" RFID "+this.RFID
-				+" Status "+this.Status+" RentDate "+this.Date );
+				+" Status "+this.Status+" StartRentDate "+this.StartRentDate );
     }
 	
 	public int getItemID() {
@@ -113,17 +171,47 @@ public class Item{
 	public void setStatus(ItemStatus status) {
 		Status = status;
 	}
-	public Date getDate() {
-		return Date;
-	}
-	public void setDate(Date date) {
-		Date = date;
-	}
 	public List<String> getRepairLogs() {
 		return RepairLogs;
 	}
 	public void setRepairLogs(List<String> repairLogs) {
 		RepairLogs = repairLogs;
+	}
+
+
+
+	public String getStopRentDate() {
+		return StopRentDate;
+	}
+
+
+
+	public void setStopRentDate(String stopRentDate) {
+		StopRentDate = stopRentDate;
+	}
+
+
+
+	public String getReturnDateDate() {
+		return ReturnDateDate;
+	}
+
+
+
+	public void setReturnDateDate(String returnDateDate) {
+		ReturnDateDate = returnDateDate;
+	}
+
+
+
+	public String getOriginalStartRentDate() {
+		return OriginalStartRentDate;
+	}
+
+
+
+	public void setOriginalStartRentDate(String originalStartRentDate) {
+		OriginalStartRentDate = originalStartRentDate;
 	}
 	
 }

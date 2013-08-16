@@ -56,7 +56,10 @@ public class TagNewItemActivity extends UgroKitActivity {
         Item_Name.setText("Itemname : "+item.getItemName());
         Item_RFID.setText("RFID :");
         Item_Location.setText("Location : "+item.getWarehouseLocation());
-        Item_Status.setText("Status : "+item.getStatus().toString());
+        if (item.getStatus()!=null)
+        	Item_Status.setText("Status : "+item.getStatus().toString());
+        else
+        	Item_Status.setText("Status : ");
         Item_Scanning.setText("Scanning ...");
     }
 /**

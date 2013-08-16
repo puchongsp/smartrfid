@@ -14,7 +14,11 @@ public class DateUtil {
     }
 
     public static Date stringToDate(String str){
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    	// 2013-05-10T21:13:06
+    	//String s = str.replace("T", " ");
+       // DateFormat dateFormat = new SimpleDateFormat("yyyy-dd-mm HH:mm:ss");
+    	DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    	
         Date date = null;
         try {
             date = dateFormat.parse(str);
@@ -27,7 +31,7 @@ public class DateUtil {
     
     public static String DatetoString(Date input){
     	
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String str = input.toString();
         
         str = dateFormat.format(input);

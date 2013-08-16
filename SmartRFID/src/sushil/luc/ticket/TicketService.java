@@ -78,7 +78,8 @@ public class TicketService {
                             networkHandler.read(ticketsUrl,TicketDTO.class, new Callback<TicketDTO>() {
                                 @Override
                                 public void callback(final TicketDTO myTicketDTO) {
-                                    Log.i("TS:", "size of items in ticket = "+myTicketDTO.getItems().size());
+                                	if (myTicketDTO.getItems()!=null)
+                                		Log.i("TS:", "size of items in ticket = "+myTicketDTO.getItems().size());
                                     //ticketDTOList.add(myTicketDTO);
                                     // map each orderdto,ticketdto to Tickets model
                                     if(!doesTicketExist(myTicketDTO)) {
