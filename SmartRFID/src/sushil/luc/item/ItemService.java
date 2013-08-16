@@ -229,27 +229,30 @@ public class ItemService {
     
     public List<Item> getNewItems()
     {
-          try {
-              final NetworkHandler networkHandler = NetworkHandler.getInstance();
-
-              String URL = "http://70.125.157.25/api/items/query?limit=20&skip=0&orderBy=0&filters=2";
-              networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
-
-				@Override
-				public void callback(List<ItemDTO> t) {
-					for (ItemDTO o :t)
-					{
-						Item item = new Item(o);
-						if (!checkItem(item))
-							newItems.add(item);
+        int limit = 20;
+    	if (newItems.size()<limit)
+    	{
+	    	try {
+	              final NetworkHandler networkHandler = NetworkHandler.getInstance();
+	
+	              String URL = "http://70.125.157.25/api/items/query?limit="+limit+"&skip=0&orderBy=0&filters=2";
+	              networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
+	
+					@Override
+					public void callback(List<ItemDTO> t) {
+						for (ItemDTO o :t)
+						{
+							Item item = new Item(o);
+							if (!checkItem(item))
+								newItems.add(item);
+						}
 					}
-				}
-              });
-
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-          
+	              });
+	
+	          } catch (Exception e) {
+	              e.printStackTrace();
+	          }
+    	}
           Log.d("ItemService", "newItems size :"+newItems.size()); 
     	  return newItems;
     }
