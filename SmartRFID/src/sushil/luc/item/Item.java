@@ -39,8 +39,6 @@ public class Item{
 		this.RepairLogs = new LinkedList<String>();
 	}
 	
-	
-	
     public Item(ItemDTO itemDto){
     	if (itemDto!=null)
     	{

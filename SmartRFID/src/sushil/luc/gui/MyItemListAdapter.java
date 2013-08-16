@@ -17,6 +17,7 @@ public class MyItemListAdapter extends SimpleAdapter {
 
 	private List<Item> allItems;
 	private static String MyLog = "MyItemListAdapter";
+	 
 	
 	
 	public MyItemListAdapter(Context context, List<? extends Map<String, ?>> data,
@@ -65,5 +66,6 @@ public class MyItemListAdapter extends SimpleAdapter {
     	}
     	return res;
     }
+    
 
 }

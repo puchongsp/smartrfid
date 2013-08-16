@@ -18,6 +18,7 @@ import sushil.luc.dtos.ItemInfoDTO;
 import sushil.luc.dtos.OrderDTO;
 import sushil.luc.dtos.RfidInfoDTO;
 import sushil.luc.dtos.TicketDTO;
+import sushil.luc.gui.NewItemFragment;
 import sushil.luc.network.Callback;
 import sushil.luc.network.NetworkHandler;
 import sushil.luc.ticket.Ticket;
@@ -227,7 +228,7 @@ public class ItemService {
         return new Item(itemDtos.get(0));
     }
     
-    public List<Item> getNewItems()
+    public List<Item> getNewItems(final String caller)
     {
         int limit = 20;
     	if (newItems.size()<limit)
@@ -245,6 +246,11 @@ public class ItemService {
 							Item item = new Item(o);
 							if (!checkItem(item))
 								newItems.add(item);
+						}
+						if (caller.equals("NewItemFragment"))
+						{
+							Log.d("ItemService", "Call done "+newItems.size());
+							NewItemFragment.updateView(newItems);
 						}
 					}
 	              });
