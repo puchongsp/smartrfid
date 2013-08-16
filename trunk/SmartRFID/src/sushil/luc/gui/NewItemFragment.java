@@ -1,6 +1,7 @@
 package sushil.luc.gui;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,8 +22,12 @@ import sushil.luc.smartrfid.R;
 
 public class NewItemFragment extends Fragment {
 
-    private ListView mListView;
+    private static ListView mListView;
     private View view;
+    private static MyItemListAdapter adapter;
+    private static List<Map<String, String>> groupData;
+    private static List<Item> newItems;
+    private static Context context;
    // private L
 
     @Override
@@ -37,17 +42,18 @@ public class NewItemFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        context = getActivity().getApplicationContext();
         loadNewItems();
     }
 
     private void loadNewItems(){
         ItemService itemService = new ItemService();
         //TODO connect to database-> done
-        List<Item> newItems = itemService.getNewItems();
+        newItems = itemService.getNewItems("NewItemFragment");
         String KEY_LABEL ="Big Text";
         String KEY_HELP ="Help Text";
         Map<String, String> group;
-        List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
+        groupData = new ArrayList<Map<String, String>>();
 
         for (int i =0; i<newItems.size();i++) {
             Item tmp = newItems.get(i);
@@ -63,7 +69,7 @@ public class NewItemFragment extends Fragment {
 
         mListView = (ListView) view.findViewById(R.id.new_item_list_view);
 
-        MyItemListAdapter adapter = new MyItemListAdapter( getActivity().getApplicationContext(), groupData, android.R.layout.simple_list_item_2,
+        adapter = new MyItemListAdapter( getActivity().getApplicationContext(), groupData, android.R.layout.simple_list_item_2,
                 new String[] { KEY_LABEL, KEY_HELP },
                 new int[]{ android.R.id.text1, android.R.id.text2 } , newItems);
 
@@ -78,5 +84,32 @@ public class NewItemFragment extends Fragment {
             }
         });
     }
- 
+    
+    
+    public static void updateView(List<Item> updateNewItems)
+    {
+    	String KEY_LABEL ="Big Text";
+        String KEY_HELP ="Help Text";
+        Map<String, String> group;
+        groupData = new ArrayList<Map<String, String>>();
+
+        for (int i =0; i<updateNewItems.size();i++) {
+            Item tmp = updateNewItems.get(i);
+
+            group = new HashMap<String, String>();
+
+            group.put( KEY_LABEL,  tmp.getItemName() );
+            group.put( KEY_HELP, "Location "+tmp.getWarehouseLocation() );
+
+
+            groupData.add(group);
+        }
+    	
+        adapter = new MyItemListAdapter( context, groupData, android.R.layout.simple_list_item_2,
+                new String[] { KEY_LABEL, KEY_HELP },
+                new int[]{ android.R.id.text1, android.R.id.text2 } , newItems);
+        
+    	mListView.setAdapter(adapter);
+    	
+    }
 }

@@ -41,7 +41,7 @@ public class TagNewItemActivity extends UgroKitActivity {
 
         ItemService itemService = new ItemService();
       //TODO connect to database
-        List<Item> newItems = itemService.getNewItems();
+        List<Item> newItems = itemService.getNewItems("TagNewItemActivity");
 
         item = newItems.get(position);
 

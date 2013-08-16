@@ -14,6 +14,7 @@ import java.util.List;
 
 import sushil.luc.dtos.OrderDTO;
 import sushil.luc.dtos.TicketDTO;
+import sushil.luc.gui.TicketsFragment;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.item.ItemStatus;
@@ -91,6 +92,7 @@ public class TicketService {
                             Toast.makeText(context, "Could not connect. Please check your connection.", Toast.LENGTH_LONG).show();
                         }
                     }
+                    TicketsFragment.updateView();
                 }
             });
         } catch (Exception e) {

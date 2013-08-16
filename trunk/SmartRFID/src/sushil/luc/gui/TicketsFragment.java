@@ -27,9 +27,9 @@ import sushil.luc.utils.DateUtil;
 
 public class TicketsFragment extends Fragment {
 	 
-	private ListView TicketList;
+	private static ListView TicketList;
 	private static String MyLog ="TicketsFragment";
-	private Context myparent;
+	private static Context myparent;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,6 +107,55 @@ public class TicketsFragment extends Fragment {
     	
     	// -- create an adapter, takes care of binding hash objects in our list to actual row views
     	MyTicketListAdapter adapter = new MyTicketListAdapter( parent, groupData, android.R.layout.simple_list_item_2, 
+    	                                                   new String[] { KEY_LABEL, KEY_HELP },
+    	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , alltickets);
+    	TicketList.setAdapter(adapter);
+    }
+    
+    public static void updateView()
+    {
+    	TicketList.setAdapter(null);
+    	
+    	List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
+    	
+    	String KEY_LABEL ="Big Text";
+    	String KEY_HELP ="Help Text";
+    	
+    	// -- list item hash re-used
+    	Map<String, String> group;
+    	
+    	TicketManagerAssembler assembler = new TicketManagerAssembler(myparent);
+    	
+    	List<Ticket> alltickets = assembler.fetchTickets();
+    	
+    	for (int i =0; i<alltickets.size();i++)
+    	{
+        	group = new HashMap<String, String>();
+        	
+        	Ticket tmp = alltickets.get(i);
+        	
+        	Customer c = tmp.getTicketCustomer();
+        	List<Item> items = tmp.getItems();
+        	
+        	int collected = 0;
+        	
+        	for (Item tmpItem :items)
+        	{
+        		if (tmpItem.getStatus()!=null && tmpItem.getStatus().equals(ItemStatus.Collected))
+        			collected++;
+        	}	
+        	
+        	String deliverydate = DateUtil.DatetoString(tmp.getDeliveryDate());
+        	
+        	group.put( KEY_LABEL, "Ticket "+ tmp.getTicketID() );
+        	group.put( KEY_HELP, "Items "+collected+"/"+items.size()+" | "+deliverydate+" | Client "+c.getName() );
+
+
+        	groupData.add(group);
+    	}
+    	
+    	// -- create an adapter, takes care of binding hash objects in our list to actual row views
+    	MyTicketListAdapter adapter = new MyTicketListAdapter( myparent, groupData, android.R.layout.simple_list_item_2, 
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , alltickets);
     	TicketList.setAdapter(adapter);
