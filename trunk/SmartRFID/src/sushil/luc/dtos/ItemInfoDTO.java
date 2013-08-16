@@ -1,13 +1,18 @@
 package sushil.luc.dtos;
 
-import java.sql.Date;
+
+
+import java.util.Date;
+
+import sushil.luc.utils.DateUtil;
 
 /**
  * Created by sushil
  */
 public class ItemInfoDTO {
-    private int id;
+    private int $id;
     private String identifier;
+    private String statusNote;
     private String category;
     private String subCategory;
     private String creationDate;
@@ -17,11 +22,11 @@ public class ItemInfoDTO {
 
 
     public int getId() {
-        return id;
+        return $id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.$id = id;
     }
 
     public String getIdentifier() {
@@ -78,5 +83,13 @@ public class ItemInfoDTO {
 
 	public void setSubCategory(String subCategory) {
 		this.subCategory = subCategory;
+	}
+
+	public String getStatusNote() {
+		return statusNote;
+	}
+
+	public void setStatusNote(String statusNote) {
+		this.statusNote = statusNote;
 	}
 }

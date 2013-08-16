@@ -28,8 +28,6 @@ public class ItemService {
     private static List<Item> items;
     private static Set<Item> returnedItems;
     private static List<Item> newItems;
-
-    //private RemoteDBService dbService;
 	
 	public ItemService() {
         if(returnedItems == null) {
@@ -38,39 +36,9 @@ public class ItemService {
         if(newItems == null) {
         	newItems = new LinkedList<Item>();
         }
-		//dbService = new RemoteDBService();
 	}
 	
-//	public List<Item> fetchRelevantItems (List<Integer> ticketIDs)
-//	{
-//
-//        String sql = "SELECT * FROM items WHERE ticket_id = 1 and status = 1";
-//
-//        // Convert Hashmap to item
-//        //List <Item> items = (List<Item>)(List<?>)dbService.select(sql);
-//
-//        List<Item> items = new ArrayList<Item>();
-//        List<HashMap<String,String>> rawItems = dbService.select(sql);
-//        for(HashMap<String, String> rawItem : rawItems) {
-//            items.add(convertToItem(rawItem));
-//        }
-//		return items;
-//	}
-	
-/*	public List<Item> getNewItems()
-	{
-//        String sql = "SELECT * FROM items WHERE status = 0";
-//        List <Item> items = (List<Item>)(List<?>)dbService.select(sql);
-//        return items;
-        List <Item> items = getMockupData();
-        List <Item> newItems = new ArrayList<Item>();
-        for(Item item : items) {
-            if(item.getRFID() == null || item.getRFID().equals("")){
-                newItems.add(item);
-            }
-        }
-        return newItems;
-	}*/
+
 
    /* private Item convertToItem(HashMap<String, String> map) {
     	//JSONObject jItem = jItems.getJSONObject(i);
@@ -222,7 +190,7 @@ public class ItemService {
             networkHandler.read(URL,RfidInfoDTO.class, new Callback<RfidInfoDTO>() {
                 @Override
                 public void callback(final RfidInfoDTO myRfidInfoDTO) {
-                    rfidInfoDTO.setId(myRfidInfoDTO.getId());
+                    rfidInfoDTO.set$Id(myRfidInfoDTO.getId());
                     rfidInfoDTO.setRfidNumber(myRfidInfoDTO.getRfidNumber());
                 }
             });
@@ -264,7 +232,7 @@ public class ItemService {
           try {
               final NetworkHandler networkHandler = NetworkHandler.getInstance();
 
-              String URL = "http://70.125.157.25/api/items/query?limit=1000&skip=0&orderBy=0&filters=2";
+              String URL = "http://70.125.157.25/api/items/query?limit=20&skip=0&orderBy=0&filters=2";
               networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
 
 				@Override

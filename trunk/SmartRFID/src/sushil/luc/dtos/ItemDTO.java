@@ -12,7 +12,9 @@ public class ItemDTO {
     private ItemInfoDTO itemInfo;
     private RentInformationDTO rentInformation;
     private ItemStatusDTO itemStatus;
-
+    private RfidInfoDTO rfidInfo;
+    private InventoryInfoDTO inventoryInfo;
+    
     public int getId() {
         return $id;
     }
@@ -75,5 +77,21 @@ public class ItemDTO {
 
 	public void setItemInfo(ItemInfoDTO itemInfo) {
 		this.itemInfo = itemInfo;
+	}
+
+	public RfidInfoDTO getRfidInfo() {
+		return rfidInfo;
+	}
+
+	public void setRfidInfo(RfidInfoDTO rfidInfo) {
+		this.rfidInfo = rfidInfo;
+	}
+
+	public InventoryInfoDTO getInventoryInfo() {
+		return inventoryInfo;
+	}
+
+	public void setInventoryInfo(InventoryInfoDTO inventoryInfo) {
+		this.inventoryInfo = inventoryInfo;
 	}
 }

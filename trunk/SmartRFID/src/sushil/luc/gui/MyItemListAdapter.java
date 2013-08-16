@@ -40,7 +40,9 @@ public class MyItemListAdapter extends SimpleAdapter {
     	int res =-1;
     	
     	ItemStatus status = allItems.get(position).getStatus();
-
+    	
+    	if (status!=null)
+    	{
 		switch (status)
 		{
 			case Collected:
@@ -60,7 +62,7 @@ public class MyItemListAdapter extends SimpleAdapter {
 				Log.d(MyLog, "Repair, RentToClient, Transport == Blue");
 			
 		}
-    	
+    	}
     	return res;
     }
 

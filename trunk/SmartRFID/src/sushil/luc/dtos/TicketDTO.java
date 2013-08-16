@@ -6,16 +6,16 @@ import java.util.List;
  * Created by sushil
  */
 public class TicketDTO {
-    private String id;
+    private int $id;
     private double identifier;
     private List<ItemDTO> items;
 
-    public String getId() {
-        return id;
+    public int getId() {
+        return $id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set$Id(int id) {
+        this.$id = id;
     }
 
     public double getIdentifier() {

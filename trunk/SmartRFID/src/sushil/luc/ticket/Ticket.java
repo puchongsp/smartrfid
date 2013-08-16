@@ -51,10 +51,13 @@ public class Ticket {
         this.DeliveryDate = new Date();
 
         List<ItemDTO> itemDtos = ticketDTO.getItems();
-
-        for(ItemDTO itemDto:itemDtos){
-            Item tmp = new Item(itemDto);
-            Items.add(tmp);
+        
+        if (itemDtos!=null)
+        {
+	        for(ItemDTO itemDto:itemDtos){
+	            Item tmp = new Item(itemDto);
+	            Items.add(tmp);
+	        }
         }
     }
 
