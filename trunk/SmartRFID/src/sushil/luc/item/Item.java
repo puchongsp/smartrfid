@@ -54,6 +54,8 @@ public class Item{
     			{
     				this.RFID = itemDto.getItemInfo().getRfidInfo().getRfidNumber();
     			}
+    			
+    			this.Status = mapStatus (itemDto.getItemInfo().getStatusNote());
     		}
     		
     		if (itemDto.getTicketItemInfo()!=null)
@@ -212,6 +214,20 @@ public class Item{
 
 	public void setOriginalStartRentDate(String originalStartRentDate) {
 		OriginalStartRentDate = originalStartRentDate;
+	}
+	
+	private ItemStatus mapStatus (String status)
+	{
+		// Have to check if mapping is correct
+		
+		if (status !=null)
+		{
+			if (status.equals("IN_TESTING"))
+				return ItemStatus.Repair;
+			if (status.contains("OUT ON CERD"))
+				return ItemStatus.Transport;
+		}
+		return ItemStatus.Available;
 	}
 	
 }
