@@ -60,8 +60,8 @@ public class NewItemFragment extends Fragment {
 
             group = new HashMap<String, String>();
 
-            group.put( KEY_LABEL,  tmp.getItemName() );
-            group.put( KEY_HELP, "Location "+tmp.getWarehouseLocation() );
+            group.put( KEY_LABEL,  tmp.getItemID() );
+            group.put( KEY_HELP, "Description : "+tmp.getItemName() );
 
 
             groupData.add(group);
@@ -98,8 +98,8 @@ public class NewItemFragment extends Fragment {
 
             group = new HashMap<String, String>();
 
-            group.put( KEY_LABEL,  tmp.getItemName() );
-            group.put( KEY_HELP, "Location "+tmp.getWarehouseLocation() );
+            group.put( KEY_LABEL,  tmp.getItemID() );
+            group.put( KEY_HELP, "Description : "+tmp.getItemName() );
 
 
             groupData.add(group);

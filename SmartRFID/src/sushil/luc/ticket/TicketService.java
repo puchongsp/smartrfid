@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import sushil.luc.dtos.OrderDTO;
+import sushil.luc.dtos.RfidInfoDTO;
 import sushil.luc.dtos.TicketDTO;
 import sushil.luc.gui.TicketsFragment;
 import sushil.luc.item.Item;
@@ -55,6 +56,11 @@ public class TicketService {
      */
 	public List<Ticket> fetchAllTickets(final Context context) {
         Log.i("TS:", "Fetching tickets");
+        
+        final int limit = 5;
+        
+        if (Tickets.size()< limit)
+        {	
         final NetworkHandler networkHandler = NetworkHandler.getInstance();
         networkHandler.setContext(context);
 
@@ -73,7 +79,7 @@ public class TicketService {
                     orderDTOList.addAll(myOrderDTOList);
 
                     for(final OrderDTO orderDto:orderDTOList) {
-                        String ticketsUrl = "http://70.125.157.25/api/tickets/query?limit=0&skip=0&orderBy=0&filters=0&addRfids=1&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
+                        String ticketsUrl = "http://70.125.157.25/api/tickets/query?limit="+limit+"&skip=0&orderBy=0&filters=0&addRfids=1&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
                         //String ticketsUrl = "http://192.168.2.69/smartrfid/api/ticket.json";
                         try {
                             networkHandler.read(ticketsUrl,TicketDTO.class, new Callback<TicketDTO>() {
@@ -98,7 +104,7 @@ public class TicketService {
         } catch (Exception e) {
             Toast.makeText(context, "Could not connect. Please check your connection.", Toast.LENGTH_LONG).show();
         }
-
+        }
         /*
           * If you need mockupdata, disable whole block of code above
           * and uncomment the statement below this comment
@@ -136,19 +142,32 @@ public class TicketService {
         }
         return ticketExists;
     }
+    
+    /**
+     * Sets all the Items from the Ticket to picked up
+     * @return false if there was a problem, true if everything was fine
+     */
+    public boolean ticketCollected (Ticket t, Context context)
+    {
+    	final NetworkHandler networkHandler = NetworkHandler.getInstance();
+        networkHandler.setContext(context);
+        
+        boolean res = networkHandler.updateTicketFullyCollected(t);
+        
+    	return res;
+    }
 
     /**
      * This method converts Json data to Ticket,
      * we will implement proper strings
      * once we get proper API and documentation
      */
-    private List<Ticket> convertToTicket(JSONObject jsonTickets) throws JSONException {
+  /*  private List<Ticket> convertToTicket(JSONObject jsonTickets) throws JSONException {
         List<Ticket> tickets = new ArrayList<Ticket>();
 
-        /*
-         * From json object to Ticket object
-         * manipulate data if necessary
-         */
+        
+          //From json object to Ticket object manipulate data if necessary
+         
         //JSONObject jObject = new JSONObject(jsonTickets);
         JSONArray jTickets = jsonTickets.getJSONArray(TICKET);
 
@@ -184,7 +203,7 @@ public class TicketService {
         }
 
         return tickets;
-    }
+    }*/
 
 
     /**

@@ -43,4 +43,13 @@ public class DateUtil {
         date.setTime(timestamp);
         return date;
     }
+    
+    public static String formatDate (String Date)
+    {
+    	String s = Date.replaceAll("T", " ");
+    	int point = s.indexOf(".");
+    	if (point!=-1)
+    		s = s.substring(0, point);
+    	return s;
+    }
 }

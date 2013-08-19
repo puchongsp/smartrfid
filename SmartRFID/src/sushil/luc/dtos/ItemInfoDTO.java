@@ -19,6 +19,7 @@ public class ItemInfoDTO {
     private String description;
     private String binLocation;
     private RfidInfoDTO rfidInfo;
+    private int quantity;
 
 
     public int getId() {
@@ -91,5 +92,13 @@ public class ItemInfoDTO {
 
 	public void setStatusNote(String statusNote) {
 		this.statusNote = statusNote;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 }
