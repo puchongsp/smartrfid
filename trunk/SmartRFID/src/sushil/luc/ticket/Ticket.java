@@ -45,8 +45,10 @@ public class Ticket {
         Customer customer = new Customer(customerDto);
 
         this.TicketCustomer = customer;
-
-        this.Status = TicketStatus.Open; // Setting default ticket status;
+        
+        // Call the method  calcTicketStatus()
+        //this.Status = TicketStatus.Open; // Setting default ticket status;
+        
         this.CreationDate = new Date();
         this.DeliveryDate = new Date();
 
@@ -59,6 +61,8 @@ public class Ticket {
 	            Items.add(tmp);
 	        }
         }
+        
+        calcTicketStatus();
     }
 
 	
@@ -106,12 +110,14 @@ public class Ticket {
 	private void calcTicketStatus ()
 	{
 		boolean res =true;
+		boolean onecollected =false;
 		for(int i=0; i<this.Items.size();i++)
 		{
 			Item tmp = this.Items.get(i);
 			if (tmp.getStatus().equals(ItemStatus.Collected))
 			{
 				res = res && true;
+				onecollected =true;
 			}
 			else
 			{
@@ -123,7 +129,13 @@ public class Ticket {
 		{
 			this.setStatus(TicketStatus.Closed);
 		}
+		else
+			if (onecollected)
+				this.setStatus(TicketStatus.InProgress);
+			else
+				this.setStatus(TicketStatus.Open);
 	}
+	
 	public String getTicketID() {
 
 		return TicketID;

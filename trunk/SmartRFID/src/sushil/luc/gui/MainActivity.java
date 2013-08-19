@@ -230,6 +230,14 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	    		iteminfo.add("");
 	    		iteminfo.add("");
 	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		iteminfo.add("");
+	    		
 	    	}
 	    	else
 	    	{
@@ -239,9 +247,17 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	    		iteminfo.add(i.getRFID());
 	    		iteminfo.add(i.getStatus().toString());
 	    		iteminfo.add(i.getWarehouseLocation());
+	    		iteminfo.add(i.getCategory());
+	    		iteminfo.add(i.getSubCategory());
+	    		iteminfo.add(i.getCreationDate()); 
+	    		iteminfo.add(i.getType()); 
+	    		iteminfo.add(i.getInventoryTotal()); 
+	    		iteminfo.add(i.getInventoryOnHand()); 
+	    		iteminfo.add(i.getInventoryOut()); 
 	    	}
 			// tell the view to display the data	    	
-			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4));
+			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4),
+					iteminfo.get(5),iteminfo.get(6),iteminfo.get(7),iteminfo.get(8),iteminfo.get(9),iteminfo.get(10), iteminfo.get(11) );
 			
         }
 		else 

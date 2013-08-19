@@ -12,13 +12,16 @@ import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
+import sushil.luc.ticket.TicketService;
 import sushil.luc.ticket.TicketStatus;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
@@ -37,6 +40,17 @@ public class Ticket_showItems extends UgroKitActivity{
 		setContentView(R.layout.ticket_show_items);
 		
 		myparent = this;
+		
+		Button b = (Button)findViewById(R.id.test);
+		b.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				TicketService ts = new TicketService();
+				ts.ticketCollected(currentTicket, myparent);
+				
+			}
+		});
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {

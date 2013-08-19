@@ -9,6 +9,7 @@ public class RentInformationDTO {
     private String stopRent;
     private String returnDate;
     private String originalStartRent;
+    private String deliveryDate;
 
     public String getId() {
         return id;
@@ -49,4 +50,12 @@ public class RentInformationDTO {
     public void setOriginalStartRent(String originalStartRent) {
         this.originalStartRent = originalStartRent;
     }
+
+	public String getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(String deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
 }

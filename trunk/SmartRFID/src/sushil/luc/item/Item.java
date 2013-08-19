@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.util.Log;
+import android.widget.TextView;
 
 import sushil.luc.dtos.ItemDTO;
 import sushil.luc.dtos.ItemInfoDTO;
@@ -22,15 +23,25 @@ public class Item{
     public static final String _STATUS = "status";
     //public static final String _DATE = "date";
 
-	private int ItemID;
+	private String ItemID;
 	private String ItemName;
     private String RFID;
 	private String WarehouseLocation;
 	private ItemStatus Status;
 	private String StartRentDate;
 	private String StopRentDate;
+	private String DeliveryDate;
 	private String ReturnDateDate;
 	private String OriginalStartRentDate;
+	private String Category;
+	private String SubCategory;
+	private String CreationDate;
+	private String Type;
+	private String InventoryTotal;
+	private String InventoryOnHand;
+	private String InventoryOut;
+	private String Quantity;
+	
 	
 	private List<String> RepairLogs;
 	
@@ -42,7 +53,7 @@ public class Item{
     public Item(ItemDTO itemDto){
     	if (itemDto!=null)
     	{
-    		this.ItemID = itemDto.getId();
+    		this.ItemID = itemDto.getIdentifier();
     		if (itemDto.getItemInfo()!=null)
     		{
     			this.ItemName = itemDto.getItemInfo().getDescription();
@@ -54,17 +65,31 @@ public class Item{
     			}
     			
     			this.Status = mapStatus (itemDto.getItemInfo().getStatusNote());
+    			this.Category = itemDto.getItemInfo().getCategory();
+    			this.CreationDate = itemDto.getItemInfo().getCreationDate();
+    			this.SubCategory = itemDto.getItemInfo().getSubCategory();
+    			
+    		}
+    		
+    		if (itemDto.getInventoryInfo()!=null)
+    		{
+    			this.Type = String.valueOf(itemDto.getInventoryInfo().getType());
+    			this.InventoryOnHand = String.valueOf(itemDto.getInventoryInfo().getInventoryOnHand());
+    			this.InventoryOut= String.valueOf(itemDto.getInventoryInfo().getInventoryOut());
+    			this.InventoryTotal = String.valueOf(itemDto.getInventoryInfo().getInventoryTotal());
     		}
     		
     		if (itemDto.getTicketItemInfo()!=null)
     		{
-    			this.ItemName = itemDto.getTicketItemInfo().getIdentifier();    	
+    			this.ItemID = itemDto.getTicketItemInfo().getIdentifier();
+    			this.ItemName = itemDto.getTicketItemInfo().getDescription();
     			this.WarehouseLocation= itemDto.getTicketItemInfo().getBinLocation();
     			
     			if (itemDto.getTicketItemInfo().getRfidInfo()!=null)
     			{
         			this.RFID = itemDto.getTicketItemInfo().getRfidInfo().getRfidNumber();
     			}
+    			this.Quantity = String.valueOf(itemDto.getTicketItemInfo().getQuantity());
     		}
     		
     		if (itemDto.getItemStatus()!=null)
@@ -86,6 +111,7 @@ public class Item{
     			this.OriginalStartRentDate= DateUtil.stringToDate(itemDto.getRentInformation().getOriginalStartRent());*/
     			this.StartRentDate = itemDto.getRentInformation().getStartRent();
     			this.StopRentDate = itemDto.getRentInformation().getStopRent();
+    			this.DeliveryDate = itemDto.getRentInformation().getDeliveryDate();
     			this.ReturnDateDate = itemDto.getRentInformation().getReturnDate();
     			this.OriginalStartRentDate= itemDto.getRentInformation().getOriginalStartRent();
     		}
@@ -140,10 +166,10 @@ public class Item{
 				+" Status "+this.Status+" StartRentDate "+this.StartRentDate );
     }
 	
-	public int getItemID() {
+	public String getItemID() {
 		return ItemID;
 	}
-	public void setItemID(int itemID) {
+	public void setItemID(String itemID) {
 		ItemID = itemID;
 	}
 	public String getItemName() {
@@ -226,6 +252,86 @@ public class Item{
 				return ItemStatus.Transport;
 		}
 		return ItemStatus.Available;
+	}
+
+	public String getStartRentDate() {
+		return StartRentDate;
+	}
+
+	public void setStartRentDate(String startRentDate) {
+		StartRentDate = startRentDate;
+	}
+
+	public String getCategory() {
+		return Category;
+	}
+
+	public void setCategory(String category) {
+		Category = category;
+	}
+
+	public String getSubCategory() {
+		return SubCategory;
+	}
+
+	public void setSubCategory(String subCategory) {
+		SubCategory = subCategory;
+	}
+
+	public String getCreationDate() {
+		return CreationDate;
+	}
+
+	public void setCreationDate(String creationDate) {
+		CreationDate = creationDate;
+	}
+
+	public String getType() {
+		return Type;
+	}
+
+	public void setType(String type) {
+		Type = type;
+	}
+
+	public String getInventoryTotal() {
+		return InventoryTotal;
+	}
+
+	public void setInventoryTotal(String inventoryTotal) {
+		InventoryTotal = inventoryTotal;
+	}
+
+	public String getInventoryOnHand() {
+		return InventoryOnHand;
+	}
+
+	public void setInventoryOnHand(String inventoryOnHand) {
+		InventoryOnHand = inventoryOnHand;
+	}
+
+	public String getInventoryOut() {
+		return InventoryOut;
+	}
+
+	public void setInventoryOut(String inventoryOut) {
+		InventoryOut = inventoryOut;
+	}
+
+	public String getQuantity() {
+		return Quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		Quantity = quantity;
+	}
+
+	public String getDeliveryDate() {
+		return DeliveryDate;
+	}
+
+	public void setDeliveryDate(String deliveryDate) {
+		DeliveryDate = deliveryDate;
 	}
 	
 }

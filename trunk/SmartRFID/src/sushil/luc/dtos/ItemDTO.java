@@ -14,6 +14,7 @@ public class ItemDTO {
     private ItemStatusDTO itemStatus;
     private RfidInfoDTO rfidInfo;
     private InventoryInfoDTO inventoryInfo;
+   
     
     public int getId() {
         return $id;
@@ -94,4 +95,6 @@ public class ItemDTO {
 	public void setInventoryInfo(InventoryInfoDTO inventoryInfo) {
 		this.inventoryInfo = inventoryInfo;
 	}
+
+	
 }

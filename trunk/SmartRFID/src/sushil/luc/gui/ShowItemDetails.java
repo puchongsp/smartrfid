@@ -4,6 +4,8 @@ import sushil.luc.item.Item;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
+import sushil.luc.ticket.TicketStatus;
+import sushil.luc.utils.DateUtil;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +22,11 @@ public class ShowItemDetails extends Activity{
 	private TextView Item_RFID;
 	private TextView Item_Location;
 	private TextView Item_Status;
+	private TextView Item_Quantity;
+	private TextView Item_Deliverydate;
+	private TextView Item_StopRent;
+	private TextView Item_ReturnDate;
+
 	
 	private int positionInTicketListview;
 	private int positionInItemListview;
@@ -49,12 +56,29 @@ public class ShowItemDetails extends Activity{
 		Item_RFID = (TextView) findViewById(R.id.item_rfid);
 		Item_Location = (TextView) findViewById(R.id.item_location);
 		Item_Status = (TextView) findViewById(R.id.item_status);
-		
+		Item_Quantity= (TextView) findViewById(R.id.item_quantity);
+		Item_Deliverydate= (TextView) findViewById(R.id.item_deliverydate);
+		Item_StopRent= (TextView) findViewById(R.id.item_stopRent);
+		Item_ReturnDate= (TextView) findViewById(R.id.item_returnDate);
+
 		Item_ID.setText("Item ID : "+i.getItemID());
 		Item_Name.setText("Itemname : "+i.getItemName());
 		Item_RFID.setText("RFID : "+i.getRFID());
 		Item_Location.setText("Location : "+i.getWarehouseLocation());
 		Item_Status.setText("Status : "+i.getStatus().toString());
+		Item_Quantity.setText("Quantity : "+i.getQuantity().toString());
+		if (i.getDeliveryDate()!=null)
+			Item_Deliverydate.setText("Delivery Date : "+DateUtil.formatDate(i.getDeliveryDate().toString()));
+		else
+			Item_Deliverydate.setVisibility(View.INVISIBLE);
+		if (i.getStopRentDate()!=null)
+			Item_StopRent.setText("Stop Rent Date : "+DateUtil.formatDate(i.getStopRentDate().toString()));
+		else
+			Item_StopRent.setVisibility(View.INVISIBLE);
+		if (i.getReturnDateDate()!=null)
+			Item_ReturnDate.setText("Return Date : "+DateUtil.formatDate(i.getReturnDateDate().toString()));
+		else
+			Item_ReturnDate.setVisibility(View.INVISIBLE);
 		
 	}
 }
