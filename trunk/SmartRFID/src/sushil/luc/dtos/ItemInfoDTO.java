@@ -4,7 +4,7 @@ package sushil.luc.dtos;
 
 import java.util.Date;
 
-import sushil.luc.utils.DateUtil;
+
 
 /**
  * Created by sushil

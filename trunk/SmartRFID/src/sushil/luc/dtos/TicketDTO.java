@@ -14,7 +14,7 @@ public class TicketDTO {
         return $id;
     }
 
-    public void set$Id(int id) {
+    public void setId(int id) {
         this.$id = id;
     }
 
