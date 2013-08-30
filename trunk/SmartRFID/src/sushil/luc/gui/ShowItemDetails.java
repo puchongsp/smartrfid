@@ -1,19 +1,15 @@
 package sushil.luc.gui;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import sushil.luc.item.Item;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
-import sushil.luc.ticket.TicketStatus;
 import sushil.luc.utils.DateUtil;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
 
 public class ShowItemDetails extends Activity{
 	
@@ -66,7 +62,8 @@ public class ShowItemDetails extends Activity{
 		Item_RFID.setText("RFID : "+i.getRFID());
 		Item_Location.setText("Location : "+i.getWarehouseLocation());
 		Item_Status.setText("Status : "+i.getStatus().toString());
-		Item_Quantity.setText("Quantity : "+i.getQuantity().toString());
+        if(i.getQuantity()!=null)
+		    Item_Quantity.setText("Quantity : "+i.getQuantity().toString());
 		if (i.getDeliveryDate()!=null)
 			Item_Deliverydate.setText("Delivery Date : "+DateUtil.formatDate(i.getDeliveryDate().toString()));
 		else

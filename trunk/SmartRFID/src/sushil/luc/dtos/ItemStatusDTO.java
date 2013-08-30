@@ -8,6 +8,8 @@ public class ItemStatusDTO {
     private boolean isStaged;
     private boolean isChecked;
     private boolean isReturned;
+    // if all are false - what does it mean
+    // if isReturned is true and all other false = what does it mean
 
     public String getId() {
         return id;

@@ -2,32 +2,33 @@ package sushil.luc.gui;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import com.ugrokit.api.Ugi;
 import com.ugrokit.api.UgiInventoryDelegate;
 import com.ugrokit.api.UgiTag;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
-import sushil.luc.msc.RFIDActivity;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 
 public class MainActivity extends UgroKitActivity implements
 Ugi.ConnectionStateListener,
 UgiInventoryDelegate.InventoryTagChangedListener{
-	
+
+
+    public static String HOST_URL = "http://sushilshilpakar.com.np/smartrfid";
+    //public static String HOST_URL = "http://rfidproject.azurewebsites.net";
+    //public static String HOST_URL = "http://70.125.157.25";
+
 	public static Context appContext;
 	private static String log ="MainActivity";
 	private ActionBar actionbar;

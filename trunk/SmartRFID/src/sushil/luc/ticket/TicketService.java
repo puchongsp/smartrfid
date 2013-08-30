@@ -4,25 +4,15 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import sushil.luc.dtos.OrderDTO;
-import sushil.luc.dtos.RfidInfoDTO;
 import sushil.luc.dtos.TicketDTO;
+import sushil.luc.gui.MainActivity;
 import sushil.luc.gui.TicketsFragment;
-import sushil.luc.item.Item;
-import sushil.luc.item.ItemService;
-import sushil.luc.item.ItemStatus;
-import sushil.luc.msc.Customer;
 import sushil.luc.network.Callback;
 import sushil.luc.network.NetworkHandler;
-import sushil.luc.utils.DateUtil;
 
 public class TicketService {
 
@@ -31,7 +21,7 @@ public class TicketService {
     private static final String ITEM = "items";
 
     //private final String URL = "http://192.168.2.69/smartrfid/api/order.json";
-    private final String URL = "http://70.125.157.25/api/orders/query?limit=5";
+    private final String URL = MainActivity.HOST_URL + "/api/orders/query.php?limit=5";
     private static List<Ticket> Tickets;
 
 
@@ -72,6 +62,7 @@ public class TicketService {
         //final List<TicketDTO> ticketDTOList = new ArrayList<TicketDTO>();
 
         try {
+            Log.i("TS:","url = "+URL);
             networkHandler.readList(URL,OrderDTO[].class, new Callback<List<OrderDTO>>() {
                 @Override
                 public void callback(final List<OrderDTO> myOrderDTOList) {
@@ -79,7 +70,7 @@ public class TicketService {
                     orderDTOList.addAll(myOrderDTOList);
 
                     for(final OrderDTO orderDto:orderDTOList) {
-                        String ticketsUrl = "http://70.125.157.25/api/tickets/query?limit="+limit+"&skip=0&orderBy=0&filters=0&addRfids=1&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
+                        String ticketsUrl = MainActivity.HOST_URL + "/api/tickets/query.php?limit="+limit+"&skip=0&orderBy=0&filters=0&addRfids=1&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
                         //String ticketsUrl = "http://192.168.2.69/smartrfid/api/ticket.json";
                         try {
                             networkHandler.read(ticketsUrl,TicketDTO.class, new Callback<TicketDTO>() {
