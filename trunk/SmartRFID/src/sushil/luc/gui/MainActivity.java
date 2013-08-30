@@ -16,6 +16,7 @@ import java.util.List;
 
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
+import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.UgroKitActivity;
 
 public class MainActivity extends UgroKitActivity implements
@@ -148,6 +149,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 		//ticketsFragment = TabListenerTickets.getFragment();
 		//newItemsFragment = TabListenerNewItems.getFragment();
 		itemInfoFragment = TabListenerItemInfo.getFragment();
+		repairItemFragment = TabListenerRepairItem.getFragment();
 		
 		Log.d(log, "inventoryTagChanged");
 		
@@ -204,9 +206,9 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 					iteminfo.get(5),iteminfo.get(6),iteminfo.get(7),iteminfo.get(8),iteminfo.get(9),iteminfo.get(10), iteminfo.get(11) );
 			
         }
-		else 
+
 			// if the current tab is the Return Item tab
-			if (currenttab.getText().equals(ReturnItemsTabName)) {
+		if (currenttab.getText().equals(ReturnItemsTabName)) {
             Log.d(log, "Return Items");
             // collect infos for the scanned tag
             currentTagId = tag.getEpc().toString();
@@ -219,6 +221,23 @@ UgiInventoryDelegate.InventoryTagChangedListener{
                 ((ReturnItemFragment)returnItemsFragment).returnItem(item);
             }
         }
+		
+		if (currenttab.getText().equals(RepairItemTabName))
+			{
+			 	Log.d(log, "Repair Items");
+	            // collect infos for the scanned tag
+	            currentTagId = tag.getEpc().toString();
+	            Log.d(log, currentTagId);
+	            
+	            Item item = service.fetchItemFromRfid(currentTagId);
+	            
+	            
+	            if (item !=null && item.getStatus().equals(ItemStatus.Repair))
+	            {
+	            	repairItemFragment.setItem(item);	            	
+	            }
+	            	
+			}
 	}
 	/**
 	 * Update the status bar
@@ -228,4 +247,6 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 		if (actionbar!=null)
 			actionbar.setSubtitle(currentStatus);
 	}
+	
+	//public static void call()
 }

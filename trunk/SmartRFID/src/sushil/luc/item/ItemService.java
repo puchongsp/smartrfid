@@ -70,7 +70,8 @@ public class ItemService {
         final List<ItemDTO> itemDtos = new ArrayList<ItemDTO>(1);
         try {
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
-           // rfid = "000000000000000000000001";
+          //  rfid = "000000000000000000000001";
+
           //  String URL = "http://rfidproject.azurewebsites.net/api/items/query?rfids="+rfid;
 
             String URL = MainActivity.HOST_URL + "/api/items/query.php?rfids="+rfid;
@@ -91,7 +92,8 @@ public class ItemService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Item item = null;
+        Item item =null;
+
         if(itemDtos.size() > 0) {
             item = new Item(itemDtos.get(0));
         }
