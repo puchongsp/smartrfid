@@ -5,7 +5,6 @@ import android.app.ActionBar.Tab;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.widget.Toast;
 
 import com.ugrokit.api.Ugi;
@@ -18,14 +17,13 @@ import java.util.List;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.msc.UgroKitActivity;
-import sushil.luc.smartrfid.R;
 
 public class MainActivity extends UgroKitActivity implements
 Ugi.ConnectionStateListener,
 UgiInventoryDelegate.InventoryTagChangedListener{
 
 
-    public static String HOST_URL = "http://192.168.2.69/smartrfid";
+    public static String HOST_URL = "http://sushilshilpakar.com.np/smartrfid";
 
     //public static String HOST_URL = "http://rfidproject.azurewebsites.net";
     //public static String HOST_URL = "http://70.125.157.25";
