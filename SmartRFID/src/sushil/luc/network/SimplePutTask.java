@@ -25,6 +25,7 @@ import sushil.luc.ticket.Ticket;
 import android.os.AsyncTask;
 import android.util.Log;
 
+// TODO How are we doing the put request??
 public class SimplePutTask  extends AsyncTask<String, String, String>{
 		
 		private Ticket t;
@@ -50,7 +51,7 @@ public class SimplePutTask  extends AsyncTask<String, String, String>{
 	        	
 	        	if(data==null)
 	        	{
-	        		throw new IOException("Problem to build the HttpPost!");
+	        		throw new IOException("Problem to build the HttpPut!");
 	        	}
 	        	else
 	        	{

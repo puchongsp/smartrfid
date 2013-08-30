@@ -33,11 +33,9 @@ public enum ItemStatus {
 		{
 			return stringvalue;
 		}
-		
 
 		public int getintValue()
 		{
 			return intValue;
-		}
-		
+		}	
 }

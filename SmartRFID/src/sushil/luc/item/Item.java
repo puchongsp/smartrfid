@@ -16,12 +16,12 @@ public class Item implements Cloneable{
     /*
      * to map models vars with fields in json
      */
-    public static final String _ID = "itemIdentifier";
+  /*  public static final String _ID = "itemIdentifier";
     public static final String _NAME = "description";
     public static final String _RFID = "rfid";
     public static final String _LOCATION = "location";
     public static final String _STATUS = "status";
-    //public static final String _DATE = "date";
+    //public static final String _DATE = "date";*/
 
 	private String ItemID;
 	private String ItemName;
@@ -63,8 +63,6 @@ public class Item implements Cloneable{
     			{
     				this.RFID = itemDto.getItemInfo().getRfidInfo().getRfidNumber();
     			}
-    			
-    		//	this.Status = mapStatus (itemDto.getItemInfo().getStatusNote());
     			this.Category = itemDto.getItemInfo().getCategory();
     			this.CreationDate = itemDto.getItemInfo().getCreationDate();
     			this.SubCategory = itemDto.getItemInfo().getSubCategory();
@@ -92,24 +90,28 @@ public class Item implements Cloneable{
     			this.Quantity = String.valueOf(itemDto.getTicketItemInfo().getQuantity());
     		}
     		
-    		// TODO
+    		// map the DTO status to our status
     		if (itemDto.getItemStatus()!=null)
     		{
-    			if(itemDto.getItemStatus().isChecked())
-            		this.Status = ItemStatus.Checked;
-            	else 
-            		if(itemDto.getItemStatus().isReturned())
-            			this.Status = ItemStatus.Returned;
-            		else
-            			this.Status = ItemStatus.Available;
+    			if (itemDto.getItemStatus().isReturned() &&
+    					itemDto.getItemStatus().isStaged() &&
+    					itemDto.getItemStatus().isChecked())
+    				this.Status = ItemStatus.Repair;
+    			else
+	    			if(itemDto.getItemStatus().isReturned())
+	        			this.Status = ItemStatus.Returned;  			
+	            	else 
+	            		if(itemDto.getItemStatus().isStaged())
+	            			this.Status = ItemStatus.Staged;
+	            		else
+	            			if(itemDto.getItemStatus().isChecked())
+	                    		this.Status = ItemStatus.Checked;
+	            			else
+	            				this.Status = ItemStatus.Available;
     		}
     		
     		if (itemDto.getRentInformation()!=null)
     		{
-    			/*this.StartRentDate = DateUtil.stringToDate(itemDto.getRentInformation().getStartRent());
-    			this.StopRentDate = DateUtil.stringToDate(itemDto.getRentInformation().getStopRent());
-    			this.ReturnDateDate = DateUtil.stringToDate(itemDto.getRentInformation().getReturnDate());
-    			this.OriginalStartRentDate= DateUtil.stringToDate(itemDto.getRentInformation().getOriginalStartRent());*/
     			this.StartRentDate = itemDto.getRentInformation().getStartRent();
     			this.StopRentDate = itemDto.getRentInformation().getStopRent();
     			this.DeliveryDate = itemDto.getRentInformation().getDeliveryDate();
@@ -122,46 +124,7 @@ public class Item implements Cloneable{
     			this.RFID = itemDto.getRfidInfo().getRfidNumber();
     		}
     	}
-    	/*
-        
-       // Log.d("Item",  "ID "+this.ItemID);
-        if (itemDto.getItemInfo()==null)
-        	Log.d("ItemInfo", "null");
-        
-        try {
-        	
-        } catch (NullPointerException e) {
-            this.ItemName = "";
-        }
-        //Log.d("Item",  "ItemName "+this.ItemName);
-        
-        try {
-            this.RFID = itemDto.getItemInfo().getRfidInfo().getRfidNumber();
-        } catch (NullPointerException e) {
-            this.RFID = "";
-        }
-        //Log.d("Item",  "RFID "+this.RFID);
-
-        this.Status = ItemStatus.Available;
-        
-        if (itemDto.getItemStatus()!=null)
-        {
-        	if(itemDto.getItemStatus().isChecked())
-        		this.Status = ItemStatus.RentToCustomer;
-        	else if(itemDto.getItemStatus().isReturned())
-        		this.Status = ItemStatus.Returned;
-        }
-      //  Log.d("Item",  "Status "+this.Status);
-        
-    /*    else
-        	this.Status=null;*/
-    /*    if (itemDto.getRentInformation()!=null)
-        {
-        	this.Date = DateUtil.stringToDate(itemDto.getRentInformation().getReturnDate());
-        }
-        else
-        	this.Date=new Date();
-       // Log.d("Item",  "Date "+this.Date);*/
+    
         Log.d("Item", "ItemId "+this.ItemID+" ItemName "+this.ItemName+
 				" WarehouseLoc "+this.WarehouseLocation+" RFID "+this.RFID
 				+" Status "+this.Status+" StartRentDate "+this.StartRentDate );
@@ -205,56 +168,30 @@ public class Item implements Cloneable{
 		RepairLogs = repairLogs;
 	}
 
-
-
 	public String getStopRentDate() {
 		return StopRentDate;
 	}
-
-
 
 	public void setStopRentDate(String stopRentDate) {
 		StopRentDate = stopRentDate;
 	}
 
-
-
 	public String getReturnDateDate() {
 		return ReturnDateDate;
 	}
-
-
 
 	public void setReturnDateDate(String returnDateDate) {
 		ReturnDateDate = returnDateDate;
 	}
 
-
-
 	public String getOriginalStartRentDate() {
 		return OriginalStartRentDate;
 	}
-
-
 
 	public void setOriginalStartRentDate(String originalStartRentDate) {
 		OriginalStartRentDate = originalStartRentDate;
 	}
 	
-	/*private ItemStatus mapStatus (String status)
-	{
-		// Have to check if mapping is correct
-		
-		if (status !=null)
-		{
-			if (status.equals("IN_TESTING"))
-				return ItemStatus.Repair;
-			if (status.contains("OUT ON CERD"))
-				return ItemStatus.Transport;
-		}
-		return ItemStatus.Available;
-	}*/
-
 	public String getStartRentDate() {
 		return StartRentDate;
 	}

@@ -17,7 +17,7 @@ import sushil.luc.network.NetworkHandler;
 
 public class ItemService {
 
-    private static List<Item> items;
+   // private static List<Item> items;
     private static Set<Item> returnedItems;
     private static List<Item> newItems;
 	
@@ -40,7 +40,6 @@ public class ItemService {
         try {
             final RfidInfoDTO rfidInfoDTO = new RfidInfoDTO();
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
-            //String URL = "";
 
        //     String URL ="http://rfidproject.azurewebsites.net/api/items/query?identifiers="+identifier;
 
@@ -71,7 +70,6 @@ public class ItemService {
         final List<ItemDTO> itemDtos = new ArrayList<ItemDTO>(1);
         try {
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
-           // String URL = "";
 
           //  String URL = "http://rfidproject.azurewebsites.net/api/items/query?rfids="+rfid;
 
@@ -146,22 +144,21 @@ public class ItemService {
 	}
     
 
- /*   public List<Item> getAllItems() {
-        return getMockupData();
-    }*/
-
     public List<Item> getReturnedItems() {
+    	//TODO connect to database
         List<Item> items =  new ArrayList<Item>();
         items.addAll(returnedItems);
         return items;
     }
 
     public void returnItem(Item item) {
+    	//TODO connect to database
         item.setStatus(ItemStatus.Returned);
         returnedItems.add(item);
     }
 
     public void sendToRepair(Item item) {
+    	//TODO connect to database
         if(item.getStatus().equals(ItemStatus.Returned)){
 //            if(returnedItems.contains(item)) {
 //                returnedItems.remove(item);
@@ -171,6 +168,7 @@ public class ItemService {
     }
 
     public void sendToWarehouse(Item item) {
+    	//TODO connect to database
         if(item.getStatus().equals(ItemStatus.Returned) || item.getStatus().equals(ItemStatus.Repair) ){
             if(returnedItems.contains(item)) {
                 returnedItems.remove(item);

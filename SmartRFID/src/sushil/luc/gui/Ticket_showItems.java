@@ -46,6 +46,7 @@ public class Ticket_showItems extends UgroKitActivity{
 		setContentView(R.layout.ticket_show_items);
 		
 		myparent = this;
+		//TODO integrate history in menu
 		itemHistory = ItemHistory.getInstance();
 		
 		Bundle extras = getIntent().getExtras();
@@ -74,7 +75,7 @@ public class Ticket_showItems extends UgroKitActivity{
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					//Toast.makeText(myparent, "Hallo", Toast.LENGTH_LONG).show();
+					
 					Intent i = new Intent(myparent, ShowItemDetails.class);
 					i.putExtra("positionInItemListview", position);
 					i.putExtra("positionInTicketList", positioninListview);
@@ -127,6 +128,7 @@ public class Ticket_showItems extends UgroKitActivity{
 	{
 		super.onResume();
 		super.StartInventory();
+		//TODO keep changes local
 		super.mHandler.modeTicketItemScan(true, currentTicket, this);
 	}
 	
@@ -138,6 +140,7 @@ public class Ticket_showItems extends UgroKitActivity{
 		super.StopInventory();
 		super.stopAllModes();
 		super.calculateStatus();
+		//TODO strange
 		assembler.saveTicket(currentTicket);
 		super.onDestroy();
 	}
@@ -150,43 +153,7 @@ public class Ticket_showItems extends UgroKitActivity{
 		//assembler.saveTicket(currentTicket);
 		super.onPause();
 	}
-	
-	/**
-	 * Checks if there are any items left which need to be collected
-	 */
-	/*public void evalTicket()
-	{
-		List<Item> items =currentTicket.getItems();
-		
-		boolean close =true;
-		//boolean partial =false;
-		
-		for (int i= 0; i<items.size();i++)
-		{
-			if (items.get(i).getStatus().equals(ItemStatus.Collected))
-			{
-				close = close && true;
-		//		partial = partial || true;
-			}
-			else
-			{
-				close = close && false;
-		//		partial = partial || false;
-			}
-		}
-		
-		// set the result to the ticket
-		if (close)
-			currentTicket.setStatus(TicketStatus.Checked);
-		else
-		{
-			//if(partial)
-				currentTicket.setStatus(TicketStatus.Open);
-			//else
-			//	currentTicket.setStatus(TicketStatus.Open);
-		}
-	}*/
-	
+
 	@Override
 	/**
 	 * If the connection from the ugrokit changes, this methode gives feedback to the user

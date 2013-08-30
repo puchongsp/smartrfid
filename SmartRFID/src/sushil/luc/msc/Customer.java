@@ -3,33 +3,24 @@ package sushil.luc.msc;
 import android.location.Location;
 
 import sushil.luc.dtos.CustomerDTO;
+import sushil.luc.dtos.OrderInfoDTO;
 
 public class Customer {
-
-    /*
-     * to map models vars with fields in json
-     */
-    public static final String _ID = "id";
-    public static final String _NAME = "name";
-    public static final String _ADDRESS = "address";
-    public static final String _PHONE = "phone";
-    public static final String _GPS = "gps";
-
 
 	private String CustomerID;
 	private String Name;
 	private String Address;
-	private String Phone;
-	private Location GPSLocation;
 	
-	public Customer()
-	{
 
-	}
-
-    public Customer(CustomerDTO customerDTO) {
+    public Customer(CustomerDTO customerDTO, OrderInfoDTO orderInfoDTO) {
         this.CustomerID = customerDTO.getId();
         this.Name = customerDTO.getCustomerName();
+        if (orderInfoDTO!=null)
+        {
+        	this.Address = orderInfoDTO.getAddress().getAddress1()+" "
+        					+ orderInfoDTO.getAddress().getCity()+" "
+        					+orderInfoDTO.getAddress().getZip();
+        }
     }
 
 	public String getCustomerID() {
@@ -54,21 +45,5 @@ public class Customer {
 
 	public void setAddress(String address) {
 		Address = address;
-	}
-
-	public String getPhone() {
-		return Phone;
-	}
-
-	public void setPhone(String phone) {
-		Phone = phone;
-	}
-
-	public Location getGPSLocation() {
-		return GPSLocation;
-	}
-
-	public void setGPSLocation(Location gPSLocation) {
-		GPSLocation = gPSLocation;
 	}
 }

@@ -27,8 +27,6 @@ public class UgroKitActivity extends Activity implements
 	
 	private String LogTag = "UgroKitActivity";
 	protected String currentStatus;
-	
-	private Boolean inventory;
 	protected Boolean isConnected;
 	protected String TagId;
 	protected  MyHandler mHandler;
@@ -93,28 +91,12 @@ public class UgroKitActivity extends Activity implements
 		//Log.d(LogTag, "inventoryTagSubsequentFinds "+tag.getEpc().toString());
 		mHandler.setTag(tag);
 	}
-		
-
-	/**
-	 * If the Inventory is currently stopped, it will be started. 
-	 * If the inventory is currently started, it will be stopped.
-	 * Should not be used, use the startInventory and the stopInventory
-	 */
-	private void doStartStopInventory() {
-		if (Ugi.singleton().getInStartInventory()) {
-			Ugi.singleton().startInventory(this, inventoryType);			
-		} else {
-			Ugi.singleton().stopInventory(this);
-		}
-		calculateStatus();
-	}
 	
 	/**
 	 * Starts the inventory if the ugrokit is connected and the inventory is not yet started.
 	 */
 	public void StartInventory ()
 	{
-		//if (Ugi.singleton().getIsConnected() && !Ugi.singleton().getInStartInventory())
 		if (!Ugi.singleton().getInStartInventory())
 		{
 			Log.d(LogTag, "StartInventory inside");
@@ -204,6 +186,6 @@ public class UgroKitActivity extends Activity implements
 	 {
 		 mHandler.modeNewItem(false, null, null);
 		 mHandler.modeTicketItemScan(false, null, null);
-		 mHandler.modeTruckerCheck(false);
+	//	 mHandler.modeTruckerCheck(false);
 	 }
 }

@@ -36,16 +36,21 @@ public class TicketManagerAssembler implements TicketManager{
 	}
 
 
-    public  List<Ticket> fetchTickets()
+    public  List<Ticket> fetchTickets(boolean local)
     {
-    	List<Ticket> alltickets = ticketserv.fetchAllTickets(context);
+    	List<Ticket> alltickets;
+    	
+    	if (local)
+    		alltickets = ticketserv.fetchLocalTickets();
+    	else
+    		alltickets = ticketserv.fetchAllTickets(context);
     	
     	List<Ticket> tmp = new LinkedList<Ticket>();
     	
     	for (int i = 0;i<alltickets.size();i++)
     	{
     		Ticket t = alltickets.get(i);
-    		if (!t.getStatus().equals(TicketStatus.Closed))
+    		if (t.getStatus().equals(TicketStatus.Open) )
     			tmp.add(t);
     	}
     	
@@ -62,7 +67,10 @@ public class TicketManagerAssembler implements TicketManager{
     
     public void saveTicket (Ticket t)
     {
-    	this.ticketserv.saveToRemote(t);
+    	//TODO how is it done?
+    	throw new NullPointerException();
+    	
+    	//this.ticketserv.saveToRemote(t);
     }
 
 }

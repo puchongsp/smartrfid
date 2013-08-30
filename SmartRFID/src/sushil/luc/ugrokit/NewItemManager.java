@@ -45,7 +45,7 @@ public class NewItemManager {
 	private Item currentItem;
 	private TagNewItemActivity currentActivity;
 	private List<UgiTag> alreadyTestedTags;
-	private ItemHistory itemHistory;
+	//private ItemHistory itemHistory;
 
 	/**
 	 * Init the Manager
@@ -62,7 +62,7 @@ public class NewItemManager {
 		this.currentItem= null;
 		this.currentActivity=null;
 		this.alreadyTestedTags = new LinkedList<UgiTag>();
-		this.itemHistory = ItemHistory.getInstance();
+		//this.itemHistory = ItemHistory.getInstance();
 	}
 
 	/**
@@ -142,8 +142,7 @@ public class NewItemManager {
 
 		initList();
 
-		Button dialogCancelButton = (Button) dialog
-				.findViewById(R.id.dialogButtonCancel);
+		Button dialogCancelButton = (Button) dialog.findViewById(R.id.dialogButtonCancel);
 		dialogCancelButton.setText(" Cancel ");
 		// if button is clicked, close the custom dialog
 		dialogCancelButton.setOnClickListener(new OnClickListener() {
@@ -198,10 +197,10 @@ public class NewItemManager {
 			    
 			    // if the user clicks on the ID, we have to combine the item and the tag id
 			    Log.d(LogTag, "Selected Id was : "+selected_id);
-			    //TODO do the magic
+			    //TODO do connect to the database
 	            currentItem.setRFID(selected_id);
 	            // Tell the history
-	            itemHistory.saveToHistory(currentItem);
+	           // itemHistory.saveToHistory(currentItem);
 	            // Stop the rfid scan to save energy
 	            currentActivity.StopInventory();
 	            // tell the view to update. Delete the currently tagged Item
@@ -226,7 +225,6 @@ public class NewItemManager {
 		if ((!taglist.contains(a)) && (!stopAdding)) {
 			taglist.add(a);
 			adapter.notifyDataSetChanged();
-			//Log.d(LogTag, "addTagtoList yayayayay");
 		}
 	}
 	
