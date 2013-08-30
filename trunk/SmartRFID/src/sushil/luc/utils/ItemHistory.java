@@ -106,21 +106,24 @@ public class ItemHistory {
 		
 		List<ItemHistoryObject> itemstates = currentHist.history.get(id);
 		
-		if (itemstates.size()>4)
+		if(itemstates!=null)
 		{
-			int j=4;
-			for (int i=0; i<=j;i++)
+			if (itemstates.size()>4)
 			{
-				String tmp = itemstates.get(itemstates.size()-i).getChange();
-				res.put((itemstates.size()-i), tmp);
+				int j=4;
+				for (int i=0; i<=j;i++)
+				{
+					String tmp = itemstates.get(itemstates.size()-i).getChange();
+					res.put((itemstates.size()-i), tmp);
+				}
 			}
-		}
-		else
-		{
-			for (int i=0; i<=itemstates.size();i++)
+			else
 			{
-				String tmp = itemstates.get(i).getChange();
-				res.put(i, tmp);
+				for (int i=0; i<=itemstates.size();i++)
+				{
+					String tmp = itemstates.get(i).getChange();
+					res.put(i, tmp);
+				}
 			}
 		}
 		

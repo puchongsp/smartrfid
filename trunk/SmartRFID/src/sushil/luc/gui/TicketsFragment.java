@@ -47,7 +47,6 @@ public class TicketsFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
-
                 Intent i = new Intent(myparent,Ticket_showItems.class);
 				i.putExtra("Position_InList", position);
 				startActivity(i);

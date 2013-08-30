@@ -19,12 +19,12 @@ public class MyHandler {
 	private TicketScanManager ts_manager;
 	//private ItemInfoManager ii_manager;
 	private NewItemManager ni_manager;
-	private TruckerCheckManager tc_manager;
+	//private TruckerCheckManager tc_manager;
 	//private ReturnItemManager ri_manager;
 	private boolean modeTicketItemScan;
 	//private boolean modeItemInfo;
 	private boolean modeNewItem;
-	private boolean modeTruckerCheck;
+	//private boolean modeTruckerCheck;
 	//private boolean modeReturnItem;
 	
 	/**

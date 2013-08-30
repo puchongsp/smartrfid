@@ -7,9 +7,11 @@ import java.util.List;
 import sushil.luc.gui.Ticket_showItems;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
+import sushil.luc.item.ItemStatus;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketStatus;
+import sushil.luc.utils.ItemHistory;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -36,6 +38,7 @@ public class TicketScanManager {
 	private Ticket currentticket;
 	private Ticket_showItems currentactivity;
 	private List<UgiTag> alreadyUsed;
+	private ItemHistory itemhistory;
 	
 	
 	public TicketScanManager (Context con)
@@ -46,6 +49,7 @@ public class TicketScanManager {
 		this.stillopen =false;
 		this.initial=true;
 		this.alreadyUsed = new LinkedList<UgiTag>();
+		itemhistory = ItemHistory.getInstance();
 	}
 	/**
 	 * Check what has to be done with the tag
@@ -165,9 +169,11 @@ public class TicketScanManager {
 				@Override
 				public void onClick(View v) {
 					Log.d(LogTag, "Button Add to Ticket");
-					//TODO update the Ticket but only localy
-					
-					// TODO add the History
+					//TODO update the Ticket but only localy->done					
+					Item currentItem= currentticket.getItem(tag);
+					currentItem.setStatus(ItemStatus.Checked);
+					// TODO add the History->done
+					itemhistory.saveToHistory(currentItem);
 					// update the views and check if ticket is maybe already fully collected
 					currentticket.calcTicketStatus();
 					currentactivity.fillItems2List();
