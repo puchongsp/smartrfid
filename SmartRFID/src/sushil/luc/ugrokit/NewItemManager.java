@@ -10,6 +10,7 @@ import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
+import sushil.luc.utils.ItemHistory;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -44,6 +45,7 @@ public class NewItemManager {
 	private Item currentItem;
 	private TagNewItemActivity currentActivity;
 	private List<UgiTag> alreadyTestedTags;
+	private ItemHistory itemHistory;
 
 	/**
 	 * Init the Manager
@@ -60,6 +62,7 @@ public class NewItemManager {
 		this.currentItem= null;
 		this.currentActivity=null;
 		this.alreadyTestedTags = new LinkedList<UgiTag>();
+		this.itemHistory = ItemHistory.getInstance();
 	}
 
 	/**
@@ -139,14 +142,14 @@ public class NewItemManager {
 
 		initList();
 
-		Button dialogChancelButton = (Button) dialog
+		Button dialogCancelButton = (Button) dialog
 				.findViewById(R.id.dialogButtonCancel);
-		dialogChancelButton.setText(" Cancel ");
+		dialogCancelButton.setText(" Cancel ");
 		// if button is clicked, close the custom dialog
-		dialogChancelButton.setOnClickListener(new OnClickListener() {
+		dialogCancelButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.d(LogTag, "Button Add to Ticket");
+				Log.d(LogTag, "Button Cancel");
 
 				reset();
 				
@@ -197,6 +200,8 @@ public class NewItemManager {
 			    Log.d(LogTag, "Selected Id was : "+selected_id);
 			    //TODO do the magic
 	            currentItem.setRFID(selected_id);
+	            // Tell the history
+	            itemHistory.saveToHistory(currentItem);
 	            // Stop the rfid scan to save energy
 	            currentActivity.StopInventory();
 	            // tell the view to update. Delete the currently tagged Item

@@ -1,12 +1,20 @@
 package sushil.luc.gui;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.ugrokit.api.Ugi;
 
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
@@ -14,6 +22,8 @@ import sushil.luc.msc.RFIDActivity;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.utils.DateUtil;
+import sushil.luc.utils.ItemHistory;
+import sushil.luc.utils.ItemHistoryObject;
 
 /**
  * Enable RFID and scan
@@ -35,6 +45,8 @@ public class TagNewItemActivity extends UgroKitActivity {
 	private TextView Item_InventoryOnHand;
 	private TextView Item_InventoryOut;
     private Item item;
+   // private ItemHistory itemHistory;
+    private ActionBar actionbar;
 
     private int position;
 
@@ -46,7 +58,18 @@ public class TagNewItemActivity extends UgroKitActivity {
         if (extras != null) {
             position = extras.getInt("position",-1);
         }
-
+        
+        if (position == -1)
+        {
+        	finish();
+        }
+        
+        
+        // init the action bar and assign the current status
+		 actionbar = getActionBar();
+		 actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
+		 actionbar.setSubtitle(currentStatus);
+        
         ItemService itemService = new ItemService();
       //TODO connect to database
         List<Item> newItems = itemService.getNewItems("TagNewItemActivity");
@@ -67,23 +90,8 @@ public class TagNewItemActivity extends UgroKitActivity {
 		Item_InventoryOnHand= (TextView) findViewById(R.id.item_inventoryonhand);
 		Item_InventoryOut= (TextView) findViewById(R.id.item_inventoryout);
         
-        
-        Item_ID.setText("Item ID : "+item.getItemID());
-        Item_Name.setText("Itemname : "+item.getItemName());
-        Item_RFID.setText("RFID :");
-        Item_Location.setText("Location : "+item.getWarehouseLocation());
-        if (item.getStatus()!=null)
-        	Item_Status.setText("Status : "+item.getStatus().toString());
-        else
-        	Item_Status.setText("Status : ");
-        Item_Scanning.setText("Scanning ...");
-        Item_Category.setText("Category : "+item.getCategory().toString());
-		Item_SubCategory.setText("SubCategory : "+item.getSubCategory().toString());
-		Item_CreationDate.setText("Creation Date : "+DateUtil.formatDate(item.getCreationDate().toString()));
-		Item_Type.setText("Type : "+item.getType().toString());
-		Item_InventoryTotal.setText("Inventory Total : "+item.getInventoryTotal().toString());
-		Item_InventoryOnHand.setText("Inventory on Hand : "+item.getInventoryOnHand().toString());
-		Item_InventoryOut.setText("Inventory out : "+item.getInventoryOut().toString());
+        this.updateView(item);
+       
     }
 /**
  * start the Rfid scan and set the correct Handler modes
@@ -96,31 +104,74 @@ public class TagNewItemActivity extends UgroKitActivity {
 	   Log.d("TagNewItemAc", "onResume");
 	   super.mHandler.modeNewItem(true, this, item);
    }
+   
+   public void onPause()
+   {
+	   super.onPause();
+	   
+	   super.StopInventory();
+	   super.mHandler.modeNewItem(false,null, null);
+   }
     
-  /*  public void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        //check if RFID already exists
-        // make RFId lookup here
-        //boolean result = rfidLookup(TagId);
-        ItemService itemService = new ItemService();
-        Item lookupItem = itemService.getItemInfo(TagId);
-
-        // lookupItem null means the rfid is not yet assigned to any item yet
-        if (lookupItem == null) {
-            item.setRFID(TagId);
-            Item_Scanning.setText("Item tagged Successfully!");
-            Item_RFID.setText("RFID :"+TagId);
-        }
-        else {
-            Toast.makeText(this, "RFID is already assigned", Toast.LENGTH_LONG).show();
-        }
-
-    }*/
     
     public void updateView ()
     {
     	 Item_Scanning.setText("Item tagged Successfully!");
          Item_RFID.setText("RFID :"+item.getRFID());
     }
+
+       
+       private void updateView (Item currentItem)
+       {
+    	   item = currentItem;
+    	   Item_ID.setText("Item ID : "+item.getItemID());
+           Item_Name.setText("Itemname : "+item.getItemName());
+           Item_RFID.setText("RFID :");
+           Item_Location.setText("Location : "+item.getWarehouseLocation());
+           if (item.getStatus()!=null)
+           {
+        	   Item_Status.setText("Status : "+item.getStatus().toString());
+           }
+           else
+           {
+           		Item_Status.setText("Status : ");
+           }
+           	Item_Scanning.setText("Scanning ...");
+           	Item_Category.setText("Category : "+item.getCategory().toString());
+	   		Item_SubCategory.setText("SubCategory : "+item.getSubCategory().toString());
+	   		Item_CreationDate.setText("Creation Date : "+DateUtil.formatDate(item.getCreationDate().toString()));
+	   		Item_Type.setText("Type : "+item.getType().toString());
+	   		Item_InventoryTotal.setText("Inventory Total : "+item.getInventoryTotal().toString());
+	   		Item_InventoryOnHand.setText("Inventory on Hand : "+item.getInventoryOnHand().toString());
+	   		Item_InventoryOut.setText("Inventory out : "+item.getInventoryOut().toString());
+       }
+       
+       @Override
+		/**
+		 * If the connection from the ugrokit changes, this methode gives feedback to the user
+		 */
+		public void connectionStateChanged(Ugi.ConnectionStates connectionState) {
+			super.connectionStateChanged(connectionState);
+			// update the Status
+			super.calculateStatus();
+			notifiySatusUpdate();
+		}
+		
+		/**
+		 * Update the status bar
+		 */
+		public void notifiySatusUpdate()
+		{
+			if (actionbar!=null)
+				actionbar.setSubtitle(currentStatus);
+		}
+		
+		public void onDestroy()
+		{
+			super.onDestroy();
+			super.StopInventory();
+			super.mHandler.modeNewItem(false,null, null);
+			super.calculateStatus();
+		}
+
 }

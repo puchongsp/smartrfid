@@ -13,12 +13,11 @@ package sushil.luc.item;
 	*/
 
 public enum ItemStatus {
-		Available("Available",0),
-		Repair("Repair",1),
-		Transport("Transport",2),
-		RentToCustomer("RentToCustomer",3),
-		Collected ("Collected",4),
-        Returned ("Returned", 5);
+	Available("Available",0),
+	Staged("IsStaged",1),
+	Checked("IsChecked",2),
+	Returned ("Returned", 3),
+	Repair ("Repair",4);
 		
 		private String stringvalue;
 		private int intValue;

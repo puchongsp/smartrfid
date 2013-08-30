@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ugrokit.api.Ugi;
+
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.RFIDActivity;
@@ -14,6 +16,8 @@ import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
 import sushil.luc.ticket.TicketService;
 import sushil.luc.ticket.TicketStatus;
+import sushil.luc.utils.ItemHistory;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +37,8 @@ public class Ticket_showItems extends UgroKitActivity{
 	private Ticket currentTicket;
 	private Context myparent;
 	private TicketManagerAssembler assembler ;
+	private ItemHistory itemHistory;
+	private ActionBar actionbar;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,17 +46,7 @@ public class Ticket_showItems extends UgroKitActivity{
 		setContentView(R.layout.ticket_show_items);
 		
 		myparent = this;
-		
-		Button b = (Button)findViewById(R.id.test);
-		b.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				TicketService ts = new TicketService();
-				ts.ticketCollected(currentTicket, myparent);
-				
-			}
-		});
+		itemHistory = ItemHistory.getInstance();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -61,6 +57,11 @@ public class Ticket_showItems extends UgroKitActivity{
 			finish();
 		else
 		{
+			 // init the action bar and assign the current status
+			 actionbar = getActionBar();
+			 actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
+			 actionbar.setSubtitle(currentStatus);
+			
 			this.ItemList = (ListView)findViewById(R.id.ItemsList);
 			
 			assembler = new TicketManagerAssembler(myparent);
@@ -134,42 +135,75 @@ public class Ticket_showItems extends UgroKitActivity{
 	 */
 	public void onDestroy()
 	{
+		super.StopInventory();
+		super.stopAllModes();
+		super.calculateStatus();
 		assembler.saveTicket(currentTicket);
 		super.onDestroy();
 	}
+	
+	public void onPause()
+	{
+		super.StopInventory();
+		super.stopAllModes();
+		super.calculateStatus();
+		//assembler.saveTicket(currentTicket);
+		super.onPause();
+	}
+	
 	/**
 	 * Checks if there are any items left which need to be collected
 	 */
-	public void evalTicket()
+	/*public void evalTicket()
 	{
 		List<Item> items =currentTicket.getItems();
 		
 		boolean close =true;
-		boolean partial =false;
+		//boolean partial =false;
 		
 		for (int i= 0; i<items.size();i++)
 		{
 			if (items.get(i).getStatus().equals(ItemStatus.Collected))
 			{
 				close = close && true;
-				partial = partial || true;
+		//		partial = partial || true;
 			}
 			else
 			{
 				close = close && false;
-				partial = partial || false;
+		//		partial = partial || false;
 			}
 		}
 		
 		// set the result to the ticket
 		if (close)
-			currentTicket.setStatus(TicketStatus.Closed);
+			currentTicket.setStatus(TicketStatus.Checked);
 		else
 		{
-			if(partial)
-				currentTicket.setStatus(TicketStatus.InProgress);
-			else
+			//if(partial)
 				currentTicket.setStatus(TicketStatus.Open);
+			//else
+			//	currentTicket.setStatus(TicketStatus.Open);
 		}
+	}*/
+	
+	@Override
+	/**
+	 * If the connection from the ugrokit changes, this methode gives feedback to the user
+	 */
+	public void connectionStateChanged(Ugi.ConnectionStates connectionState) {
+		super.connectionStateChanged(connectionState);
+		// update the Status
+		super.calculateStatus();
+		notifiySatusUpdate();
+	}
+	
+	/**
+	 * Update the status bar
+	 */
+	public void notifiySatusUpdate()
+	{
+		if (actionbar!=null)
+			actionbar.setSubtitle(currentStatus);
 	}
 }
