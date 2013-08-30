@@ -92,7 +92,7 @@ public class TicketScanManager {
 			// check if the dialog is open and retest is not active
 			if (stillopen)
 			{
-				// ignore the tag
+				// ignore the tag for now
 			}
 			else
 			{
@@ -145,13 +145,13 @@ public class TicketScanManager {
 			final TextView text = (TextView) dialog.findViewById(R.id.text);
 			text.setText("Found item : "+ info);
 
-			Button dialogChancelButton = (Button) dialog.findViewById(R.id.dialogButtonCancel);
-			dialogChancelButton.setText(" Cancel ");
+			Button dialogCancelButton = (Button) dialog.findViewById(R.id.dialogButtonCancel);
+			dialogCancelButton.setText(" Cancel ");
 			// if button is clicked, close the custom dialog
-			dialogChancelButton.setOnClickListener(new OnClickListener() {
+			dialogCancelButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Log.d(LogTag, "Button Add to Ticket");
+					Log.d(LogTag, "Button Cancel");
 					
 					reset();
 					dialog.dismiss();					
@@ -167,8 +167,9 @@ public class TicketScanManager {
 					Log.d(LogTag, "Button Add to Ticket");
 					//TODO do the magic
 					
+					// TODO add the History
 					// update the views and check if ticket is maybe already fully collected
-					currentactivity.evalTicket();
+					currentticket.calcTicketStatus();
 					currentactivity.fillItems2List();
 					
 					alreadyUsed.add(tag);

@@ -19,6 +19,7 @@ import java.util.Map;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.smartrfid.R;
+import sushil.luc.utils.ItemHistory;
 
 public class NewItemFragment extends Fragment {
 
@@ -28,14 +29,14 @@ public class NewItemFragment extends Fragment {
     private static List<Map<String, String>> groupData;
     private static List<Item> newItems;
     private static Context context;
-   // private L
+    private ItemHistory itemHistory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.new_item_fragment, container, false);
       // loadNewItems();
-      //  setRetainInstance(true);
+        itemHistory = ItemHistory.getInstance();
         return view;
     }
 

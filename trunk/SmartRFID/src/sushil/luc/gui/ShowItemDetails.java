@@ -1,17 +1,19 @@
 package sushil.luc.gui;
 
-import android.app.Activity;
+
+import com.ugrokit.api.Ugi;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import sushil.luc.item.Item;
+import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
 import sushil.luc.utils.DateUtil;
+import android.app.ActionBar;
 
-public class ShowItemDetails extends Activity{
+public class ShowItemDetails extends UgroKitActivity{
 	
 	private TextView Item_ID;
 	private TextView Item_Name;
@@ -22,13 +24,14 @@ public class ShowItemDetails extends Activity{
 	private TextView Item_Deliverydate;
 	private TextView Item_StopRent;
 	private TextView Item_ReturnDate;
+	private ActionBar actionbar;
 
 	
 	private int positionInTicketListview;
 	private int positionInItemListview;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.show_item_details);
 	
@@ -42,6 +45,11 @@ public class ShowItemDetails extends Activity{
 		finish();
 	else
 	{
+		
+		// init the action bar and assign the current status
+		actionbar = getActionBar();
+		actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
+		actionbar.setSubtitle(currentStatus);
 		
 		Ticket current = TicketManagerAssembler.ticketlist.get(positionInTicketListview);
 		
@@ -78,6 +86,35 @@ public class ShowItemDetails extends Activity{
 			Item_ReturnDate.setVisibility(View.INVISIBLE);
 		
 	}
+	
 }
+	
+	public void onResume()
+	{
+		// stop the inventory if not yet stopped and stop all modes. We don't need it here
+		super.onResume();
+		super.stopAllModes();
+		super.calculateStatus();
+	}
+	
+    @Override
+		/**
+		 * If the connection from the ugrokit changes, this methode gives feedback to the user
+		 */
+		public void connectionStateChanged(Ugi.ConnectionStates connectionState) {
+			super.connectionStateChanged(connectionState);
+			// update the Status
+			super.calculateStatus();
+			notifiySatusUpdate();
+		}
+		
+		/**
+		 * Update the status bar
+		 */
+		public void notifiySatusUpdate()
+		{
+			if (actionbar!=null)
+				actionbar.setSubtitle(currentStatus);
+		}
 
 }

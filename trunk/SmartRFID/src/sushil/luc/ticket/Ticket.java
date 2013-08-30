@@ -17,12 +17,12 @@ public class Ticket {
     /*
      * to map models vars with fields in json
      */
-    public static final String _ID = "id";
+  /*  public static final String _ID = "id";
     public static final String _CUSTOMER = "customer";
     public static final String _ITEMS = "items";
     public static final String _STATUS = "status";
     public static final String _CREATED_DATE = "created_date";
-    public static final String _DELIVERY_DATE = "delivery_date";
+    public static final String _DELIVERY_DATE = "delivery_date";*/
 
 
 	private String TicketID;
@@ -82,7 +82,7 @@ public class Ticket {
 			if (rfid!=null && rfid.equals(check))
 			{
 				result =true;
-				this.Items.get(i).setStatus(ItemStatus.Collected);
+				this.Items.get(i).setStatus(ItemStatus.Checked);
 			}
 			i++;
 		}
@@ -107,17 +107,17 @@ public class Ticket {
 	}
 	
 	
-	private void calcTicketStatus ()
+	public void calcTicketStatus ()
 	{
 		boolean res =true;
-		boolean onecollected =false;
+	//	boolean onecollected =false;
 		for(int i=0; i<this.Items.size();i++)
 		{
 			Item tmp = this.Items.get(i);
-			if (tmp.getStatus().equals(ItemStatus.Collected))
+			if (tmp.getStatus().equals(ItemStatus.Checked))
 			{
 				res = res && true;
-				onecollected =true;
+	//			onecollected =true;
 			}
 			else
 			{
@@ -127,12 +127,12 @@ public class Ticket {
 		
 		if (res)
 		{
-			this.setStatus(TicketStatus.Closed);
+			this.setStatus(TicketStatus.Checked);
 		}
 		else
-			if (onecollected)
-				this.setStatus(TicketStatus.InProgress);
-			else
+			//if (onecollected)
+			//	this.setStatus(TicketStatus.InProgress);
+			//else
 				this.setStatus(TicketStatus.Open);
 	}
 	

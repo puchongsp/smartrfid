@@ -92,7 +92,7 @@ public class TicketsFragment extends Fragment {
         	
         	for (Item tmpItem :items)
         	{
-        		if (tmpItem.getStatus()!=null && tmpItem.getStatus().equals(ItemStatus.Collected))
+        		if (tmpItem.getStatus()!=null && tmpItem.getStatus().equals(ItemStatus.Checked))
         			collected++;
         	}	
         	
@@ -141,7 +141,7 @@ public class TicketsFragment extends Fragment {
         	
         	for (Item tmpItem :items)
         	{
-        		if (tmpItem.getStatus()!=null && tmpItem.getStatus().equals(ItemStatus.Collected))
+        		if (tmpItem.getStatus()!=null && tmpItem.getStatus().equals(ItemStatus.Checked))
         			collected++;
         	}	
         	

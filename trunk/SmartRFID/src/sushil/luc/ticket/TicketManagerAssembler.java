@@ -56,6 +56,7 @@ public class TicketManagerAssembler implements TicketManager{
     
     public List<Item> getShortestRoute(Ticket t)
     {
+    	// Not possible since the exacat locations in the warehouse is not maintained
     	return t.getItems();
     }
     

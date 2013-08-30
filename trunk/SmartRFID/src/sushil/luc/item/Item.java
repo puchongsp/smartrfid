@@ -11,7 +11,7 @@ import sushil.luc.dtos.ItemDTO;
 import sushil.luc.dtos.ItemInfoDTO;
 import sushil.luc.utils.DateUtil;
 
-public class Item{
+public class Item implements Cloneable{
 
     /*
      * to map models vars with fields in json
@@ -64,7 +64,7 @@ public class Item{
     				this.RFID = itemDto.getItemInfo().getRfidInfo().getRfidNumber();
     			}
     			
-    			this.Status = mapStatus (itemDto.getItemInfo().getStatusNote());
+    		//	this.Status = mapStatus (itemDto.getItemInfo().getStatusNote());
     			this.Category = itemDto.getItemInfo().getCategory();
     			this.CreationDate = itemDto.getItemInfo().getCreationDate();
     			this.SubCategory = itemDto.getItemInfo().getSubCategory();
@@ -92,10 +92,11 @@ public class Item{
     			this.Quantity = String.valueOf(itemDto.getTicketItemInfo().getQuantity());
     		}
     		
+    		// TODO
     		if (itemDto.getItemStatus()!=null)
     		{
     			if(itemDto.getItemStatus().isChecked())
-            		this.Status = ItemStatus.RentToCustomer;
+            		this.Status = ItemStatus.Checked;
             	else 
             		if(itemDto.getItemStatus().isReturned())
             			this.Status = ItemStatus.Returned;
@@ -240,7 +241,7 @@ public class Item{
 		OriginalStartRentDate = originalStartRentDate;
 	}
 	
-	private ItemStatus mapStatus (String status)
+	/*private ItemStatus mapStatus (String status)
 	{
 		// Have to check if mapping is correct
 		
@@ -252,7 +253,7 @@ public class Item{
 				return ItemStatus.Transport;
 		}
 		return ItemStatus.Available;
-	}
+	}*/
 
 	public String getStartRentDate() {
 		return StartRentDate;
@@ -333,5 +334,8 @@ public class Item{
 	public void setDeliveryDate(String deliveryDate) {
 		DeliveryDate = deliveryDate;
 	}
-	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }

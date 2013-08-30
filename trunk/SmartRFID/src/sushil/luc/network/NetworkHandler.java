@@ -78,7 +78,7 @@ public class NetworkHandler {
 	  
 	  public boolean updateTicketFullyCollected(Ticket t) {
 		  
-		  SimplePostTask pt = new SimplePostTask(t, "TicketFullyCollected");
+		  SimplePutTask pt = new SimplePutTask(t, "TicketFullyCollected");
 		  pt.execute(new String[0]);
 		  return true;
 	  }

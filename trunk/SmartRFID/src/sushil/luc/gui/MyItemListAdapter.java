@@ -46,13 +46,13 @@ public class MyItemListAdapter extends SimpleAdapter {
     	{
 		switch (status)
 		{
-			case Collected:
+			case Checked:
 				res =Color.GREEN;
-				Log.d(MyLog, "Closed == Green");
+				Log.d(MyLog, "Checked == Green");
 				break;
 			case Available:
 				res =Color.RED;
-				Log.d(MyLog, "Open == RED");
+				Log.d(MyLog, "Available == RED");
 				break;
             case Repair:
                 res = Color.DKGRAY;

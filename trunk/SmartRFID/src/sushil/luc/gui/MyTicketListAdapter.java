@@ -50,8 +50,8 @@ public class MyTicketListAdapter extends SimpleAdapter {
 				if (logging)
 					Log.d(MyLog, "Closed == Green");
 				break;
-			case InProgress:
-				res =Color.YELLOW;
+			case Checked:
+				res =Color.GREEN;
 				if (logging)
 					Log.d(MyLog, "InProgress == Yellow");
 				break;
