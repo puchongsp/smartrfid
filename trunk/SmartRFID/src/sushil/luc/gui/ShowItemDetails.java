@@ -26,7 +26,6 @@ public class ShowItemDetails extends UgroKitActivity{
 	private TextView Item_ReturnDate;
 	private ActionBar actionbar;
 
-	
 	private int positionInTicketListview;
 	private int positionInItemListview;
 	

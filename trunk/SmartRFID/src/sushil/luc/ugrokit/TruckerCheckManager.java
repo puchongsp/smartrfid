@@ -27,7 +27,11 @@ import com.ugrokit.api.UgiTag;
 
 public class TruckerCheckManager {
 
-	private Context con;
+	/**
+	 * Not needed in this project
+	 * 
+	 */
+	/*private Context con;
 	private Dialog dialog;
 	private String LogTag = "TruckerCheck";
 	public boolean initial;
@@ -58,7 +62,7 @@ public class TruckerCheckManager {
 	}
 
 	private String getTagName(UgiTag tag) {
-		// TODO ask database
+
 		String name = tag.getEpc().toString();
 		name = name.replaceFirst("^0*", "");
 		return "TestName" + name;
@@ -95,7 +99,7 @@ public class TruckerCheckManager {
 			@Override
 			public void onClick(View v) {
 				Log.d(LogTag, "Ok Button");
-				// TODO do the magic
+
 				//reset();
 				dialog.dismiss();
 			}
@@ -109,7 +113,7 @@ public class TruckerCheckManager {
 			@Override
 			public void onClick(View v) {
 				Log.d(LogTag, "Retest Button");
-				// TODO do the magic
+
 			//	reset();
 				dialog.dismiss();
 			}
@@ -127,7 +131,6 @@ public class TruckerCheckManager {
 
 	private void initList() {
 
-		// TODO LOAD FROM TICKET data
 		String[] dummy = new String[] { "TestName1", "TestName2", "TestName3" };
 		taglist = new ArrayList<String>();
 		for (String a : dummy) {
@@ -159,7 +162,6 @@ public class TruckerCheckManager {
 		}
 	}
 
-	// TODO uncomment
 	/*
 	 * public void setTicket (Ticket t) { deliveryTicket =t; }
 	 */

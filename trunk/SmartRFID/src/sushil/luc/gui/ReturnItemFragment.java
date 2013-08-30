@@ -23,11 +23,14 @@ public class ReturnItemFragment extends Fragment {
 
     private ListView returnItemListView;
     private View view;
+    private ItemService itemService;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.return_items_fragment, container, false);
-
+        
+        itemService = new ItemService();
+        
         return view;
     }
 
@@ -38,16 +41,12 @@ public class ReturnItemFragment extends Fragment {
     }
 
     public void returnItem(Item item){
-        ItemService itemService = new ItemService();
-      //TODO connect to database
         itemService.returnItem(item);
         populateItems();
     }
 
     private void populateItems() {
 
-        ItemService itemService = new ItemService();
-      //TODO connect to database
         List<Item> returnedItems = itemService.getReturnedItems();
 
         String KEY_LABEL ="Big Text";

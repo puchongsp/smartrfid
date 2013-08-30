@@ -16,11 +16,6 @@ import sushil.luc.network.NetworkHandler;
 
 public class TicketService {
 
-    private static final String TICKET = "ticket";
-    private static final String CLIENT = "client";
-    private static final String ITEM = "items";
-
-
   //  private final String URL = "http://rfidproject.azurewebsites.net/api/orders/query?limit=5";
 
     private final String URL = MainActivity.HOST_URL + "/api/orders/query.php?limit=5";
@@ -41,7 +36,10 @@ public class TicketService {
 	}
 
 
-
+	public List<Ticket> fetchLocalTickets()
+	{
+		return Tickets;
+	}
     /**
      * This function will fetch json data from exposed REST webservice
      * and return after converting it to Ticket model
@@ -78,7 +76,6 @@ public class TicketService {
 
                         String ticketsUrl = MainActivity.HOST_URL + "/api/tickets/query.php?limit="+limit+"&skip=0&orderBy=0&filters=0&addRfids=1&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
 
-                        //String ticketsUrl = "http://192.168.2.69/smartrfid/api/ticket.json";
                         try {
                             networkHandler.read(ticketsUrl,TicketDTO.class, new Callback<TicketDTO>() {
                                 @Override
@@ -103,11 +100,6 @@ public class TicketService {
             Toast.makeText(context, "Could not connect. Please check your connection.", Toast.LENGTH_LONG).show();
         }
         }
-        /*
-          * If you need mockupdata, disable whole block of code above
-          * and uncomment the statement below this comment
-         */
-        //Tickets = getMockupData();
 
         return Tickets;
 	}

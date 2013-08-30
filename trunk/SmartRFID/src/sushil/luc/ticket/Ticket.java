@@ -42,7 +42,7 @@ public class Ticket {
         this.TicketID = String.valueOf(ticketDTO.getIdentifier());
 
         CustomerDTO customerDto = orderDTO.getCustomer();
-        Customer customer = new Customer(customerDto);
+        Customer customer = new Customer(customerDto, orderDTO.getInfo());
 
         this.TicketCustomer = customer;
         

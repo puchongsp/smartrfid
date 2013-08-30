@@ -12,7 +12,7 @@ import com.ugrokit.api.UgiTag;
  */
 public class ItemInfoManager {
 	
-	private boolean init;
+/*	private boolean init;
 	private UgiTag lastTag;
 	private String DebugTag = "ItemInfoManager";
 	//private Item item;
@@ -35,7 +35,6 @@ public class ItemInfoManager {
 			init = false;
 			lastTag = tag;
 			Log.d(DebugTag, "Found Item "+tag.getEpc());
-			//TODO Remove next line later
 			reset();
 			//item = service.getItemInfo(lastTag.getEpc());
 		}

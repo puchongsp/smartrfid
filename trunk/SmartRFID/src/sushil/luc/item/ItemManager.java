@@ -2,6 +2,7 @@ package sushil.luc.item;
 
 import java.util.List;
 
+//TODO what to do with this class
 public class ItemManager {
 	public void tag(String Rfid, int ItemID)
 	{

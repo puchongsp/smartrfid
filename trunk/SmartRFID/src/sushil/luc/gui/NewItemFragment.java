@@ -29,14 +29,12 @@ public class NewItemFragment extends Fragment {
     private static List<Map<String, String>> groupData;
     private static List<Item> newItems;
     private static Context context;
-    private ItemHistory itemHistory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.new_item_fragment, container, false);
-      // loadNewItems();
-        itemHistory = ItemHistory.getInstance();
+
         return view;
     }
 
@@ -49,8 +47,10 @@ public class NewItemFragment extends Fragment {
 
     private void loadNewItems(){
         ItemService itemService = new ItemService();
-        //TODO connect to database-> done
+        
+        // get all the items without an rfid tag
         newItems = itemService.getNewItems("NewItemFragment");
+        
         String KEY_LABEL ="Big Text";
         String KEY_HELP ="Help Text";
         Map<String, String> group;

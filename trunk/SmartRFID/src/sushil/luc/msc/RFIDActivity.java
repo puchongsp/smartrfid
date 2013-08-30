@@ -10,7 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
-
+// OLD Implementation for the NFC adapter of the Phone
 public class RFIDActivity extends Activity {
 
 	private static String log = "RFIDActivity";

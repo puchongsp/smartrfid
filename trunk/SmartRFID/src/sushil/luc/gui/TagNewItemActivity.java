@@ -45,7 +45,6 @@ public class TagNewItemActivity extends UgroKitActivity {
 	private TextView Item_InventoryOnHand;
 	private TextView Item_InventoryOut;
     private Item item;
-   // private ItemHistory itemHistory;
     private ActionBar actionbar;
 
     private int position;
@@ -64,14 +63,13 @@ public class TagNewItemActivity extends UgroKitActivity {
         	finish();
         }
         
-        
         // init the action bar and assign the current status
 		 actionbar = getActionBar();
 		 actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		 actionbar.setSubtitle(currentStatus);
         
         ItemService itemService = new ItemService();
-      //TODO connect to database
+
         List<Item> newItems = itemService.getNewItems("TagNewItemActivity");
 
         item = newItems.get(position);

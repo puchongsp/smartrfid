@@ -106,71 +106,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 		super.onSaveInstanceState(outState);
 		outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
  	}
-
-/*	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}*/
 	
-	
-/*	@Override
-	public void inventoryTagSubsequentFinds(UgiTag tag, int foundnb) {
-		//Log.d(LogTag, "inventoryTagSubsequentFinds");
-		//mHandler.setTag(tag);
-
-	}*/
-	
-/*	public void onNewIntent(Intent intent) {
-		//returnItemsFragment = TabListenerReturnItems.getFragment();
-		//ticketsFragment = TabListenerTickets.getFragment();
-		newItemsFragment = TabListenerNewItems.getFragment();
-		itemInfoFragment = TabListenerItemInfo.getFragment();
-		
-		Tab currenttab = actionbar.getSelectedTab();
-		if (currenttab.getText().equals(ItemInfoTabName))
-		{
-			Log.d(log, "onNewIntent");
-			super.doStartStopInventory();
-			TagId = super.mHandler.getLastEpc();
-			super.doStartStopInventory();
-			Log.d(log, TagId);
-			Item i = service.getItemInfo(TagId);
-			List<String> iteminfo = new LinkedList<String>();
-			
-	    	if (i ==null)
-	    	{
-	    		iteminfo.add("");
-	    		iteminfo.add("No Item found for the scanned RFID");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    	}
-	    	else
-	    	{
-	    		iteminfo.add(i.getItemID());
-	    		iteminfo.add(i.getItemName());
-	    		iteminfo.add(i.getRFID());
-	    		iteminfo.add(i.getStatus().toString());
-	    		iteminfo.add(i.getWarehouseLocation());
-	    	}
-				    	
-			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4));
-			
-        } else if (currenttab.getText().equals(ReturnItemsTabName)) {
-            Log.d(log, "Return Items");
-            super.doStartStopInventory();
-            TagId = super.mHandler.getLastEpc();
-            super.doStartStopInventory();
-            Log.d(log, TagId);
-            Item item = service.getItemInfo(TagId);
-            if(item != null) {
-                ((ReturnItemFragment)returnItemsFragment).returnItem(item);
-            }
-        }
-	}*/
-
 	@Override
 	/**
 	 * If the connection from the ugrokit changes, this methode gives feedback to the user
@@ -218,7 +154,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 			
 			// search information about the new tag
 			Log.d(log, currentTagId);
-			// TODO Here is a connection to the database->done
+			
 			Item i = service.fetchItemFromRfid(currentTagId);
 			List<String> iteminfo = new LinkedList<String>();
 			
@@ -268,7 +204,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
             // collect infos for the scanned tag
             currentTagId = tag.getEpc().toString();
             Log.d(log, currentTagId);
-         // TODO Here is a connection to the database->done
+        
             Item item = service.fetchItemFromRfid(currentTagId);
           
             if(item != null) {

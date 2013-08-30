@@ -36,7 +36,7 @@ public class MyHandler {
 		ts_manager = new TicketScanManager(con);
 	//	ii_manager = new ItemInfoManager();
 		ni_manager = new NewItemManager(con);
-		tc_manager = new TruckerCheckManager(con);
+		//tc_manager = new TruckerCheckManager(con);
 	//	ri_manager = new ReturnItemManager(con);
 		lastTag=null;
 	}
@@ -61,11 +61,11 @@ public class MyHandler {
 	 * Turn on the Trucker scan Mode
 	 * @param mode true = on, false =off
 	 */
-	public void modeTruckerCheck( boolean mode)
+/*	public void modeTruckerCheck( boolean mode)
 	{
 		tc_manager.reset();
 		modeTruckerCheck = mode;
-	}
+	}*/
 	
 	/**
 	 * Tag new Items 
@@ -99,8 +99,8 @@ public class MyHandler {
 			ItemInfoScan(current);*/
 		if (modeNewItem)
 			NewItemScan(current);
-		if (modeTruckerCheck)
-			TruckerCheckScan(current);
+/*		if (modeTruckerCheck)
+			TruckerCheckScan(current);*/
 	/*	if (modeReturnItem)
 			ReturnItemScan(current);*/
 			
@@ -143,10 +143,10 @@ public class MyHandler {
 	 * Give the Trucker Check manager the new tag
 	 * @param tag
 	 */
-	private void TruckerCheckScan (UgiTag tag)
+/*	private void TruckerCheckScan (UgiTag tag)
 	{
 		tc_manager.handleTag(tag);
-	}
+	}*/
 	
 	/*private void ReturnItemScan (UgiTag tag)
 	{

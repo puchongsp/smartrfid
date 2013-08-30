@@ -54,7 +54,7 @@ public class TicketScanManager {
 	public void handleTag (UgiTag tag)
 	{
 		// did the user find all the tags?
-		if (currentticket.getStatus().equals(TicketStatus.Closed))
+		if (!currentticket.getStatus().equals(TicketStatus.Open))
 		{
 			// stop the rfid scanner to save energy
 			this.currentactivity.StopInventory();
@@ -165,7 +165,7 @@ public class TicketScanManager {
 				@Override
 				public void onClick(View v) {
 					Log.d(LogTag, "Button Add to Ticket");
-					//TODO do the magic
+					//TODO update the Ticket but only localy
 					
 					// TODO add the History
 					// update the views and check if ticket is maybe already fully collected

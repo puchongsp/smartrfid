@@ -38,21 +38,20 @@ public class TicketsFragment extends Fragment {
     	
     	myparent = container.getContext();
     	
-    	this.TicketList = (ListView) view.findViewById(R.id.TicketList);
+    	TicketList = (ListView) view.findViewById(R.id.TicketList);
     	
     	
-    	this.TicketList.setOnItemClickListener(new OnItemClickListener() {
+    	TicketList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//Toast.makeText(myparent, "Hallo", Toast.LENGTH_LONG).show();
+				
 				Intent i = new Intent(myparent,Ticket_showItems.class);
 				i.putExtra("Position_InList", position);
 				startActivity(i);
 			}
 		});
     	
-    	 //setRetainInstance(true);
     	return view;
     }
     
@@ -77,7 +76,7 @@ public class TicketsFragment extends Fragment {
     	
     	TicketManagerAssembler assembler = new TicketManagerAssembler(getActivity().getApplicationContext());
     	
-    	List<Ticket> alltickets = assembler.fetchTickets();
+    	List<Ticket> alltickets = assembler.fetchTickets(false);
     	
     	for (int i =0; i<alltickets.size();i++)
     	{
@@ -126,7 +125,7 @@ public class TicketsFragment extends Fragment {
     	
     	TicketManagerAssembler assembler = new TicketManagerAssembler(myparent);
     	
-    	List<Ticket> alltickets = assembler.fetchTickets();
+    	List<Ticket> alltickets = assembler.fetchTickets(true);
     	
     	for (int i =0; i<alltickets.size();i++)
     	{

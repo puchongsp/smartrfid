@@ -35,7 +35,7 @@ import com.ugrokit.api.UgiTag;
  */
 public class ReturnItemManager {
 
-	private Context con;
+/*	private Context con;
 	private Dialog dialog;
 	private String LogTag = "ReturnItem";
 	public boolean initial;
@@ -120,5 +120,5 @@ public class ReturnItemManager {
 			adapter.notifyDataSetChanged();
 			//Log.d(LogTag, "addTagtoList yayayayay");
 		}
-	}
+	}*/
 }
