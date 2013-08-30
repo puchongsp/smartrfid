@@ -23,7 +23,7 @@ import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketStatus;
 import sushil.luc.utils.ItemHistory;
 
-public class TicketScanManager {
+public class TicketScanManager extends RFIDManager{
 	
 	private Context con;
 	public boolean retest;
@@ -35,7 +35,8 @@ public class TicketScanManager {
 	private Ticket currentticket;
 	private Ticket_showItems currentactivity;
 	private List<UgiTag> alreadyUsed;
-	private ItemHistory itemhistory;
+//	private ItemHistory itemhistory;
+	private ItemService itemservice;
 	
 	
 	public TicketScanManager (Context con)
@@ -46,7 +47,8 @@ public class TicketScanManager {
 		this.stillopen =false;
 		this.initial=true;
 		this.alreadyUsed = new LinkedList<UgiTag>();
-		itemhistory = ItemHistory.getInstance();
+		//itemhistory = ItemHistory.getInstance();
+		this.itemservice = new ItemService();
 	}
 	/**
 	 * Check what has to be done with the tag
@@ -62,6 +64,8 @@ public class TicketScanManager {
 		}
 		else
 		{
+			itemservice.fetchItemFromRfid(tag, null, this);
+		/*
 		//this.discoveredtags.add(tag);
 		String name = getTagName(tag);
 		//this.IdtoName.put(tag.getEpc(), name);
@@ -110,7 +114,7 @@ public class TicketScanManager {
 				}
 			}
 		}
-		}
+		}*/
 		}
 	}
 	
@@ -119,15 +123,68 @@ public class TicketScanManager {
 	 * @param tag
 	 * @return the name of the item
 	 */
-	private String getTagName(UgiTag tag)
+/*	private String getTagName(UgiTag tag)
 	{
 		// ask database
 		String id = tag.getEpc().toString();
 		ItemService is = new ItemService();
-		Item i = is.fetchIt emFromRfid(id);
+		Item i = is.fetchItemFromRfid(id, null, this);
 		//TODO: resolve concurrency issue here
         return i.getItemName();
-
+	}*/
+	
+	
+	public void handle2 (Item item, UgiTag tag)
+	{
+				//this.discoveredtags.add(tag);
+				String name = item.getItemName();
+				//this.IdtoName.put(tag.getEpc(), name);
+				Log.d(LogTag, "handle Tag "+tag.getEpc().toString());
+				String info = name +" ("+tag.getEpc()+")";
+				// If the tag was already handled we don't have to check it again
+				if (!alreadyUsed.contains(tag))
+				{
+					// did the user activate the retest mode, to find the correct item
+				if (retest)
+				{
+					TextView text = (TextView) dialog.findViewById(R.id.text);
+				//	Log.d(LogTag, "RetestTag "+retestTag.getEpc().toBytes());
+				//	Log.d(LogTag, "CurrentTag "+tag.getEpc().toBytes());
+					// is the current tag the same as before
+					if (retestTag.equals(tag))
+					{
+						Log.d(LogTag, "The same Tag");				
+						text.setText("Found the same item : "+ info);
+					}
+					else
+					{
+						Log.d(LogTag, "Not the same Tag");
+						text.setText("Found another item : "+ info);
+					}
+				}
+				else
+				{
+					// check if the dialog is open and retest is not active
+					if (stillopen)
+					{
+						// ignore the tag for now
+					}
+					else
+					{
+						// Dialog not yet open, check if the tag is in the item list of the ticket
+						if (currentticket.checkRFIDInTicket(tag.getEpc().toString()))
+						{
+							this.initial=false;
+							Log.d(LogTag, "First time found, No retest");
+							showDialog(name, tag );
+						}
+						else
+						{
+							Toast.makeText(con, "This item is not in the ticket", Toast.LENGTH_LONG).show();
+						}
+					}
+				}
+				}
 	}
 	
 	/**
@@ -168,11 +225,11 @@ public class TicketScanManager {
 				@Override
 				public void onClick(View v) {
 					Log.d(LogTag, "Button Add to Ticket");
-					//TODO update the Ticket but only localy->done					
+					
 					Item currentItem= currentticket.getItem(tag);
 					currentItem.setStatus(ItemStatus.Checked);
 					// TODO add the History->done
-					itemhistory.saveToHistory(currentItem);
+					//itemhistory.saveToHistory(currentItem);
 					// update the views and check if ticket is maybe already fully collected
 					currentticket.calcTicketStatus();
 					currentactivity.fillItems2List();

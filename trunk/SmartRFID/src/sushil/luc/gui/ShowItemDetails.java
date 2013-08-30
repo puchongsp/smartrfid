@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import sushil.luc.item.Item;
+import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
@@ -33,11 +35,9 @@ public class ShowItemDetails extends UgroKitActivity{
 	private TextView Item_StopRent;
 	private TextView Item_ReturnDate;
 	private ActionBar actionbar;
-	private final int menuGroupId = 1;
-	private ItemHistory itemHistory;
 	private Item currentItem;
 	private Ticket currentTicket;
-	private Map<Integer,Integer> menuItemIdtoVersion;
+	private Button btnUnCheck;
 
 	private int positionInTicketListview;
 	private int positionInItemListview;
@@ -59,8 +59,8 @@ public class ShowItemDetails extends UgroKitActivity{
 		}
 		else
 		{
-			menuItemIdtoVersion = new HashMap<Integer, Integer>();
-			itemHistory= ItemHistory.getInstance();
+		//	menuItemIdtoVersion = new HashMap<Integer, Integer>();
+		//	itemHistory= ItemHistory.getInstance();
 			
 			// init the action bar and assign the current status
 			actionbar = getActionBar();
@@ -80,7 +80,17 @@ public class ShowItemDetails extends UgroKitActivity{
 			Item_Deliverydate= (TextView) findViewById(R.id.item_deliverydate);
 			Item_StopRent= (TextView) findViewById(R.id.item_stopRent);
 			Item_ReturnDate= (TextView) findViewById(R.id.item_returnDate);
-	
+			
+			btnUnCheck = (Button) findViewById(R.id.btn_UnCheck);
+			btnUnCheck.setText("Uncheck Item");
+			btnUnCheck.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// Set it back to Available
+						currentItem.setStatus(ItemStatus.Available);
+				}
+			});
+			
 			Item_ID.setText("Item ID : "+currentItem.getItemID());		
 			Item_Name.setText("Itemname : "+currentItem.getItemName());
 			if (currentItem.getRFID()!=null)
@@ -112,6 +122,8 @@ public class ShowItemDetails extends UgroKitActivity{
 			else
 				Item_ReturnDate.setText("Return Date : ");
 			
+			
+			
 		}
 	}
 	
@@ -121,6 +133,15 @@ public class ShowItemDetails extends UgroKitActivity{
 		super.onResume();
 		super.stopAllModes();
 		super.calculateStatus();
+		
+		if (currentItem.getStatus().equals(ItemStatus.Checked))
+		{
+			btnUnCheck.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			btnUnCheck.setVisibility(View.INVISIBLE);
+		}
 	}
 	
     @Override
@@ -143,7 +164,7 @@ public class ShowItemDetails extends UgroKitActivity{
 				actionbar.setSubtitle(currentStatus);
 		}
 		
-		public boolean onPrepareOptionsMenu(Menu menu)
+		/*public boolean onPrepareOptionsMenu(Menu menu)
 		{
 			menu.clear();
 			menuItemIdtoVersion.clear();
@@ -185,5 +206,5 @@ public class ShowItemDetails extends UgroKitActivity{
 			  
 		 
 			  return super.onOptionsItemSelected(item);
-		}
+		}*/
 }

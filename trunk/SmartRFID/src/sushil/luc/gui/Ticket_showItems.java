@@ -109,9 +109,8 @@ public class Ticket_showItems extends UgroKitActivity{
     		
     		group = new HashMap<String, String>();
         	
-        	group.put( KEY_LABEL,  tmp.getItemName() );
-        	group.put( KEY_HELP, "Location "+tmp.getWarehouseLocation() );
-
+        	group.put( KEY_LABEL,  tmp.getItemID() );
+        	group.put( KEY_HELP, "Desc: "+tmp.getItemName() );
 
         	groupData.add(group);
     	}

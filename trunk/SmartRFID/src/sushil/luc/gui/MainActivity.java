@@ -183,6 +183,23 @@ UgiInventoryDelegate.InventoryTagChangedListener{
             itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4),
                     iteminfo.get(5),iteminfo.get(6),iteminfo.get(7),iteminfo.get(8),iteminfo.get(9),iteminfo.get(10), iteminfo.get(11) );
         }
+        
+        if (currenttab.getText().equals(ReturnItemsTabName))
+        {
+        	if(i != null) {
+          	  // if we found some infos for the tag, tell the view
+              ((ReturnItemFragment)returnItemsFragment).returnItem(i);
+          }
+        }
+        
+        if (currenttab.getText().equals(RepairItemTabName))
+        {
+        	if (i !=null && i.getStatus().equals(ItemStatus.Repair))
+            {
+            	repairItemFragment.setItem(i);
+            	super.StopInventory();
+            }
+        }
     }
 	@Override
 	/**
@@ -210,12 +227,10 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 			// search information about the new tag
 			Log.d(log, currentTagId);
 			
-			service.fetchItemFromRfid(currentTagId);
+			service.fetchItemFromRfid(tag, this, null);
             /*
                 This method calls updateItemInfo();
              */
-
-			
         }
 
 			// if the current tab is the Return Item tab
@@ -225,12 +240,15 @@ UgiInventoryDelegate.InventoryTagChangedListener{
             currentTagId = tag.getEpc().toString();
             Log.d(log, currentTagId);
         
-            Item item = service.fetchItemFromRfid(currentTagId);
+            // this calls updateItemInfo()
+            service.fetchItemFromRfid(tag, this, null);
+            
+           /* Item item = service.fetchItemFromRfid(currentTagId, this);
           
             if(item != null) {
             	  // if we found some infos for the tag, tell the view
                 ((ReturnItemFragment)returnItemsFragment).returnItem(item);
-            }
+            }*/
         }
 		
 		if (currenttab.getText().equals(RepairItemTabName))
@@ -240,14 +258,16 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	            currentTagId = tag.getEpc().toString();
 	            Log.d(log, currentTagId);
 	            
-	            Item item = service.fetchItemFromRfid(currentTagId);
+	            service.fetchItemFromRfid(tag, this, null);
+	            /*
+	            Item item = service.fetchItemFromRfid(currentTagId, this);
 	            
 	            
 	            if (item !=null && item.getStatus().equals(ItemStatus.Repair))
 	            {
 	            	repairItemFragment.setItem(item);
 	            	super.StopInventory();
-	            }
+	            }*/
 	            	
 			}
 	}
