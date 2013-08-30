@@ -81,7 +81,6 @@ public class NewItemManager {
 	        }
 	        else {
 	        	return true;
-	            
 	        }
 	}
 	

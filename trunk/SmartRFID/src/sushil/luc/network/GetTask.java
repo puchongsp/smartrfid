@@ -9,6 +9,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import sushil.luc.gui.MainActivity;
+
 public class GetTask extends AsyncTask<String, String, String>{
 
 	private final String url;
@@ -24,11 +26,11 @@ public class GetTask extends AsyncTask<String, String, String>{
 
     @Override
     protected void onPreExecute() {
-//        dialog = new ProgressDialog(context);
-//        dialog.setMessage("Bitte Warten...");
-//        dialog.setIndeterminate(true);
-//        dialog.setCancelable(true);
-//        dialog.show();
+        dialog = new ProgressDialog(MainActivity.getInstance());
+        dialog.setMessage("Please Wait...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(true);
+        dialog.show();
     }
 
 	@Override
@@ -51,7 +53,7 @@ public class GetTask extends AsyncTask<String, String, String>{
         } else {
             callback.callback(result);
         }
-//        dialog.dismiss();
+        dialog.dismiss();
         super.onPostExecute(result);
 	}
 }
