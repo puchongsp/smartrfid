@@ -1,6 +1,7 @@
 package sushil.luc.msc;
 
 
+import sushil.luc.item.Item;
 import sushil.luc.ugrokit.MyHandler;
 import com.ugrokit.api.Ugi;
 import com.ugrokit.api.UgiInventoryDelegate;
@@ -187,5 +188,15 @@ public class UgroKitActivity extends Activity implements
 		 mHandler.modeNewItem(false, null, null);
 		 mHandler.modeTicketItemScan(false, null, null);
 	//	 mHandler.modeTruckerCheck(false);
+	 }
+	 
+	 /**
+	  * Should be implemented by the real Activites which use the ugrokit.
+	  * Updates the View with the new Item i
+	  * @param i
+	  */
+	 public void updateIteminfo(Item i)
+	 {
+		 
 	 }
 }

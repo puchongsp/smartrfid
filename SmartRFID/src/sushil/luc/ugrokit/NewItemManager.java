@@ -32,7 +32,7 @@ import android.widget.Toast;
 import com.ugrokit.api.UgiEpc;
 import com.ugrokit.api.UgiTag;
 
-public class NewItemManager {
+public class NewItemManager extends RFIDManager{
 
 	private Context con;
 	private Dialog dialog;
@@ -46,6 +46,7 @@ public class NewItemManager {
 	private TagNewItemActivity currentActivity;
 	private List<UgiTag> alreadyTestedTags;
 	//private ItemHistory itemHistory;
+	private ItemService itemService;
 
 	/**
 	 * Init the Manager
@@ -63,6 +64,7 @@ public class NewItemManager {
 		this.currentActivity=null;
 		this.alreadyTestedTags = new LinkedList<UgiTag>();
 		//this.itemHistory = ItemHistory.getInstance();
+		this.itemService = new ItemService();
 	}
 
 	/**
@@ -71,9 +73,10 @@ public class NewItemManager {
 	 * @param tag
 	 * @return false if there is no connection true if there is a connection
 	 */
-	private boolean alreadyexitsts(UgiTag tag) {
-		 	ItemService itemService = new ItemService();
-	        Item lookupItem = itemService.fetchItemFromRfid(tag.getEpc().toString());
+/*	private boolean alreadyexitsts(UgiTag tag) {
+
+		 	//TODO fix concurrency here
+	        Item lookupItem = itemService.fetchItemFromRfid(tag.getEpc().toString(),null, this);
 
 	        // lookupItem null means the rfid is not yet assigned to any item yet
 	        if (lookupItem == null) {
@@ -82,7 +85,7 @@ public class NewItemManager {
 	        else {
 	        	return true;
 	        }
-	}
+	}*/
 	
 	/**
 	 * Check what should be done with the Tag
@@ -97,6 +100,8 @@ public class NewItemManager {
 			// Tag was not seen before
 			Log.d(LogTag, "Not yet in the List "+ tag.getEpc());
 			
+			itemService.fetchItemFromRfid(tag,null, this);
+			/*
 			if (alreadyexitsts(tag)) {
 				// The Tag is already in use, by another item 
 				Toast.makeText(con, "Tag "+tag.getEpc().toString()+" already in use for another item", Toast.LENGTH_SHORT).show();
@@ -111,10 +116,30 @@ public class NewItemManager {
 					Log.d(LogTag, "Not intial "+ tag.getEpc());
 					addTagtoList(tag);
 				}
+			}*/
+		}
+	}
+	
+	public void handle2 (Item item, UgiTag tag)
+	{
+		if (item !=null)
+		{
+			// The Tag is already in use, by another item 
+			Toast.makeText(con, "Tag "+tag.getEpc().toString()+" already in use for another item", Toast.LENGTH_SHORT).show();
+			this.alreadyTestedTags.add(tag);
+		} else {
+			// check if the Dialog is currently open
+			if (initial) {					
+				this.initial = false;
+				Log.d(LogTag, "First time startup "+ tag.getEpc());
+				showDialog(tag);
+			} else {
+				Log.d(LogTag, "Not intial "+ tag.getEpc());
+				addTagtoList(tag);
 			}
 		}
 	}
-
+	
 	/**
 	 * Gets from the given tag the EPC id. Does cut of the leading 0
 	 * @param tag

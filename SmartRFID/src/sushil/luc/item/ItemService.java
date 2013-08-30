@@ -8,12 +8,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import com.ugrokit.api.UgiTag;
+
 import sushil.luc.dtos.ItemDTO;
 import sushil.luc.dtos.RfidInfoDTO;
 import sushil.luc.gui.MainActivity;
 import sushil.luc.gui.NewItemFragment;
+import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.network.Callback;
 import sushil.luc.network.NetworkHandler;
+import sushil.luc.ugrokit.RFIDManager;
 
 public class ItemService {
 
@@ -64,9 +68,10 @@ public class ItemService {
     /**
      * Fetches Rfid by item identifier from remote server
      * @param rfid
+     * @param activity
      * @return
      */
-    public Item fetchItemFromRfid(String rfid) {
+    public Item fetchItemFromRfid(final UgiTag tag, final UgroKitActivity activity, final RFIDManager rfidManager) {
         final List<ItemDTO> itemDtos = new ArrayList<ItemDTO>(1);
         try {
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
@@ -74,7 +79,7 @@ public class ItemService {
 
           //  String URL = "http://rfidproject.azurewebsites.net/api/items/query?rfids="+rfid;
 
-            String URL = MainActivity.HOST_URL + "/api/items/query.php?rfids="+rfid;
+            String URL = MainActivity.HOST_URL + "/api/items/query.php?rfids="+tag.getEpc().toString();
             Log.i("Item Service :", URL);
 
             networkHandler.read(URL, ItemDTO.class, new Callback<ItemDTO>() {
@@ -86,7 +91,10 @@ public class ItemService {
                     Log.i("ItemServiceCallback", "idf=" + myItemDto.getIdentifier());
 
                     itemDtos.add(myItemDto);
-                    MainActivity.getInstance().updateIteminfo(new Item(myItemDto));
+                    if (activity!=null)
+                    	activity.updateIteminfo(new Item(myItemDto));
+                    if(rfidManager!=null)
+                    	rfidManager.handle2(new Item(myItemDto), tag);
                 }
             });
 
@@ -183,5 +191,10 @@ public class ItemService {
             }
             item.setStatus(ItemStatus.Available);
         }
+    }
+    
+    public void onNotify()
+    {
+    	
     }
 }
