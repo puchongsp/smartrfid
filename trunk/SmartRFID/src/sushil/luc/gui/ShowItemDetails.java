@@ -66,23 +66,34 @@ public class ShowItemDetails extends UgroKitActivity{
 
 		Item_ID.setText("Item ID : "+i.getItemID());
 		Item_Name.setText("Itemname : "+i.getItemName());
-		Item_RFID.setText("RFID : "+i.getRFID());
-		Item_Location.setText("Location : "+i.getWarehouseLocation());
-		Item_Status.setText("Status : "+i.getStatus().toString());
+		if (i.getRFID()!=null)
+			Item_RFID.setText("RFID : "+i.getRFID());
+		else
+			Item_RFID.setText("RFID : not yet assigned");
+		if(i.getWarehouseLocation()!=null)
+			Item_Location.setText("Location : "+i.getWarehouseLocation());
+		else
+			Item_Location.setText("Location : ");
+		if(i.getStatus()!=null)
+			Item_Status.setText("Status : "+i.getStatus().toString());
+		else
+			Item_Status.setText("Status : ");
         if(i.getQuantity()!=null)
 		    Item_Quantity.setText("Quantity : "+i.getQuantity().toString());
+        else
+        	 Item_Quantity.setText("Quantity : ");
 		if (i.getDeliveryDate()!=null)
 			Item_Deliverydate.setText("Delivery Date : "+DateUtil.formatDate(i.getDeliveryDate().toString()));
 		else
-			Item_Deliverydate.setVisibility(View.INVISIBLE);
+			Item_Deliverydate.setText("Delivery Date : ");
 		if (i.getStopRentDate()!=null)
 			Item_StopRent.setText("Stop Rent Date : "+DateUtil.formatDate(i.getStopRentDate().toString()));
 		else
-			Item_StopRent.setVisibility(View.INVISIBLE);
+			Item_StopRent.setText("Stop Rent Date : ");
 		if (i.getReturnDateDate()!=null)
 			Item_ReturnDate.setText("Return Date : "+DateUtil.formatDate(i.getReturnDateDate().toString()));
 		else
-			Item_ReturnDate.setVisibility(View.INVISIBLE);
+			Item_ReturnDate.setText("Return Date : ");
 		
 	}
 	
