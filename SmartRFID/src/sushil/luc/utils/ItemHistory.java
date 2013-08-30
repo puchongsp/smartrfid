@@ -214,7 +214,7 @@ public class ItemHistory {
 		}*/
 	}
 	
-	public Map<Touple,String> getLastChanges()
+	/*public Map<Touple,String> getLastChanges()
 	{
 		
 		Map<Touple,String> res = new HashMap<Touple, String>();
@@ -222,7 +222,7 @@ public class ItemHistory {
 		
 		
 		return res;
-	}
+	}*/
 	
 	/**
 	 * private class to map the item to the version, which changed last
