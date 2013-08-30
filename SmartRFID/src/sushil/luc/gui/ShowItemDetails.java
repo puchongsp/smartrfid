@@ -1,16 +1,24 @@
 package sushil.luc.gui;
 
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import com.ugrokit.api.Ugi;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import sushil.luc.item.Item;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
 import sushil.luc.utils.DateUtil;
+import sushil.luc.utils.ItemHistory;
 import android.app.ActionBar;
 
 public class ShowItemDetails extends UgroKitActivity{
@@ -25,79 +33,87 @@ public class ShowItemDetails extends UgroKitActivity{
 	private TextView Item_StopRent;
 	private TextView Item_ReturnDate;
 	private ActionBar actionbar;
+	private final int menuGroupId = 1;
+	private ItemHistory itemHistory;
+	private Item currentItem;
+	private Ticket currentTicket;
+	private Map<Integer,Integer> menuItemIdtoVersion;
 
 	private int positionInTicketListview;
 	private int positionInItemListview;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setContentView(R.layout.show_item_details);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.show_item_details);
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			positionInTicketListview = extras.getInt("positionInTicketList",-1);
+			positionInItemListview = extras.getInt("positionInItemListview",-1);
+		 }
+		
+		if (positionInTicketListview == -1 || positionInItemListview ==-1)
+		{
+			finish();
+		}
+		else
+		{
+			menuItemIdtoVersion = new HashMap<Integer, Integer>();
+			itemHistory= ItemHistory.getInstance();
+			
+			// init the action bar and assign the current status
+			actionbar = getActionBar();
+			actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
+			actionbar.setSubtitle(currentStatus);
+			
+			currentTicket = TicketManagerAssembler.ticketlist.get(positionInTicketListview);
+			
+			currentItem =currentTicket.getItems().get(positionInItemListview);
+			
+			Item_ID = (TextView) findViewById(R.id.item_id);
+			Item_Name = (TextView) findViewById(R.id.item_name);
+			Item_RFID = (TextView) findViewById(R.id.item_rfid);
+			Item_Location = (TextView) findViewById(R.id.item_location);
+			Item_Status = (TextView) findViewById(R.id.item_status);
+			Item_Quantity= (TextView) findViewById(R.id.item_quantity);
+			Item_Deliverydate= (TextView) findViewById(R.id.item_deliverydate);
+			Item_StopRent= (TextView) findViewById(R.id.item_stopRent);
+			Item_ReturnDate= (TextView) findViewById(R.id.item_returnDate);
 	
-	Bundle extras = getIntent().getExtras();
-	if (extras != null) {
-		positionInTicketListview = extras.getInt("positionInTicketList",-1);
-		positionInItemListview = extras.getInt("positionInItemListview",-1);
-	 }
-	
-	if (positionInTicketListview == -1 || positionInItemListview ==-1)
-		finish();
-	else
-	{
-		
-		// init the action bar and assign the current status
-		actionbar = getActionBar();
-		actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
-		actionbar.setSubtitle(currentStatus);
-		
-		Ticket current = TicketManagerAssembler.ticketlist.get(positionInTicketListview);
-		
-		Item i = current.getItems().get(positionInItemListview);
-		
-		Item_ID = (TextView) findViewById(R.id.item_id);
-		Item_Name = (TextView) findViewById(R.id.item_name);
-		Item_RFID = (TextView) findViewById(R.id.item_rfid);
-		Item_Location = (TextView) findViewById(R.id.item_location);
-		Item_Status = (TextView) findViewById(R.id.item_status);
-		Item_Quantity= (TextView) findViewById(R.id.item_quantity);
-		Item_Deliverydate= (TextView) findViewById(R.id.item_deliverydate);
-		Item_StopRent= (TextView) findViewById(R.id.item_stopRent);
-		Item_ReturnDate= (TextView) findViewById(R.id.item_returnDate);
-
-		Item_ID.setText("Item ID : "+i.getItemID());
-		Item_Name.setText("Itemname : "+i.getItemName());
-		if (i.getRFID()!=null)
-			Item_RFID.setText("RFID : "+i.getRFID());
-		else
-			Item_RFID.setText("RFID : not yet assigned");
-		if(i.getWarehouseLocation()!=null)
-			Item_Location.setText("Location : "+i.getWarehouseLocation());
-		else
-			Item_Location.setText("Location : ");
-		if(i.getStatus()!=null)
-			Item_Status.setText("Status : "+i.getStatus().toString());
-		else
-			Item_Status.setText("Status : ");
-        if(i.getQuantity()!=null)
-		    Item_Quantity.setText("Quantity : "+i.getQuantity().toString());
-        else
-        	 Item_Quantity.setText("Quantity : ");
-		if (i.getDeliveryDate()!=null)
-			Item_Deliverydate.setText("Delivery Date : "+DateUtil.formatDate(i.getDeliveryDate().toString()));
-		else
-			Item_Deliverydate.setText("Delivery Date : ");
-		if (i.getStopRentDate()!=null)
-			Item_StopRent.setText("Stop Rent Date : "+DateUtil.formatDate(i.getStopRentDate().toString()));
-		else
-			Item_StopRent.setText("Stop Rent Date : ");
-		if (i.getReturnDateDate()!=null)
-			Item_ReturnDate.setText("Return Date : "+DateUtil.formatDate(i.getReturnDateDate().toString()));
-		else
-			Item_ReturnDate.setText("Return Date : ");
-		
+			Item_ID.setText("Item ID : "+currentItem.getItemID());		
+			Item_Name.setText("Itemname : "+currentItem.getItemName());
+			if (currentItem.getRFID()!=null)
+				Item_RFID.setText("RFID : "+currentItem.getRFID());
+			else
+				Item_RFID.setText("RFID : not yet assigned");
+			if(currentItem.getWarehouseLocation()!=null)
+				Item_Location.setText("Location : "+currentItem.getWarehouseLocation());
+			else
+				Item_Location.setText("Location : ");
+			if(currentItem.getStatus()!=null)
+				Item_Status.setText("Status : "+currentItem.getStatus().toString());
+			else
+				Item_Status.setText("Status : ");
+	        if(currentItem.getQuantity()!=null)
+			    Item_Quantity.setText("Quantity : "+currentItem.getQuantity().toString());
+	        else
+	        	 Item_Quantity.setText("Quantity : ");
+			if (currentItem.getDeliveryDate()!=null)
+				Item_Deliverydate.setText("Delivery Date : "+DateUtil.formatDate(currentItem.getDeliveryDate().toString()));
+			else
+				Item_Deliverydate.setText("Delivery Date : ");
+			if (currentItem.getStopRentDate()!=null)
+				Item_StopRent.setText("Stop Rent Date : "+DateUtil.formatDate(currentItem.getStopRentDate().toString()));
+			else
+				Item_StopRent.setText("Stop Rent Date : ");
+			if (currentItem.getReturnDateDate()!=null)
+				Item_ReturnDate.setText("Return Date : "+DateUtil.formatDate(currentItem.getReturnDateDate().toString()));
+			else
+				Item_ReturnDate.setText("Return Date : ");
+			
+		}
 	}
-	
-}
 	
 	public void onResume()
 	{
@@ -126,5 +142,48 @@ public class ShowItemDetails extends UgroKitActivity{
 			if (actionbar!=null)
 				actionbar.setSubtitle(currentStatus);
 		}
+		
+		public boolean onPrepareOptionsMenu(Menu menu)
+		{
+			menu.clear();
+			menuItemIdtoVersion.clear();
+			
+			Map<Integer, String> map = itemHistory.getItemHistotyStates(currentItem);
+			
+			Set<Integer> versions =map.keySet();
+			int counter =0;
+			for (Integer v:versions)
+			{
+				menuItemIdtoVersion.put(Menu.FIRST+counter, v);
+				
+				String text = "Version "+v+" "+map.get(v); 
+				menu.add(menuGroupId, v, Menu.FIRST+counter, text);
+				 
+				 counter++;
+			}
+		   
+			if (counter==0)
+				Toast.makeText(getApplicationContext(), "No History available", Toast.LENGTH_SHORT).show();
+			
+			
+			return super.onPrepareOptionsMenu(menu);
+		}
+			
 
+		   @Override
+		    public boolean onOptionsItemSelected(MenuItem item) {
+			   
+			  int menuId = item.getItemId();
+			  
+			  int version = menuItemIdtoVersion.get(menuId);
+			  
+			  Item oldItem = itemHistory.rollback(currentItem, version);
+			  
+			  currentTicket.getItems().remove(currentItem);
+			  
+			  currentTicket.getItems().add(oldItem);
+			  
+		 
+			  return super.onOptionsItemSelected(item);
+		}
 }

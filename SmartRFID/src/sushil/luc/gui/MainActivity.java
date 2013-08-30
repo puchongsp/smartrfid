@@ -35,6 +35,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	public static final String NewItemsTabName ="Tag new Items";
 	public static final String ReturnItemsTabName ="Return Items";
 	public static final String ItemInfoTabName ="Item Info";
+	public static final String RepairItemTabName ="Repair Items";
 	private ItemService service;
 	//public static String currentStatus;
 	
@@ -42,11 +43,13 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	private NewItemFragment newItemsFragment;
 	private ReturnItemFragment returnItemsFragment;
 	private ItemInfoFragment itemInfoFragment;
+	private RepairItemFragment repairItemFragment;
 	
 	private MyTabsListener<TicketsFragment> TabListenerTickets;
 	private MyTabsListener<NewItemFragment> TabListenerNewItems;
 	private MyTabsListener<ReturnItemFragment> TabListenerReturnItems;
 	private MyTabsListener<ItemInfoFragment> TabListenerItemInfo;
+	private MyTabsListener<RepairItemFragment> TabListenerRepairItem;
 
 	
 /**
@@ -70,6 +73,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
          ActionBar.Tab NewItemsTab = actionbar.newTab().setText(NewItemsTabName);       
          ActionBar.Tab ReturnItemsTab = actionbar.newTab().setText(ReturnItemsTabName);
          ActionBar.Tab ItemInfoTab = actionbar.newTab().setText(ItemInfoTabName);
+         ActionBar.Tab RepairItemTab = actionbar.newTab().setText(RepairItemTabName);
          
          TabListenerTickets = new MyTabsListener<TicketsFragment>(this, TicketsTabName, TicketsFragment.class);
          TicketsTab.setTabListener(TabListenerTickets);
@@ -86,11 +90,15 @@ UgiInventoryDelegate.InventoryTagChangedListener{
          TabListenerItemInfo = new MyTabsListener<ItemInfoFragment>(this, ItemInfoTabName, ItemInfoFragment.class);
          ItemInfoTab.setTabListener(TabListenerItemInfo);
          
+         TabListenerRepairItem = new MyTabsListener<RepairItemFragment>(this, RepairItemTabName, RepairItemFragment.class);
+         RepairItemTab.setTabListener(TabListenerRepairItem);
+         
          
          actionbar.addTab(TicketsTab);
          actionbar.addTab(NewItemsTab);
          actionbar.addTab(ReturnItemsTab);
          actionbar.addTab(ItemInfoTab);
+         actionbar.addTab(RepairItemTab);
      }
 
      if (savedInstanceState != null)

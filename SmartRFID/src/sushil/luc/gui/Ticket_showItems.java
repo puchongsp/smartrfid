@@ -22,6 +22,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -37,8 +39,9 @@ public class Ticket_showItems extends UgroKitActivity{
 	private Ticket currentTicket;
 	private Context myparent;
 	private TicketManagerAssembler assembler ;
-	private ItemHistory itemHistory;
+//	private ItemHistory itemHistory;
 	private ActionBar actionbar;
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +49,7 @@ public class Ticket_showItems extends UgroKitActivity{
 		setContentView(R.layout.ticket_show_items);
 		
 		myparent = this;
-		//TODO integrate history in menu
-		itemHistory = ItemHistory.getInstance();
+	//	itemHistory = ItemHistory.getInstance();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -128,7 +130,7 @@ public class Ticket_showItems extends UgroKitActivity{
 	{
 		super.onResume();
 		super.StartInventory();
-		//TODO keep changes local
+		//TODO keep changes local->done
 		super.mHandler.modeTicketItemScan(true, currentTicket, this);
 	}
 	
@@ -173,4 +175,8 @@ public class Ticket_showItems extends UgroKitActivity{
 		if (actionbar!=null)
 			actionbar.setSubtitle(currentStatus);
 	}
+
+
+	
+	
 }

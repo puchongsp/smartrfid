@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.ugrokit.api.UgiTag;
+
 import sushil.luc.dtos.CustomerDTO;
 import sushil.luc.dtos.ItemDTO;
 import sushil.luc.dtos.OrderDTO;
@@ -185,6 +187,23 @@ public class Ticket {
 
 	public void setDeliveryDate(Date deliveryDate) {
 		DeliveryDate = deliveryDate;
+	}
+	
+	/**
+	 * Get an Item from the Ticket by Ugitag
+	 * @param tag
+	 * @return null if there is no Item tag with the given tag. Otherwise the corresponding Item
+	 */
+	public Item getItem(UgiTag tag)
+	{
+		Item res =null;
+		for (Item i : Items)
+		{
+			if (i.getRFID().equals(tag.getEpc().toString()))
+				res=i;
+		}
+		
+		return res;
 	}
 	
 }
