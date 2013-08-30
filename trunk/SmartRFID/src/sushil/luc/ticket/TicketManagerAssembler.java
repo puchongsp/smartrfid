@@ -68,7 +68,7 @@ public class TicketManagerAssembler implements TicketManager{
     public void saveTicket (Ticket t)
     {
     	//TODO how is it done?
-    	throw new NullPointerException();
+    //	throw new NullPointerException();
     	
     	//this.ticketserv.saveToRemote(t);
     }
