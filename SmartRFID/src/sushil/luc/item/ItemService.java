@@ -1,28 +1,19 @@
 package sushil.luc.item;
 
+import android.util.Log;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.json.JSONObject;
-
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-
 import sushil.luc.dtos.ItemDTO;
-import sushil.luc.dtos.ItemInfoDTO;
-import sushil.luc.dtos.OrderDTO;
 import sushil.luc.dtos.RfidInfoDTO;
-import sushil.luc.dtos.TicketDTO;
+import sushil.luc.gui.MainActivity;
 import sushil.luc.gui.NewItemFragment;
 import sushil.luc.network.Callback;
 import sushil.luc.network.NetworkHandler;
-import sushil.luc.ticket.Ticket;
-import sushil.luc.utils.DateUtil;
 
 public class ItemService {
 
@@ -187,7 +178,7 @@ public class ItemService {
             final RfidInfoDTO rfidInfoDTO = new RfidInfoDTO();
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
             //String URL = "";
-            String URL ="http://70.125.157.25/api/items/query?identifiers="+identifier;
+            String URL = MainActivity.HOST_URL + "/api/items/query.php?identifiers="+identifier;
             networkHandler.read(URL,RfidInfoDTO.class, new Callback<RfidInfoDTO>() {
                 @Override
                 public void callback(final RfidInfoDTO myRfidInfoDTO) {
@@ -214,7 +205,7 @@ public class ItemService {
         try {
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
            // String URL = "";
-            String URL = "http://70.125.157.25/api/items/query?rfids="+rfid;
+            String URL = MainActivity.HOST_URL + "/api/items/query.php?rfids="+rfid;
             networkHandler.read(URL, ItemDTO.class, new Callback<ItemDTO>() {
                 @Override
                 public void callback(final ItemDTO myItemDto) {
@@ -225,7 +216,13 @@ public class ItemService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Item(itemDtos.get(0));
+        Item item = new Item();
+
+        if(itemDtos.size() > 0) {
+            item = new Item(itemDtos.get(0));
+        }
+
+        return item;
     }
     
     public List<Item> getNewItems(final String caller)
@@ -236,7 +233,7 @@ public class ItemService {
 	    	try {
 	              final NetworkHandler networkHandler = NetworkHandler.getInstance();
 	
-	              String URL = "http://70.125.157.25/api/items/query?limit="+limit+"&skip=0&orderBy=0&filters=2";
+	              String URL = MainActivity.HOST_URL + "/api/items/query.php?limit="+limit+"&skip=0&orderBy=0&filters=2";
 	              networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
 	
 					@Override
