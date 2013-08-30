@@ -4,7 +4,7 @@ package sushil.luc.dtos;
  * Created by sushil
  */
 public class ItemDTO {
-    private int $id;
+    private int id;
     private String identifier;
     private double ticketIdentifier;
     private double ticketItemNumber;
@@ -12,16 +12,15 @@ public class ItemDTO {
     private ItemInfoDTO itemInfo;
     private RentInformationDTO rentInformation;
     private ItemStatusDTO itemStatus;
-    private RfidInfoDTO rfidInfo;
     private InventoryInfoDTO inventoryInfo;
    
     
     public int getId() {
-        return $id;
+        return id;
     }
 
-    public void set$Id(int $id) {
-        this.$id = $id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getTicketIdentifier() {
@@ -78,14 +77,6 @@ public class ItemDTO {
 
 	public void setItemInfo(ItemInfoDTO itemInfo) {
 		this.itemInfo = itemInfo;
-	}
-
-	public RfidInfoDTO getRfidInfo() {
-		return rfidInfo;
-	}
-
-	public void setRfidInfo(RfidInfoDTO rfidInfo) {
-		this.rfidInfo = rfidInfo;
 	}
 
 	public InventoryInfoDTO getInventoryInfo() {

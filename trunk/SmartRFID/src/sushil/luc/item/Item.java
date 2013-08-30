@@ -1,15 +1,11 @@
 package sushil.luc.item;
 
-import java.util.Date;
+import android.util.Log;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import android.util.Log;
-import android.widget.TextView;
-
 import sushil.luc.dtos.ItemDTO;
-import sushil.luc.dtos.ItemInfoDTO;
-import sushil.luc.utils.DateUtil;
 
 public class Item implements Cloneable{
 
@@ -119,9 +115,9 @@ public class Item implements Cloneable{
     			this.OriginalStartRentDate= itemDto.getRentInformation().getOriginalStartRent();
     		}
     		
-    		if (itemDto.getRfidInfo()!=null)
+    		if (itemDto.getItemInfo().getRfidInfo()!=null)
     		{
-    			this.RFID = itemDto.getRfidInfo().getRfidNumber();
+    			this.RFID = itemDto.getItemInfo().getRfidInfo().getRfidNumber();
     		}
     	}
     

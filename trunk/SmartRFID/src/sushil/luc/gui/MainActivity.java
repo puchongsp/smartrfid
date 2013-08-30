@@ -25,7 +25,8 @@ Ugi.ConnectionStateListener,
 UgiInventoryDelegate.InventoryTagChangedListener{
 
 
-    public static String HOST_URL = "http://sushilshilpakar.com.np/smartrfid";
+    public static String HOST_URL = "http://192.168.2.69/smartrfid";
+
     //public static String HOST_URL = "http://rfidproject.azurewebsites.net";
     //public static String HOST_URL = "http://70.125.157.25";
 
@@ -55,7 +56,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
  */
 	public void onCreate(Bundle savedInstanceState) {
 	 super.onCreate(savedInstanceState);
-	 
+
 	 service= new ItemService();
 	 
      // setup action bar for tabs
@@ -182,7 +183,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	    		iteminfo.add(String.valueOf(i.getItemID()));
 	    		iteminfo.add(i.getItemName());
 	    		iteminfo.add(i.getRFID());
-	    		iteminfo.add(i.getStatus().toString());
+	    		iteminfo.add(String.valueOf(i.getStatus()));
 	    		iteminfo.add(i.getWarehouseLocation());
 	    		iteminfo.add(i.getCategory());
 	    		iteminfo.add(i.getSubCategory());
