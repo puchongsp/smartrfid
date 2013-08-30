@@ -37,7 +37,7 @@ public class TicketsFragment extends Fragment {
     	View view = inflater.inflate(R.layout.tickets_fragment, container, false);
     	
     	myparent = container.getContext();
-    	
+
     	TicketList = (ListView) view.findViewById(R.id.TicketList);
     	
     	
@@ -46,12 +46,14 @@ public class TicketsFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
-				Intent i = new Intent(myparent,Ticket_showItems.class);
+
+                Intent i = new Intent(myparent,Ticket_showItems.class);
 				i.putExtra("Position_InList", position);
 				startActivity(i);
+
 			}
 		});
-    	
+
     	return view;
     }
     

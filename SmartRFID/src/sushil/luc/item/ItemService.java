@@ -48,7 +48,7 @@ public class ItemService {
             networkHandler.read(URL,RfidInfoDTO.class, new Callback<RfidInfoDTO>() {
                 @Override
                 public void callback(final RfidInfoDTO myRfidInfoDTO) {
-                    rfidInfoDTO.set$Id(myRfidInfoDTO.getId());
+                    rfidInfoDTO.setId(myRfidInfoDTO.getId());
                     rfidInfoDTO.setRfidNumber(myRfidInfoDTO.getRfidNumber());
                 }
             });
@@ -70,14 +70,20 @@ public class ItemService {
         final List<ItemDTO> itemDtos = new ArrayList<ItemDTO>(1);
         try {
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
-
+            rfid = "000000000000000000000001";
           //  String URL = "http://rfidproject.azurewebsites.net/api/items/query?rfids="+rfid;
 
             String URL = MainActivity.HOST_URL + "/api/items/query.php?rfids="+rfid;
+            Log.i("Item Service :", URL);
 
             networkHandler.read(URL, ItemDTO.class, new Callback<ItemDTO>() {
                 @Override
                 public void callback(final ItemDTO myItemDto) {
+
+                    Log.i("ItemServiceCallback","id="+myItemDto.getId());
+                    Log.i("ItemServiceCallback", "rfid=" + myItemDto.getItemInfo().getRfidInfo().getRfidNumber());
+                    Log.i("ItemServiceCallback", "idf=" + myItemDto.getIdentifier());
+
                     itemDtos.add(myItemDto);
                 }
             });
@@ -114,7 +120,7 @@ public class ItemService {
 						{
 							Item item = new Item(o);
 							if (!checkItem(item))
-								newItems.add(item);
+                                newItems.add(item);
 						}
 						if (caller.equals("NewItemFragment"))
 						{
@@ -135,9 +141,9 @@ public class ItemService {
 	private boolean checkItem (Item newItem)
 	{
 		boolean check =false;
-		for (Item i: newItems)
+		for (Item i: newItems)  
 		{
-			if (i.getItemID() == newItem.getItemID())
+			if (newItem.getItemID().equals(i.getItemID()))
 				check=true;
 		}
 		return check;
