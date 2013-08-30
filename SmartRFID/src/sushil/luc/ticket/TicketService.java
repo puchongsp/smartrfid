@@ -86,14 +86,16 @@ public class TicketService {
                                     // map each orderdto,ticketdto to Tickets model
                                     if(!doesTicketExist(myTicketDTO)) {
                                         Tickets.add(new Ticket(myTicketDTO, orderDto));
+                                        TicketsFragment.updateView();
                                     }
                                 }
                             });
                         } catch (Exception e) {
                             Toast.makeText(context, "Could not connect. Please check your connection.", Toast.LENGTH_LONG).show();
                         }
+                        
                     }
-                    TicketsFragment.updateView();
+                 
                 }
             });
         } catch (Exception e) {
