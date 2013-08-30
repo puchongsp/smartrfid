@@ -135,13 +135,34 @@ public class TagNewItemActivity extends UgroKitActivity {
            		Item_Status.setText("Status : ");
            }
            	Item_Scanning.setText("Scanning ...");
-           	Item_Category.setText("Category : "+item.getCategory().toString());
-	   		Item_SubCategory.setText("SubCategory : "+item.getSubCategory().toString());
-	   		Item_CreationDate.setText("Creation Date : "+DateUtil.formatDate(item.getCreationDate().toString()));
-	   		Item_Type.setText("Type : "+item.getType().toString());
-	   		Item_InventoryTotal.setText("Inventory Total : "+item.getInventoryTotal().toString());
-	   		Item_InventoryOnHand.setText("Inventory on Hand : "+item.getInventoryOnHand().toString());
-	   		Item_InventoryOut.setText("Inventory out : "+item.getInventoryOut().toString());
+           	if (item.getCategory()!=null)
+           		Item_Category.setText("Category : "+item.getCategory().toString());
+           	else
+           		Item_Category.setText("Category : ");
+           	if (item.getSubCategory()!=null)
+           		Item_SubCategory.setText("SubCategory : "+item.getSubCategory().toString());
+           	else
+           		Item_SubCategory.setText("SubCategory : ");
+           	if (item.getCreationDate()!=null)
+           		Item_CreationDate.setText("Creation Date : "+DateUtil.formatDate(item.getCreationDate().toString()));
+           	else
+           		Item_CreationDate.setText("Creation Date : ");
+           	if(item.getType()!=null)
+           		Item_Type.setText("Type : "+item.getType().toString());
+           	else
+           		Item_Type.setText("Type : ");
+           	if(item.getInventoryTotal()!=null)
+           		Item_InventoryTotal.setText("Inventory Total : "+item.getInventoryTotal().toString());
+           	else
+           		Item_InventoryTotal.setText("Inventory Total : ");
+           	if (item.getInventoryOnHand()!=null)
+           		Item_InventoryOnHand.setText("Inventory on Hand : "+item.getInventoryOnHand().toString());
+           	else
+           		Item_InventoryOnHand.setText("Inventory on Hand : ");
+           	if (item.getInventoryOut()!=null)
+           		Item_InventoryOut.setText("Inventory out : "+item.getInventoryOut().toString());
+           	else
+           		Item_InventoryOut.setText("Inventory out : ");
        }
        
        @Override
