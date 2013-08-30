@@ -25,6 +25,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 
 
     public static String HOST_URL = "http://sushilshilpakar.com.np/smartrfid";
+    static MainActivity instance;
 
     //public static String HOST_URL = "http://rfidproject.azurewebsites.net";
     //public static String HOST_URL = "http://70.125.157.25";
@@ -52,15 +53,19 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	private MyTabsListener<ItemInfoFragment> TabListenerItemInfo;
 	private MyTabsListener<RepairItemFragment> TabListenerRepairItem;
 
-	
+
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
 /**
  * init the Tabs 
  */
 	public void onCreate(Bundle savedInstanceState) {
 	 super.onCreate(savedInstanceState);
-
 	 service= new ItemService();
-	 
+	 instance=this;
      // setup action bar for tabs
 	 actionbar = getActionBar();
 	 actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
@@ -138,6 +143,47 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 		notifiySatusUpdate();
 	}
 
+
+    public void updateIteminfo(Item i) {
+        Tab currenttab = actionbar.getSelectedTab();
+        if (currenttab.getText().equals(ItemInfoTabName)) {
+            List<String> iteminfo = new LinkedList<String>();
+
+            if (i ==null) {
+                // if the tag is not yet known yet
+                iteminfo.add("");
+                iteminfo.add("No Item found for the scanned RFID");
+                iteminfo.add("");
+                iteminfo.add("");
+                iteminfo.add("");
+                iteminfo.add("");
+                iteminfo.add("");
+                iteminfo.add("");
+                iteminfo.add("");
+                iteminfo.add("");
+                iteminfo.add("");
+                iteminfo.add("");
+
+            } else {
+                // the item is known. Get the data
+                iteminfo.add(String.valueOf(i.getItemID()));
+                iteminfo.add(i.getItemName());
+                iteminfo.add(i.getRFID());
+                iteminfo.add(String.valueOf(i.getStatus()));
+                iteminfo.add(i.getWarehouseLocation());
+                iteminfo.add(i.getCategory());
+                iteminfo.add(i.getSubCategory());
+                iteminfo.add(i.getCreationDate());
+                iteminfo.add(i.getType());
+                iteminfo.add(i.getInventoryTotal());
+                iteminfo.add(i.getInventoryOnHand());
+                iteminfo.add(i.getInventoryOut());
+            }
+            // tell the view to display the data
+            itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4),
+                    iteminfo.get(5),iteminfo.get(6),iteminfo.get(7),iteminfo.get(8),iteminfo.get(9),iteminfo.get(10), iteminfo.get(11) );
+        }
+    }
 	@Override
 	/**
 	 * This methode is called as soon as the ugrokit discovers a new Tag. If found the same tag twice immediately after each other, this function is not called
@@ -164,46 +210,11 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 			// search information about the new tag
 			Log.d(log, currentTagId);
 			
-			Item i = service.fetchItemFromRfid(currentTagId);
-			List<String> iteminfo = new LinkedList<String>();
-			
-			
-	    	if (i ==null)
-	    	{
-	    		// if the tag is not yet known yet
-	    		iteminfo.add("");
-	    		iteminfo.add("No Item found for the scanned RFID");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		iteminfo.add("");
-	    		
-	    	}
-	    	else
-	    	{
-	    		// the item is known. Get the data
-	    		iteminfo.add(String.valueOf(i.getItemID()));
-	    		iteminfo.add(i.getItemName());
-	    		iteminfo.add(i.getRFID());
-	    		iteminfo.add(String.valueOf(i.getStatus()));
-	    		iteminfo.add(i.getWarehouseLocation());
-	    		iteminfo.add(i.getCategory());
-	    		iteminfo.add(i.getSubCategory());
-	    		iteminfo.add(i.getCreationDate()); 
-	    		iteminfo.add(i.getType()); 
-	    		iteminfo.add(i.getInventoryTotal()); 
-	    		iteminfo.add(i.getInventoryOnHand()); 
-	    		iteminfo.add(i.getInventoryOut()); 
-	    	}
-			// tell the view to display the data	    	
-			itemInfoFragment.displayInfo(iteminfo.get(0),iteminfo.get(1),iteminfo.get(2),iteminfo.get(3),iteminfo.get(4),
-					iteminfo.get(5),iteminfo.get(6),iteminfo.get(7),iteminfo.get(8),iteminfo.get(9),iteminfo.get(10), iteminfo.get(11) );
+			service.fetchItemFromRfid(currentTagId);
+            /*
+                This method calls updateItemInfo();
+             */
+
 			
         }
 

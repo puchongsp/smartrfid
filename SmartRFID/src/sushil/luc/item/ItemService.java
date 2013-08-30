@@ -86,6 +86,7 @@ public class ItemService {
                     Log.i("ItemServiceCallback", "idf=" + myItemDto.getIdentifier());
 
                     itemDtos.add(myItemDto);
+                    MainActivity.getInstance().updateIteminfo(new Item(myItemDto));
                 }
             });
 

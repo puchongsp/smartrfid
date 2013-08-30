@@ -1,6 +1,16 @@
 package sushil.luc.ugrokit;
 
-import java.util.HashMap;
+import android.app.Dialog;
+import android.content.Context;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ugrokit.api.UgiTag;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,19 +22,6 @@ import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketStatus;
 import sushil.luc.utils.ItemHistory;
-
-import android.app.Dialog;
-import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.ugrokit.api.UgiEpc;
-import com.ugrokit.api.UgiTag;
 
 public class TicketScanManager {
 	
@@ -127,8 +124,10 @@ public class TicketScanManager {
 		// ask database
 		String id = tag.getEpc().toString();
 		ItemService is = new ItemService();
-		Item i = is.fetchItemFromRfid(id);
-		return i.getItemName();
+		Item i = is.fetchIt emFromRfid(id);
+		//TODO: resolve concurrency issue here
+        return i.getItemName();
+
 	}
 	
 	/**

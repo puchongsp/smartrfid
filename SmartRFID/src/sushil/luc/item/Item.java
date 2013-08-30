@@ -53,6 +53,7 @@ public class Item implements Cloneable{
     		if (itemDto.getItemInfo()!=null)
     		{
     			this.ItemName = itemDto.getItemInfo().getDescription();
+                System.out.println("ITEM INFO " + ItemName);
     			this.WarehouseLocation= itemDto.getItemInfo().getBinLocation();
     			
     			if (itemDto.getItemInfo().getRfidInfo()!=null)
