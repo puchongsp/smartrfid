@@ -234,7 +234,8 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	            
 	            if (item !=null && item.getStatus().equals(ItemStatus.Repair))
 	            {
-	            	repairItemFragment.setItem(item);	            	
+	            	repairItemFragment.setItem(item);
+	            	super.StopInventory();
 	            }
 	            	
 			}
@@ -247,6 +248,4 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 		if (actionbar!=null)
 			actionbar.setSubtitle(currentStatus);
 	}
-	
-	//public static void call()
 }

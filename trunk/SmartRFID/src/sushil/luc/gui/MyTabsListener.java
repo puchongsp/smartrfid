@@ -46,7 +46,9 @@ public class MyTabsListener<T extends Fragment> implements android.app.ActionBar
             ft.attach(mFragment);
         }
         // Start the Rfid scan if certain tabs open
-        if (tab.getText().equals(MainActivity.ItemInfoTabName) || tab.getText().equals(MainActivity.ReturnItemsTabName))
+        if (tab.getText().equals(MainActivity.ItemInfoTabName) 
+        		|| tab.getText().equals(MainActivity.ReturnItemsTabName)
+        		|| tab.getText().equals(MainActivity.RepairItemTabName))
         	{
         		Log.d(log, "onTabSelected");
         		mActivity.StartInventory();

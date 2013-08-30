@@ -7,6 +7,7 @@ import com.ugrokit.api.UgiTag;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.item.ItemStatus;
+import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class RepairItemFragment extends Fragment{
 	
 	private TextView ItemName;
 	private TextView ItemInfo;
+	private TextView HistoryInfo;
 	private EditText NewItemHistory;
 	private Button btnSave;
 	private Button btnFixed;
@@ -39,11 +41,9 @@ public class RepairItemFragment extends Fragment{
         // Inflate the layout for this fragment
     	View view = inflater.inflate(R.layout.repair_item_fragment, container, false);
     	
-    	//TODO remove this line
-    	currentItem = new Item();
-    	
     	ItemName = (TextView) view.findViewById(R.id.ItemName);
     	ItemInfo  = (TextView) view.findViewById(R.id.ItemInfo);
+    	HistoryInfo  = (TextView) view.findViewById(R.id.HistoryInfo);
     	NewItemHistory = (EditText) view.findViewById(R.id.NewItemHistory);
     	ItemHistory  = (ListView) view.findViewById(R.id.ItemHistory);
     	
@@ -56,7 +56,7 @@ public class RepairItemFragment extends Fragment{
     	
     	itemservice = new ItemService();
     	
-    	initScreen();
+    	
     	
     	btnSave.setOnClickListener(new View.OnClickListener() {
 			
@@ -92,6 +92,12 @@ public class RepairItemFragment extends Fragment{
     	return view;
 	}
 	
+	public void onResume()
+	{
+		initScreen();
+		super.onResume();
+	}
+	
 	public void setItem( Item i )
 	{
 		currentItem=i;
@@ -109,6 +115,7 @@ public class RepairItemFragment extends Fragment{
 	    	btnFixed.setVisibility(View.INVISIBLE);
 	    	btnCancel.setVisibility(View.INVISIBLE);
 			ItemHistory.setVisibility(View.INVISIBLE);
+			HistoryInfo.setVisibility(View.INVISIBLE);
     	}
     	else
     	{
@@ -118,6 +125,7 @@ public class RepairItemFragment extends Fragment{
         	btnFixed.setVisibility(View.VISIBLE);
         	btnCancel.setVisibility(View.VISIBLE);
         	ItemHistory.setVisibility(View.VISIBLE);
+        	HistoryInfo.setVisibility(View.VISIBLE);
         	
         	ItemName.setText("Item ID: "+currentItem.getItemID());
         	ItemInfo.setText("Desc: "+currentItem.getItemName()+ " RFID Nb: "+ currentItem.getRFID());
@@ -144,8 +152,8 @@ public class RepairItemFragment extends Fragment{
 	
 	private void reset()
 	{
-		// TODO activate the RFID mode again 
 		currentItem=null;
 		initScreen();
+		((UgroKitActivity) getActivity()).StartInventory();
 	}
 }
