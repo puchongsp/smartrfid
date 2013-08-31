@@ -9,8 +9,7 @@ import com.sun.jersey.spi.service.ServiceFinder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import sushil.luc.ticket.Ticket;
+import java.util.concurrent.ExecutionException;
 
 public class NetworkHandler {
 	 
@@ -33,27 +32,39 @@ public class NetworkHandler {
 	  }
 
 	  public <T> void read(final String url, final Class<T> class1, final Callback<T> callback) {
-	    new GetTask(context, url, new Callback<String>() {
-	 
-	      @Override
-	      public void callback(String result) {
-            System.out.println("RESULT: "+result);
-	        callback.callback(new GsonBuilder().create().fromJson(result, class1));
-	      }
-	    }).execute();
-	  }
+          try {
+              new GetTask(context, url, new Callback<String>() {
+
+                @Override
+                public void callback(String result) {
+                  System.out.println("RESULT: "+result);
+                  callback.callback(new GsonBuilder().create().fromJson(result, class1));
+                }
+              }).execute().get();
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          } catch (ExecutionException e) {
+              e.printStackTrace();
+          }
+      }
 	 
 	  public <T> void readList(final String url, final Class<T[]> clazz, final Callback<List<T>> callback) {
-	    new GetTask(context, url, new Callback<String>() {
-	 
-	      @Override
-	      public void callback(String result) {
-	        final T[] array = new GsonBuilder().create().fromJson(result, clazz);
-	        callback.callback(new ArrayList<T>(Arrays.asList(array)));
-	      }
-	    }).execute();
+          try {
+              new GetTask(context, url, new Callback<String>() {
 
-	  }
+                @Override
+                public void callback(String result) {
+                  final T[] array = new GsonBuilder().create().fromJson(result, clazz);
+                  callback.callback(new ArrayList<T>(Arrays.asList(array)));
+                }
+              }).execute().get();
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          } catch (ExecutionException e) {
+              e.printStackTrace();
+          }
+
+      }
 	 
 	  public <T> void write(final String url, final Class<T> clazz, final T t, final Callback<T> callback) {
 	    final Gson gson = new GsonBuilder().create();

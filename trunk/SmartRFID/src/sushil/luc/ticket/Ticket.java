@@ -1,10 +1,10 @@
 package sushil.luc.ticket;
 
+import com.ugrokit.api.UgiTag;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.ugrokit.api.UgiTag;
 
 import sushil.luc.dtos.CustomerDTO;
 import sushil.luc.dtos.ItemDTO;
@@ -199,7 +199,7 @@ public class Ticket {
 		Item res =null;
 		for (Item i : Items)
 		{
-			if (i.getRFID().equals(tag.getEpc().toString()))
+			if (tag.getEpc().toString().equals(i.getRFID()))
 				res=i;
 		}
 		

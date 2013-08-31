@@ -128,7 +128,11 @@ public class TicketScanManager extends RFIDManager{
 		// ask database
 		String id = tag.getEpc().toString();
 		ItemService is = new ItemService();
+<<<<<<< .mine
+		Item i = is.fetchItemFromRfid(id);
+=======
 		Item i = is.fetchItemFromRfid(id, null, this);
+>>>>>>> .r75
 		//TODO: resolve concurrency issue here
         return i.getItemName();
 	}*/
