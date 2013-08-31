@@ -175,7 +175,7 @@ public class TicketScanManager extends RFIDManager{
 					else
 					{
 						// Dialog not yet open, check if the tag is in the item list of the ticket
-						if (currentticket.checkRFIDInTicket(tag.getEpc().toString()))
+						if (currentticket!=null && currentticket.checkRFIDInTicket(tag.getEpc().toString()))
 						{
 							this.initial=false;
 							Log.d(LogTag, "First time found, No retest");

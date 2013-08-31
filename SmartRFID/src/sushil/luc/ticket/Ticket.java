@@ -3,7 +3,6 @@ package sushil.luc.ticket;
 import com.ugrokit.api.UgiTag;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import sushil.luc.dtos.CustomerDTO;
@@ -63,8 +62,18 @@ public class Ticket {
 	            Items.add(tmp);
 	        }
         }
+
+        if (orderDTO.getStatus().isCheckedOut()==1 && orderDTO.getStatus().isReturned()==1 && orderDTO.getStatus().isStaged()==1)
+            this.Status= TicketStatus.Closed;
+        else
+            if(orderDTO.getStatus().isStaged()==1)
+                this.Status=TicketStatus.Staged;
+            else if (orderDTO.getStatus().isCheckedOut()==1)
+                this.Status = TicketStatus.Checked;
+            else
+                this.Status = TicketStatus.Open;
         
-        calcTicketStatus();
+        //calcTicketStatus();
     }
 
 	

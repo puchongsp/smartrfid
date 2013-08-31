@@ -194,9 +194,12 @@ UgiInventoryDelegate.InventoryTagChangedListener{
         
         if (currenttab.getText().equals(RepairItemTabName))
         {
-        	if (i !=null && i.getStatus().equals(ItemStatus.Returned))
+        	Log.d("MainActivity", "before");
+            Log.d("MainActivity", i.getStatus().toString());
+            if (i !=null && i.getStatus().equals(ItemStatus.Returned))
             {
             	repairItemFragment.setItem(i);
+                Log.d("MainActivity", "inside");
             	super.StopInventory();
             }
         }

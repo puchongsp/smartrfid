@@ -2,13 +2,11 @@ package sushil.luc.item;
 
 import android.util.Log;
 
+import com.ugrokit.api.UgiTag;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
-import com.ugrokit.api.UgiTag;
 
 import sushil.luc.dtos.ItemDTO;
 import sushil.luc.dtos.RepairHistoryDTO;
@@ -74,9 +72,10 @@ public class ItemService {
     }
 
     /**
-     * Fetches Rfid by item identifier from remote server
-     * @param rfid
+     *
+     * @param tag
      * @param activity
+     * @param rfidManager
      * @return
      */
     public Item fetchItemFromRfid(final UgiTag tag, final UgroKitActivity activity, final RFIDManager rfidManager) {
@@ -182,7 +181,7 @@ public class ItemService {
 
        //     String URL = "http://rfidproject.azurewebsites.net/api/items/query?limit="+limit+"&skip=0&orderBy=0&filters=2";
             
-            String URL = MainActivity.HOST_URL + "/api/repairHistory/query.php?itemId="+item.getItemID();
+            String URL = MainActivity.HOST_URL + "/api/repairHistory/query.php?itemId="+item.getId();
 
             networkHandler.readList(URL, RepairHistoryDTO[].class, new Callback<List<RepairHistoryDTO>>() {
 
@@ -247,11 +246,26 @@ public class ItemService {
 
     }*/
 	
-	
+	private boolean containsReturnedItem (Item i)
+    {
+        boolean res = false;
+        for(Item item : returnedItems)
+        {
+            if (item.getItemID().equals(i.getItemID()))
+                return true;
+
+        }
+        return res;
+    }
+
 	
     public void returnItem(Item item) {
         item.setStatus(ItemStatus.Returned);
-        returnedItems.add(item);
+        if(item != null && item.getItemID() == null){
+            return;
+        }
+        if (!containsReturnedItem(item)  )
+            returnedItems.add(item);
     }
     
     public List<Item> getReturnedItems()

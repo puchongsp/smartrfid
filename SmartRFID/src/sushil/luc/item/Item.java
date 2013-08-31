@@ -19,6 +19,7 @@ public class Item implements Cloneable{
     public static final String _STATUS = "status";
     //public static final String _DATE = "date";*/
 
+    private int id;
 	private String ItemID;
 	private String ItemName;
     private String RFID;
@@ -49,6 +50,7 @@ public class Item implements Cloneable{
     public Item(ItemDTO itemDto){
     	if (itemDto!=null)
     	{
+            this.id = itemDto.getId();
     		this.ItemID = itemDto.getIdentifier();
     		if (itemDto.getItemInfo()!=null)
     		{
@@ -90,15 +92,15 @@ public class Item implements Cloneable{
     		// map the DTO status to our status
     		if (itemDto.getItemStatus()!=null)
     		{
-    			if (itemDto.getItemStatus().isReturned() &&
-    					itemDto.getItemStatus().isStaged() &&
-    					itemDto.getItemStatus().isChecked())
+    			if (itemDto.getItemStatus().isReturned()==1 &&
+    					itemDto.getItemStatus().isStaged()==1 &&
+    					itemDto.getItemStatus().isChecked()==1)
     				this.Status = ItemStatus.Returned;
     			else
-	            		if(itemDto.getItemStatus().isStaged())
+	            		if(itemDto.getItemStatus().isStaged()==1)
 	            			this.Status = ItemStatus.Staged;
 	            		else
-	            			if(itemDto.getItemStatus().isChecked())
+	            			if(itemDto.getItemStatus().isChecked()==1)
 	                    		this.Status = ItemStatus.Checked;
 	            			else
 	            				this.Status = ItemStatus.Available;
@@ -123,8 +125,16 @@ public class Item implements Cloneable{
 				" WarehouseLoc "+this.WarehouseLocation+" RFID "+this.RFID
 				+" Status "+this.Status+" StartRentDate "+this.StartRentDate );
     }
-	
-	public String getItemID() {
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getItemID() {
 		return ItemID;
 	}
 	public void setItemID(String itemID) {
