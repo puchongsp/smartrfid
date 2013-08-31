@@ -5,9 +5,9 @@ package sushil.luc.dtos;
  */
 public class ItemStatusDTO {
     private String id;
-    private boolean isStaged;
-    private boolean isChecked;
-    private boolean isReturned;
+    private int isStaged;
+    private int isChecked;
+    private int isReturned;
     // if all are false - what does it mean
     // if isReturned is true and all other false = what does it mean
 
@@ -19,27 +19,27 @@ public class ItemStatusDTO {
         this.id = id;
     }
 
-    public boolean isStaged() {
+    public int isStaged() {
         return isStaged;
     }
 
-    public void setStaged(boolean staged) {
+    public void setStaged(int staged) {
         isStaged = staged;
     }
 
-    public boolean isChecked() {
+    public int isChecked() {
         return isChecked;
     }
 
-    public void setChecked(boolean checked) {
+    public void setChecked(int checked) {
         isChecked = checked;
     }
 
-    public boolean isReturned() {
+    public int isReturned() {
         return isReturned;
     }
 
-    public void setReturned(boolean returned) {
+    public void setReturned(int returned) {
         isReturned = returned;
     }
 }

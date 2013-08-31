@@ -1,33 +1,24 @@
 package sushil.luc.network;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import sushil.luc.gui.MainActivity;
 import sushil.luc.item.Item;
 import sushil.luc.ticket.Ticket;
-
-import android.os.AsyncTask;
-import android.util.Log;
 
 public class SimpleGetTask  extends AsyncTask<String, String, String>{
 		
@@ -140,7 +131,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    	
 	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getTicketID()+"&isStaged=0&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
-	    	
+	    	Log.i("SGT",url);
 	        return get;
 		}
 	    
@@ -149,7 +140,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    	
 	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=0&ticketId="+t.getTicketID()+"&isStaged=0&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
-	    	
+            Log.i("SGT",url);
 	        return get;
 		}
 	    
@@ -158,7 +149,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    	
 	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getTicketID()+"&isStaged=1&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
-	    	
+            Log.i("SGT",url);
 	        return get;
 		}
 	    
@@ -167,7 +158,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    	
 	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getTicketID()+"&isStaged=1&isReturned=1";
 	    	HttpGet get= new HttpGet(url);
-	    	
+            Log.i("SGT",url);
 	        return get;
 		}
 	    
@@ -175,36 +166,36 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    private HttpGet updateItemAvailable(Item i) {
 
 	    	
-	    	String url = MainActivity.HOST_URL+"api/items/update.php?id="+i.getItemID()+"&isChecked=0&isStaged=0&isReturned=0";
+	    	String url = MainActivity.HOST_URL+"/api/items/update.php?id="+i.getId()+"&isChecked=0&isStaged=0&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
-	    	
+            Log.i("SGT",url);
 	        return get;
 		}
 	    
 	    private HttpGet updateItemChecked(Item i) {
 
 	    	
-	    	String url = MainActivity.HOST_URL+"api/items/update.php?id="+i.getItemID()+"&isChecked=1&isStaged=0&isReturned=0";
+	    	String url = MainActivity.HOST_URL+"/api/items/update.php?id="+i.getId()+"&isChecked=1&isStaged=0&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
-	    	
+            Log.i("SGT",url);
 	        return get;
 		}
 	    
 	    private HttpGet updateItemStaged(Item i) {
 
 	    	
-	    	String url = MainActivity.HOST_URL+"api/items/update.php?id="+i.getItemID()+"&isChecked=1&isStaged=1&isReturned=0";
+	    	String url = MainActivity.HOST_URL+"/api/items/update.php?id="+i.getId()+"&isChecked=1&isStaged=1&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
-	    	
+            Log.i("SGT",url);
 	        return get;
 		}
 	    
 	    private HttpGet updateItemReturned(Item i) {
 
 	    	
-	    	String url = MainActivity.HOST_URL+"api/items/update.php?id="+i.getItemID()+"&isChecked=1&isStaged=1&isReturned=1";
+	    	String url = MainActivity.HOST_URL+"/api/items/update.php?id="+i.getId()+"&isChecked=1&isStaged=1&isReturned=1";
 	    	HttpGet get= new HttpGet(url);
-	    	
+            Log.i("SGT",url);
 	        return get;
 		}
 	    

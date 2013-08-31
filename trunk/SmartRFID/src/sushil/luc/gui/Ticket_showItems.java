@@ -1,35 +1,26 @@
 package sushil.luc.gui;
 
+import android.app.ActionBar;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
+import com.ugrokit.api.Ugi;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ugrokit.api.Ugi;
-
 import sushil.luc.item.Item;
-import sushil.luc.item.ItemStatus;
-import sushil.luc.msc.RFIDActivity;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
-import sushil.luc.ticket.TicketService;
-import sushil.luc.ticket.TicketStatus;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 public class Ticket_showItems extends UgroKitActivity{
 	
@@ -137,13 +128,15 @@ public class Ticket_showItems extends UgroKitActivity{
 	 */
 	public void onDestroy()
 	{
-		super.StopInventory();
+        // check ticket again and update database
+        currentTicket.calcTicketStatus();
+        assembler.saveTicket(currentTicket);
+
+        super.StopInventory();
 		super.stopAllModes();
 		super.calculateStatus();
 		
-		// check ticket again and update database
-		currentTicket.calcTicketStatus();
-		assembler.saveTicket(currentTicket);
+
 		super.onDestroy();
 	}
 	

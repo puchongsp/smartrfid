@@ -5,9 +5,9 @@ package sushil.luc.dtos;
  */
 public class OrderStatusDTO {
     private String $id;
-    private boolean isStaged;
-    private boolean isCheckedOut;
-    private boolean isReturned;
+    private int isStaged;
+    private int isCheckedOut;
+    private int isReturned;
 
     public String getId() {
         return $id;
@@ -17,27 +17,27 @@ public class OrderStatusDTO {
         this.$id = id;
     }
 
-    public boolean isStaged() {
+    public int isStaged() {
         return isStaged;
     }
 
-    public void setStaged(boolean staged) {
+    public void setStaged(int staged) {
         isStaged = staged;
     }
 
-    public boolean isCheckedOut() {
+    public int isCheckedOut() {
         return isCheckedOut;
     }
 
-    public void setCheckedOut(boolean checkedOut) {
+    public void setCheckedOut(int checkedOut) {
         isCheckedOut = checkedOut;
     }
 
-	public boolean isReturned() {
+	public int isReturned() {
 		return isReturned;
 	}
 
-	public void setReturned(boolean isReturned) {
+	public void setReturned(int isReturned) {
 		this.isReturned = isReturned;
 	}
 }
