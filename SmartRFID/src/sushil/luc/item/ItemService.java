@@ -276,7 +276,7 @@ public class ItemService {
     public void sendToRepair(Item item) {
     	
     	// Update Database
-    	SimpleGetTask getTask = new SimpleGetTask(null, SimpleGetTask.ItemReturned, item);
+    	SimpleGetTask getTask = new SimpleGetTask( SimpleGetTask.ItemReturned, item);
     	getTask.execute();
     	// Update local
     	item.setStatus(ItemStatus.Returned);
@@ -287,9 +287,15 @@ public class ItemService {
     public void sendToWarehouse(Item item) {
     	
     	// Update Database
-    	SimpleGetTask getTask = new SimpleGetTask(null, SimpleGetTask.ItemAvailable, item);
+    	SimpleGetTask getTask = new SimpleGetTask( SimpleGetTask.ItemAvailable, item);
     	getTask.execute();
     	// Update local
     	item.setStatus(ItemStatus.Available);
+    }
+    
+    public void updateItemHistory (Item item, String text)
+    {
+    	SimpleGetTask getTask = new SimpleGetTask(SimpleGetTask.UpdateItemHistory, item,text);
+    	getTask.execute();
     }
 }

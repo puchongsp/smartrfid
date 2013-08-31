@@ -65,9 +65,19 @@ public class RepairItemFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				//TODO save ItemHistory with itemService
+				String text = NewItemHistory.getText().toString();
+				if (currentItem!=null && text.isEmpty())
+				{
+					itemservice.updateItemHistory(currentItem, text);
+					
+					Toast.makeText(getActivity(), "Please insert a text", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					
+					Toast.makeText(getActivity(), "History saved", Toast.LENGTH_SHORT).show();
+				}
 				
-				Toast.makeText(getActivity(), "History saved", Toast.LENGTH_SHORT).show();
 			}
 		});
     	
@@ -85,6 +95,7 @@ public class RepairItemFragment extends Fragment{
 			public void onClick(View v) {
 				
 				itemservice.sendToWarehouse(currentItem);
+				Toast.makeText(getActivity(), "Item fixed, put it back in the warehouse", Toast.LENGTH_SHORT).show();
 				reset();
 			}
 		});

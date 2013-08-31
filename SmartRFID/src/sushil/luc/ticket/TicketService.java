@@ -151,19 +151,19 @@ public class TicketService {
     	switch (t.getStatus())
     	{
 		    	case Open:
-		    		 gettask = new SimpleGetTask(t, SimpleGetTask.TicketAvailable, null);
+		    		 gettask = new SimpleGetTask(t, SimpleGetTask.TicketAvailable);
 		    		gettask.execute();
 		    		break;
 		    	case Checked:
-		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketChecked, null);
+		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketChecked);
 		    		gettask.execute();
 		    		break;
 		    	case Closed:
-		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketReturned, null);
+		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketReturned);
 		    		gettask.execute();
 		    		break;
 		    	case Staged:
-		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketStaged, null);
+		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketStaged);
 		    		gettask.execute();
 		    		break;
     	}
