@@ -93,11 +93,8 @@ public class Item implements Cloneable{
     			if (itemDto.getItemStatus().isReturned() &&
     					itemDto.getItemStatus().isStaged() &&
     					itemDto.getItemStatus().isChecked())
-    				this.Status = ItemStatus.Repair;
+    				this.Status = ItemStatus.Returned;
     			else
-	    			if(itemDto.getItemStatus().isReturned())
-	        			this.Status = ItemStatus.Returned;  			
-	            	else 
 	            		if(itemDto.getItemStatus().isStaged())
 	            			this.Status = ItemStatus.Staged;
 	            		else

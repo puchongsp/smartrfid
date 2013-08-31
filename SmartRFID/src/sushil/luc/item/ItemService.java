@@ -14,23 +14,30 @@ import sushil.luc.dtos.ItemDTO;
 import sushil.luc.dtos.RfidInfoDTO;
 import sushil.luc.gui.MainActivity;
 import sushil.luc.gui.NewItemFragment;
+import sushil.luc.gui.RepairItemFragment;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.network.Callback;
 import sushil.luc.network.NetworkHandler;
+import sushil.luc.network.SimpleGetTask;
 import sushil.luc.ugrokit.RFIDManager;
 
 public class ItemService {
 
    // private static List<Item> items;
-    private static Set<Item> returnedItems;
+    private static List<Item> repairItems;
     private static List<Item> newItems;
+    private static List<Item> returnedItems;
 	
 	public ItemService() {
-        if(returnedItems == null) {
-            returnedItems = new HashSet<Item>();
+        if(repairItems == null) {
+            repairItems = new LinkedList<Item>();
         }
         if(newItems == null) {
         	newItems = new LinkedList<Item>();
+        }
+        if(returnedItems==null)
+        {
+        	returnedItems = new LinkedList<Item>();
         }
 	}
 	
@@ -129,7 +136,7 @@ public class ItemService {
 						for (ItemDTO o :t)
 						{
 							Item item = new Item(o);
-							if (!checkItem(item))
+							if (!checkItem(item, newItems))
                                 newItems.add(item);
 						}
 						if (caller.equals("NewItemFragment"))
@@ -148,48 +155,90 @@ public class ItemService {
     	  return newItems;
     }
     
-	private boolean checkItem (Item newItem)
+    /**
+     * Checks if an Item item is contained in the given itemlist
+     * @param item
+     * @param itemlist
+     * @return true yes, false no
+     */
+	private boolean checkItem (Item item, List<Item> itemlist)
 	{
 		boolean check =false;
-		for (Item i: newItems)  
+		for (Item i: itemlist)  
 		{
-			if (newItem.getItemID().equals(i.getItemID()))
+			if (item.getItemID().equals(i.getItemID()))
 				check=true;
 		}
 		return check;
 	}
     
+	//NO NEEDED, Sorry for the extra work
+	/*
+    public List<Item> getRepairItems (final String caller)
+        {
+            int limit = 20;
+        	if (repairItems.size()<limit)
+        	{
+    	    	try {
+    	              final NetworkHandler networkHandler = NetworkHandler.getInstance();
 
-    public List<Item> getReturnedItems() {
-    	//TODO connect to database
-        List<Item> items =  new ArrayList<Item>();
-        items.addAll(returnedItems);
-        return items;
-    }
+    	              String URL = MainActivity.HOST_URL + "/smartrfid/api/items/queryRepairItems.php?limit="+limit;
+
+    	              networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
+    	
+    					@Override
+    					public void callback(List<ItemDTO> t) {
+    						for (ItemDTO o :t)
+    						{
+    							Item item = new Item(o);
+    							if (!checkItem(item, repairItems))
+    								repairItems.add(item);
+    						}
+    						if (caller.equals("RepairItemsFragment"))
+    						{
+    							Log.d("ItemService", "Call done "+repairItems.size());
+    							RepairItemFragment.updateView(repairItems);
+    						}
+    					}
+    	              });
+    	
+    	          } catch (Exception e) {
+    	              e.printStackTrace();
+    	          }
+        	}
+              Log.d("ItemService", "repairItems size :"+repairItems.size()); 
+        	  return repairItems;
+
+    }*/
 
     public void returnItem(Item item) {
-    	//TODO connect to database
+    	//ONLY LOCAL!
         item.setStatus(ItemStatus.Returned);
         returnedItems.add(item);
     }
+    
+    public List<Item> getReturnedItems()
+    {
+    	return returnedItems;
+    }
 
     public void sendToRepair(Item item) {
-    	//TODO connect to database
-        if(item.getStatus().equals(ItemStatus.Returned)){
-//            if(returnedItems.contains(item)) {
-//                returnedItems.remove(item);
-//            }
-            item.setStatus(ItemStatus.Repair);
-        }
+    	
+    	// Update Database
+    	SimpleGetTask getTask = new SimpleGetTask(null, SimpleGetTask.ItemReturned, item);
+    	getTask.execute();
+    	// Update local
+    	item.setStatus(ItemStatus.Returned);
+    	if (!checkItem(item, repairItems))
+    		repairItems.add(item);
     }
 
     public void sendToWarehouse(Item item) {
-    	//TODO connect to database
-        if(item.getStatus().equals(ItemStatus.Returned) || item.getStatus().equals(ItemStatus.Repair) ){
-            if(returnedItems.contains(item)) {
-                returnedItems.remove(item);
-            }
-            item.setStatus(ItemStatus.Available);
-        }
+    	
+    	// Update Database
+    	SimpleGetTask getTask = new SimpleGetTask(null, SimpleGetTask.ItemAvailable, item);
+    	getTask.execute();
+    	// Update local
+    	item.setStatus(ItemStatus.Available);
     }
 }

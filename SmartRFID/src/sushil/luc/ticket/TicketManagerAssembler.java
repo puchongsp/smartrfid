@@ -67,10 +67,7 @@ public class TicketManagerAssembler implements TicketManager{
     
     public void saveTicket (Ticket t)
     {
-    	//TODO Call put operations which sets all the Item Statuses to checked
-    //	throw new NullPointerException();
-    	
-    	//this.ticketserv.saveToRemote(t);
+    	ticketserv.saveToRemote(t);
     }
 
 }

@@ -141,7 +141,9 @@ public class Ticket_showItems extends UgroKitActivity{
 		super.StopInventory();
 		super.stopAllModes();
 		super.calculateStatus();
-		//TODO strange
+		
+		// check ticket again and update database
+		currentTicket.calcTicketStatus();
 		assembler.saveTicket(currentTicket);
 		super.onDestroy();
 	}
