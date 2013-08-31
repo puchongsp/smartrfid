@@ -1,19 +1,7 @@
 package sushil.luc.ugrokit;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
-import sushil.luc.gui.TagNewItemActivity;
-import sushil.luc.item.Item;
-import sushil.luc.item.ItemService;
-import sushil.luc.msc.UgroKitActivity;
-import sushil.luc.smartrfid.R;
-
 import android.app.Dialog;
 import android.content.Context;
-import android.nfc.Tag;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,15 +9,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ugrokit.api.UgiEpc;
 import com.ugrokit.api.UgiTag;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import sushil.luc.gui.TagNewItemActivity;
+import sushil.luc.item.Item;
+import sushil.luc.item.ItemService;
+import sushil.luc.smartrfid.R;
 
 public class NewItemManager extends RFIDManager{
 
@@ -121,22 +113,25 @@ public class NewItemManager extends RFIDManager{
 	
 	public void handle2 (Item item, UgiTag tag)
 	{
-		if (item ==null)
-		{
-			// The Tag is already in use, by another item 
-			Toast.makeText(con, "Tag "+tag.getEpc().toString()+" already in use for another item", Toast.LENGTH_SHORT).show();
-			this.alreadyTestedTags.add(tag);
-		} else {
-			// check if the Dialog is currently open
-			if (initial) {					
-				this.initial = false;
-				Log.d(LogTag, "First time startup "+ tag.getEpc());
-				showDialog(tag);
-			} else {
-				Log.d(LogTag, "Not intial "+ tag.getEpc());
-				addTagtoList(tag);
-			}
-		}
+		if (currentItem!=null)
+        {
+            if (item ==null)
+            {
+                // The Tag is already in use, by another item
+                Toast.makeText(con, "Tag "+tag.getEpc().toString()+" already in use for another item", Toast.LENGTH_SHORT).show();
+                this.alreadyTestedTags.add(tag);
+            } else {
+                // check if the Dialog is currently open
+                if (initial) {
+                    this.initial = false;
+                    Log.d(LogTag, "First time startup "+ tag.getEpc());
+                    showDialog(tag);
+                } else {
+                    Log.d(LogTag, "Not intial "+ tag.getEpc());
+                    addTagtoList(tag);
+                }
+            }
+        }
 	}
 	
 	/**
@@ -144,12 +139,12 @@ public class NewItemManager extends RFIDManager{
 	 * @param tag
 	 * @return
 	 */
-	private String getTagId(UgiTag tag) {
+	/*private String getTagId(UgiTag tag) {
 		// ask database
 		String name = tag.getEpc().toString();
 		name = name.replaceFirst("^0*", "");
 		return name;
-	}
+	}*/
 
 	/**
 	 * Displays the Dialog to find all the available not yet used Tags
@@ -188,6 +183,17 @@ public class NewItemManager extends RFIDManager{
 	 */
 	public void reset() {
 		Log.d(LogTag, "reset");
+
+       /* this.initial = true;
+        this.taglist = null;
+        this.adapter = null;
+        this.dialog =null;
+        this.d_tags = null;
+        this.stopAdding =false;
+        this.currentItem= null;
+        this.currentActivity=null;
+        this.alreadyTestedTags = new LinkedList<UgiTag>();*/
+
 		this.initial = true;
 		this.taglist = null;
 		this.adapter = null;
@@ -224,12 +230,19 @@ public class NewItemManager extends RFIDManager{
 	            currentItem.setRFID(selected_id);
 	            // Tell the history
 	           // itemHistory.saveToHistory(currentItem);
-	            // Stop the rfid scan to save energy
+
+
 	            currentActivity.StopInventory();
 	            // tell the view to update. Delete the currently tagged Item
-	            currentActivity.updateView();
-	            // stop all modes
-	            currentActivity.stopAllModes();
+
+
+                // Stop the rfid scan to save energy
+                currentActivity.updateView();
+
+                // stop all modes
+                currentActivity.stopAllModes();
+
+
 	            
 	            
 	            Log.d(LogTag, "Did it");
@@ -243,7 +256,7 @@ public class NewItemManager extends RFIDManager{
 	 * @param tag
 	 */
 	private void addTagtoList(UgiTag tag) {
-		String a = getTagId(tag);
+		String a = tag.getEpc().toString();
 		//Log.d(LogTag, "addTagtoList");
 		if ((!taglist.contains(a)) && (!stopAdding)) {
 			taglist.add(a);
