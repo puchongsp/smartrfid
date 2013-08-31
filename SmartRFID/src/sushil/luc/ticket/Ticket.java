@@ -31,8 +31,8 @@ public class Ticket {
 	private Customer TicketCustomer;
 	private List<Item> Items;
 	private TicketStatus Status;
-	private Date CreationDate;
-	private Date DeliveryDate;
+	private String CreationDate;
+	private String DeliveryDate;
 	
 	public Ticket()
 	{
@@ -51,8 +51,8 @@ public class Ticket {
         // Call the method  calcTicketStatus()
         //this.Status = TicketStatus.Open; // Setting default ticket status;
         
-        this.CreationDate = new Date();
-        this.DeliveryDate = new Date();
+        this.CreationDate = orderDTO.getInfo().getCreationDate();
+        this.DeliveryDate = orderDTO.getInfo().getDeliveryDate();
 
         List<ItemDTO> itemDtos = ticketDTO.getItems();
         
@@ -171,21 +171,21 @@ public class Ticket {
 		Status = status;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return CreationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		CreationDate = creationDate;
 	}
 
 
-	public Date getDeliveryDate() {
+	public String getDeliveryDate() {
 		return DeliveryDate;
 	}
 
 
-	public void setDeliveryDate(Date deliveryDate) {
+	public void setDeliveryDate(String deliveryDate) {
 		DeliveryDate = deliveryDate;
 	}
 	

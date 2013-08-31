@@ -97,7 +97,7 @@ public class TicketsFragment extends Fragment {
         			collected++;
         	}	
         	
-        	String deliverydate = DateUtil.DatetoString(tmp.getDeliveryDate());
+        	String deliverydate = DateUtil.formatDate(tmp.getDeliveryDate());
         	
         	group.put( KEY_LABEL, "Ticket "+ tmp.getTicketID() );
         	group.put( KEY_HELP, "Items "+collected+"/"+items.size()+" | "+deliverydate+" | Client "+c.getName() );
@@ -147,7 +147,7 @@ public class TicketsFragment extends Fragment {
         			collected++;
         	}	
         	
-        	String deliverydate = DateUtil.DatetoString(tmp.getDeliveryDate());
+        	String deliverydate = DateUtil.formatDate(tmp.getDeliveryDate());
         	
         	group.put( KEY_LABEL, "Ticket "+ tmp.getTicketID() );
         	group.put( KEY_HELP, "Items "+collected+"/"+items.size()+" | "+deliverydate+" | Client "+c.getName() );

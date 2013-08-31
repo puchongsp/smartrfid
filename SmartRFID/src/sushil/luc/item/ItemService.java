@@ -192,9 +192,4 @@ public class ItemService {
             item.setStatus(ItemStatus.Available);
         }
     }
-    
-    public void onNotify()
-    {
-    	
-    }
 }
