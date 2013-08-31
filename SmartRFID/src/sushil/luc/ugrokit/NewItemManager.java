@@ -10,7 +10,6 @@ import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
-import sushil.luc.utils.ItemHistory;
 
 import android.app.Dialog;
 import android.content.Context;

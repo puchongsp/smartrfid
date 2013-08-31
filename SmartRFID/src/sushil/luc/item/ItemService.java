@@ -11,6 +11,7 @@ import java.util.Set;
 import com.ugrokit.api.UgiTag;
 
 import sushil.luc.dtos.ItemDTO;
+import sushil.luc.dtos.RepairHistoryDTO;
 import sushil.luc.dtos.RfidInfoDTO;
 import sushil.luc.gui.MainActivity;
 import sushil.luc.gui.NewItemFragment;
@@ -172,6 +173,41 @@ public class ItemService {
 		return check;
 	}
     
+	public List<ItemHistory> getItemHistory (Item item, final String caller)
+	{
+		final List<ItemHistory> hist =new LinkedList<ItemHistory>();
+		
+		try {
+            final NetworkHandler networkHandler = NetworkHandler.getInstance();
+
+       //     String URL = "http://rfidproject.azurewebsites.net/api/items/query?limit="+limit+"&skip=0&orderBy=0&filters=2";
+            
+            String URL = MainActivity.HOST_URL + "/api/repairHistory/query.php?itemId="+item.getItemID();
+
+            networkHandler.readList(URL, RepairHistoryDTO[].class, new Callback<List<RepairHistoryDTO>>() {
+
+				@Override
+				public void callback(List<RepairHistoryDTO> ih) {
+					for (RepairHistoryDTO o :ih)
+					{
+						ItemHistory itemhis = new ItemHistory(o);
+						hist.add(itemhis);
+					}
+					
+					if (caller.equals("RepairItemFragment"))
+					{						
+						RepairItemFragment.updateHistory(hist);
+					}
+				}
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+		return hist;
+	}
+	
 	//NO NEEDED, Sorry for the extra work
 	/*
     public List<Item> getRepairItems (final String caller)
@@ -210,9 +246,10 @@ public class ItemService {
         	  return repairItems;
 
     }*/
-
+	
+	
+	
     public void returnItem(Item item) {
-    	//ONLY LOCAL!
         item.setStatus(ItemStatus.Returned);
         returnedItems.add(item);
     }

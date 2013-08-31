@@ -20,7 +20,6 @@ import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
 import sushil.luc.utils.DateUtil;
-import sushil.luc.utils.ItemHistory;
 import android.app.ActionBar;
 
 public class ShowItemDetails extends UgroKitActivity{

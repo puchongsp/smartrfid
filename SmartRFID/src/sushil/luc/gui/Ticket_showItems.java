@@ -16,7 +16,6 @@ import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
 import sushil.luc.ticket.TicketService;
 import sushil.luc.ticket.TicketStatus;
-import sushil.luc.utils.ItemHistory;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;

@@ -21,7 +21,6 @@ import sushil.luc.item.ItemStatus;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketStatus;
-import sushil.luc.utils.ItemHistory;
 
 public class TicketScanManager extends RFIDManager{
 	
