@@ -122,7 +122,7 @@ public class NewItemManager extends RFIDManager{
 	
 	public void handle2 (Item item, UgiTag tag)
 	{
-		if (item !=null)
+		if (item ==null)
 		{
 			// The Tag is already in use, by another item 
 			Toast.makeText(con, "Tag "+tag.getEpc().toString()+" already in use for another item", Toast.LENGTH_SHORT).show();

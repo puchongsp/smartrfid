@@ -166,7 +166,7 @@ public class TruckerCheckManager {
 	 * public void setTicket (Ticket t) { deliveryTicket =t; }
 	 */
 
-	// TODO implement after import
+
 	/*
 	 * private class TruckerAdapter extends SimpleAdapter {
 	 * 

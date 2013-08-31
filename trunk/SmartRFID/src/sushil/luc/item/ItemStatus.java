@@ -16,8 +16,8 @@ public enum ItemStatus {
 	Available("Available",0),
 	Staged("IsStaged",1),
 	Checked("IsChecked",2),
-	Returned ("Returned", 3),
-	Repair ("Repair",4);
+	Returned ("Returned", 3);
+	//,Repair ("Repair",4);
 		
 		private String stringvalue;
 		private int intValue;

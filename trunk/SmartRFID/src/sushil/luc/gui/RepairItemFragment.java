@@ -1,6 +1,7 @@
 package sushil.luc.gui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ugrokit.api.UgiTag;
 
@@ -56,8 +57,6 @@ public class RepairItemFragment extends Fragment{
     	
     	itemservice = new ItemService();
     	
-    	
-    	
     	btnSave.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -81,9 +80,7 @@ public class RepairItemFragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				
-				currentItem.setStatus(ItemStatus.Available);
-				// TODO Update in the database
-				
+				itemservice.sendToWarehouse(currentItem);
 				reset();
 			}
 		});
@@ -156,4 +153,5 @@ public class RepairItemFragment extends Fragment{
 		initScreen();
 		((UgroKitActivity) getActivity()).StartInventory();
 	}
+	
 }

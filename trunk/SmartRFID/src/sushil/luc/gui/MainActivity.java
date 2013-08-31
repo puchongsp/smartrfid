@@ -194,7 +194,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
         
         if (currenttab.getText().equals(RepairItemTabName))
         {
-        	if (i !=null && i.getStatus().equals(ItemStatus.Repair))
+        	if (i !=null && i.getStatus().equals(ItemStatus.Returned))
             {
             	repairItemFragment.setItem(i);
             	super.StopInventory();
