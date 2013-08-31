@@ -13,6 +13,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 		private Ticket t;
 		private Item i;
 		private String operation;
+		private String text;
 		
 		public static final String TicketChecked = "TicketChecked";
 		public static final String TicketStaged = "TicketStaged";
@@ -36,13 +39,26 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 		//public static final String ItemRepair = "ItemRepair";
 		public static final String ItemReturned = "ItemReturned";
 		public static final String ItemAvailable ="ItemAvailable";
+		public static final String UpdateItemHistory = "UpdateItemHistory";
 		
 		
-		public SimpleGetTask(Ticket t, String Operation, Item i)
+		public SimpleGetTask(Ticket t, String Operation)
 		{
 			this.t =t;
 			this.operation = Operation;
+		}
+		
+		public SimpleGetTask (String Operation, Item i)
+		{
+			this.operation = Operation;
 			this.i =i;
+		}
+		
+		public SimpleGetTask (String Operation, Item i, String text)
+		{
+			this.operation = Operation;
+			this.i =i;
+			this.text =text;
 		}
 	
 	    @Override
@@ -78,6 +94,9 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	        		data = updateItemReturned(i);
 	        	if (operation.equals(ItemStaged))
 	        		data = updateItemStaged(i);
+	        	
+	        	if(operation.equals(UpdateItemHistory));
+	        		data = updateItemHistory(i,text);
 	        	
 	        	if(data==null)
 	        	{
@@ -221,7 +240,21 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    	
 	    	return Tasks;
 	    }
-
+	    
+	    
+	    private HttpGet updateItemHistory (Item i, String text )
+	    {
+	    	String encodeText="";
+			try {
+				encodeText = URLEncoder.encode(text,"UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	    	String url = MainActivity.HOST_URL+"/api/repairHistory/insert.php?itemId="+i.getId()+"1&description="+encodeText;
+	    	HttpGet get= new HttpGet(url);
+	    	
+	    	return get;
+	    }
 	    @Override
 	    protected void onPostExecute(String result) {
 	        super.onPostExecute(result);
