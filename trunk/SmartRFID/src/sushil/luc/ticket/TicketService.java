@@ -13,6 +13,7 @@ import sushil.luc.gui.MainActivity;
 import sushil.luc.gui.TicketsFragment;
 import sushil.luc.network.Callback;
 import sushil.luc.network.NetworkHandler;
+import sushil.luc.network.SimpleGetTask;
 
 public class TicketService {
 
@@ -55,10 +56,7 @@ public class TicketService {
         final NetworkHandler networkHandler = NetworkHandler.getInstance();
         networkHandler.setContext(context);
 
-        //
-        // First get order
-        // then get ticket by id
-        //
+        // First get order then get ticket by id
         final List<OrderDTO> orderDTOList = new ArrayList<OrderDTO>();
         //final List<TicketDTO> ticketDTOList = new ArrayList<TicketDTO>();
 
@@ -92,10 +90,8 @@ public class TicketService {
                             });
                         } catch (Exception e) {
                             Toast.makeText(context, "Could not connect. Please check your connection.", Toast.LENGTH_LONG).show();
-                        }
-                        
-                    }
-                 
+                        }          
+                    }     
                 }
             });
         } catch (Exception e) {
@@ -106,7 +102,7 @@ public class TicketService {
         return Tickets;
 	}
 
-	
+/*	
 	public void saveToRemote(Ticket t)
 	{
 		int i =0;
@@ -122,7 +118,7 @@ public class TicketService {
 		{
 			Tickets.set(i, t);
 		}
-	}
+	}*/
 
     public boolean doesTicketExist(TicketDTO myTicketDTO) {
         boolean ticketExists = false;
@@ -139,7 +135,7 @@ public class TicketService {
      * Sets all the Items from the Ticket to picked up
      * @return false if there was a problem, true if everything was fine
      */
-    public boolean ticketCollected (Ticket t, Context context)
+    /*public boolean ticketCollected (Ticket t, Context context)
     {
     	final NetworkHandler networkHandler = NetworkHandler.getInstance();
         networkHandler.setContext(context);
@@ -147,6 +143,30 @@ public class TicketService {
         boolean res = networkHandler.updateTicketFullyCollected(t);
         
     	return res;
+    }*/
+    
+    public void saveToRemote(Ticket t)
+    {
+    	SimpleGetTask gettask;
+    	switch (t.getStatus())
+    	{
+		    	case Open:
+		    		 gettask = new SimpleGetTask(t, SimpleGetTask.TicketAvailable, null);
+		    		gettask.execute();
+		    		break;
+		    	case Checked:
+		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketChecked, null);
+		    		gettask.execute();
+		    		break;
+		    	case Closed:
+		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketReturned, null);
+		    		gettask.execute();
+		    		break;
+		    	case Staged:
+		    		gettask = new SimpleGetTask(t, SimpleGetTask.TicketStaged, null);
+		    		gettask.execute();
+		    		break;
+    	}
     }
 
 }

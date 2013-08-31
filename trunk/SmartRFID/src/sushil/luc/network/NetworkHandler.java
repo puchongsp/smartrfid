@@ -65,11 +65,4 @@ public class NetworkHandler {
 	      }
 	    }).execute();
 	  }
-	  
-	  public boolean updateTicketFullyCollected(Ticket t) {
-		  
-		  SimplePutTask pt = new SimplePutTask(t, "TicketFullyCollected");
-		  pt.execute(new String[0]);
-		  return true;
-	  }
 	}
