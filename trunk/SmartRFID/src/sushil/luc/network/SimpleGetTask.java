@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -62,10 +63,17 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	        
 	        try {
 	        	HttpGet data = null;
+	        	List<HttpGet> data2 = null;
 	        	if (operation.equals(TicketChecked))
+	        	{
 	        		data = updateTicketChecked(t);
+	        		data2 = updateAllItems(t);
+	        	}
 	        	if (operation.equals(TicketStaged))
+	        	{
 	        		data = updateTicketStaged(t);
+	        		data2 = updateAllItems(t);
+	        	}
 	        	if (operation.equals(TicketReturned))
 	        		data = updateTicketReturned(t);
 	        	if (operation.equals(TicketAvailable))
@@ -98,6 +106,25 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 		                response.getEntity().getContent().close();
 		                throw new IOException(statusLine.getReasonPhrase());
 		            }
+	        	}
+	        	
+	        	if (data2!=null)
+	        	{
+	        		for (HttpGet get : data2)
+	        		{
+	        			response = httpclient.execute(get);
+			            StatusLine statusLine = response.getStatusLine();
+			            if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+			                ByteArrayOutputStream out = new ByteArrayOutputStream();
+			                response.getEntity().writeTo(out);
+			                out.close();
+			                responseString = out.toString();
+			            } else{
+			                //Closes the connection.
+			                response.getEntity().getContent().close();
+			                throw new IOException(statusLine.getReasonPhrase());
+			            }
+	        		}
 	        	}
 	        } catch (ClientProtocolException e) {
 	        	Log.e("BackgroundTask", e.getMessage());
@@ -180,6 +207,29 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    	
 	        return get;
 		}
+	    
+	    private List<HttpGet> updateAllItems (Ticket t)
+	    {
+	    	List<HttpGet> Tasks = new LinkedList<HttpGet>();
+	    	
+	    	for (Item i: t.getItems())
+	    	{
+	    		HttpGet get= null;
+	    		switch (t.getStatus())
+	    		{
+	    		case Checked:
+	    			get = this.updateItemChecked(i);
+	    			break;
+	    		case Staged:
+	    			get = this.updateItemStaged(i);
+	    			break;
+	    		}
+	    		
+	    		Tasks.add(get);
+	    	}
+	    	
+	    	return Tasks;
+	    }
 
 	    @Override
 	    protected void onPostExecute(String result) {

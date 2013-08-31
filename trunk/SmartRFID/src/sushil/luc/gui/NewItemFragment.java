@@ -19,7 +19,6 @@ import java.util.Map;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.smartrfid.R;
-import sushil.luc.utils.ItemHistory;
 
 public class NewItemFragment extends Fragment {
 

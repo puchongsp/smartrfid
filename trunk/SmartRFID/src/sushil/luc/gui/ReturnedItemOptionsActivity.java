@@ -11,7 +11,6 @@ import java.util.List;
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
 import sushil.luc.smartrfid.R;
-import sushil.luc.utils.ItemHistory;
 
 /**
  * Created by sushil on 7/9/13.

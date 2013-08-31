@@ -22,8 +22,6 @@ import sushil.luc.msc.RFIDActivity;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.utils.DateUtil;
-import sushil.luc.utils.ItemHistory;
-import sushil.luc.utils.ItemHistoryObject;
 
 /**
  * Enable RFID and scan

@@ -6,10 +6,12 @@ import java.util.List;
 import com.ugrokit.api.UgiTag;
 
 import sushil.luc.item.Item;
+import sushil.luc.item.ItemHistory;
 import sushil.luc.item.ItemService;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,8 +34,9 @@ public class RepairItemFragment extends Fragment{
 	private Button btnSave;
 	private Button btnFixed;
 	private Button btnCancel;
-	private ListView ItemHistory;
+	private static ListView ItemHistory;
 	private ItemService itemservice;
+	private static Activity parent;
 	
 	private static Item currentItem; 
 	
@@ -56,6 +59,7 @@ public class RepairItemFragment extends Fragment{
     	btnCancel.setText("Cancel");
     	
     	itemservice = new ItemService();
+    	parent = getActivity();
     	
     	btnSave.setOnClickListener(new View.OnClickListener() {
 			
@@ -129,22 +133,20 @@ public class RepairItemFragment extends Fragment{
         	NewItemHistory.setHint("Insert a new history entry here");
         	//TODO get the ItemHistory 
         	
-        	ArrayList<String> data = new ArrayList<String>();
-        	
-        	data.add("foo");
-        	data.add("bar bar bar bar bar bar bar bar barbar bar bar bar bar bar barbar bar bar barbarbarbarbar bar  bar");
-        	data.add("bar bar bar bar bar bar bar bar barbar bar bar bar bar bar barbar bar bar barbarbarbarbar bar  bar");
-        	data.add("bar bar bar bar bar bar bar bar barbar bar bar bar bar bar barbar bar bar barbarbarbarbar bar  bar");
-        	data.add("bar bar bar bar bar bar bar bar barbar bar bar bar bar bar barbar bar bar barbarbarbarbar bar  bar");
-        	data.add("bar bar bar bar bar bar bar bar barbar bar bar bar bar bar barbar bar bar barbarbarbarbar bar  bar");
-        	data.add("bar bar bar bar bar bar bar bar barbar bar bar bar bar bar barbar bar bar barbarbarbarbar bar  bar");
-        	data.add("bar bar bar bar bar bar bar bar barbar bar bar bar bar bar barbar bar bar barbarbarbarbar bar  bar");
-           
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, data);
-            ItemHistory.setAdapter(arrayAdapter);
-        
-    
+        	itemservice.getItemHistory(currentItem, "RepairItemFragment");
     	}
+	}
+	
+	public static void updateHistory (List<ItemHistory> hist)
+	{
+		ArrayList<String> data = new ArrayList<String>();
+		
+		for (ItemHistory ih : hist)
+		{
+			data.add(ih.getDesc());
+		}
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(parent,android.R.layout.simple_list_item_1, data);
+        ItemHistory.setAdapter(arrayAdapter);
 	}
 	
 	private void reset()
