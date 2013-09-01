@@ -1,17 +1,17 @@
 package sushil.luc.gui;
 
-import java.util.List;
-import java.util.Map;
-
-import sushil.luc.ticket.Ticket;
-import sushil.luc.ticket.TicketStatus;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
+
+import java.util.List;
+import java.util.Map;
+
+import sushil.luc.ticket.Ticket;
+import sushil.luc.ticket.TicketStatus;
 
 public class MyTicketListAdapter extends SimpleAdapter {
 
@@ -53,7 +53,7 @@ public class MyTicketListAdapter extends SimpleAdapter {
 			case Checked:
 				res =Color.GREEN;
 				if (logging)
-					Log.d(MyLog, "InProgress == Yellow");
+					Log.d(MyLog, "Checked == GREEN");
 				break;
 			case Open:
 				res =Color.RED;

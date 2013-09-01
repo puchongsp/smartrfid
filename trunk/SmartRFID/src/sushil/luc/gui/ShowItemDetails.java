@@ -1,18 +1,14 @@
 package sushil.luc.gui;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import com.ugrokit.api.Ugi;
+import android.app.ActionBar;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.ugrokit.api.Ugi;
+
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.UgroKitActivity;
@@ -20,7 +16,6 @@ import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
 import sushil.luc.utils.DateUtil;
-import android.app.ActionBar;
 
 public class ShowItemDetails extends UgroKitActivity{
 	
@@ -87,6 +82,8 @@ public class ShowItemDetails extends UgroKitActivity{
 				public void onClick(View v) {
 					// Set it back to Available
 						currentItem.setStatus(ItemStatus.Available);
+                        initButton();
+                        Item_Status.setText("Status : "+currentItem.getStatus().toString());
 				}
 			});
 			
@@ -125,22 +122,27 @@ public class ShowItemDetails extends UgroKitActivity{
 			
 		}
 	}
-	
+
+    private void initButton()
+    {
+        if (currentItem.getStatus().equals(ItemStatus.Checked))
+        {
+            btnUnCheck.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            btnUnCheck.setVisibility(View.INVISIBLE);
+        }
+    }
+
 	public void onResume()
 	{
 		// stop the inventory if not yet stopped and stop all modes. We don't need it here
 		super.onResume();
 		super.stopAllModes();
 		super.calculateStatus();
-		
-		if (currentItem.getStatus().equals(ItemStatus.Checked))
-		{
-			btnUnCheck.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			btnUnCheck.setVisibility(View.INVISIBLE);
-		}
+
+        initButton();
 	}
 	
     @Override

@@ -31,6 +31,7 @@ public class Ticket_showItems extends UgroKitActivity{
 	private TicketManagerAssembler assembler ;
 //	private ItemHistory itemHistory;
 	private ActionBar actionbar;
+    private MyItemListAdapter adapter;
 
 	
 	@Override
@@ -106,7 +107,7 @@ public class Ticket_showItems extends UgroKitActivity{
     	}
     	
     	// -- create an adapter, takes care of binding hash objects in our list to actual row views
-    	MyItemListAdapter adapter = new MyItemListAdapter( this, groupData, android.R.layout.simple_list_item_2, 
+    	adapter = new MyItemListAdapter( this, groupData, android.R.layout.simple_list_item_2,
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , allItems);
     	ItemList.setAdapter(adapter);
@@ -121,6 +122,9 @@ public class Ticket_showItems extends UgroKitActivity{
 		super.StartInventory();
 		//TODO keep changes local->done
 		super.mHandler.modeTicketItemScan(true, currentTicket, this);
+
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
 	}
 	
 	/**

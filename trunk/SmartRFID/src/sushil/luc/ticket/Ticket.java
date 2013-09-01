@@ -26,6 +26,7 @@ public class Ticket {
     public static final String _DELIVERY_DATE = "delivery_date";*/
 
 
+    private int id;
 	private String TicketID;
 	private Customer TicketCustomer;
 	private List<Item> Items;
@@ -40,6 +41,7 @@ public class Ticket {
 
     public Ticket(TicketDTO ticketDTO, OrderDTO orderDTO){
         this.Items = new ArrayList<Item>();
+        this.id = ticketDTO.getId();
         this.TicketID = String.valueOf(ticketDTO.getIdentifier());
 
         CustomerDTO customerDto = orderDTO.getCustomer();
@@ -146,8 +148,16 @@ public class Ticket {
 			//else
 				this.setStatus(TicketStatus.Open);
 	}
-	
-	public String getTicketID() {
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTicketID() {
 
 		return TicketID;
 	}
