@@ -125,7 +125,7 @@ public class TagNewItemActivity extends UgroKitActivity {
             Item_Location.setText("Location : "+item.getWarehouseLocation());
            else
                Item_Location.setText("Location : ");
-           
+
            if (item.getStatus()!=null)
            {
         	   Item_Status.setText("Status : "+item.getStatus().toString());

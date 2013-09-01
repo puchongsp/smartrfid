@@ -260,7 +260,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-	    	String url = MainActivity.HOST_URL+"/api/repairHistory/insert.php?itemId="+i.getId()+"1&description="+encodeText;
+	    	String url = MainActivity.HOST_URL+"/api/repairHistory/insert.php?itemId="+i.getId()+"&description="+encodeText;
 	    	HttpGet get= new HttpGet(url);
 	    	
 	    	return get;

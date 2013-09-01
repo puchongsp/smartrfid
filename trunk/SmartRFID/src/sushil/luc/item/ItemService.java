@@ -263,10 +263,10 @@ public class ItemService {
 
 	
     public void returnItem(Item item) {
-        item.setStatus(ItemStatus.Returned);
-        if(item != null && item.getItemID() == null){
+       // item.setStatus(ItemStatus.Returned);
+       /* if(item != null && item.getItemID() == null){
             return;
-        }
+        }*/
         if (!containsReturnedItem(item)  )
             returnedItems.add(item);
     }

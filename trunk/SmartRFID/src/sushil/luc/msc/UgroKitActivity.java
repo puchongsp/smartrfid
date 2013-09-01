@@ -1,17 +1,18 @@
 package sushil.luc.msc;
 
 
-import sushil.luc.item.Item;
-import sushil.luc.ugrokit.MyHandler;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
 import com.ugrokit.api.Ugi;
 import com.ugrokit.api.UgiInventoryDelegate;
 import com.ugrokit.api.UgiTag;
-import android.os.Bundle;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
+
+import sushil.luc.item.Item;
+import sushil.luc.ugrokit.MyHandler;
 
 /**
  * Activity which implement the Ugrokit functionality. All Activites which want to use the Ugrokit should extend this class
@@ -70,7 +71,7 @@ public class UgroKitActivity extends Activity implements
 	
 	@Override
 	public void connectionStateChanged(Ugi.ConnectionStates connectionState) {
-		if (connectionState == Ugi.ConnectionStates.NOT_CONNECTED) {
+		/*if (connectionState == Ugi.ConnectionStates.NOT_CONNECTED) {
 			Toast.makeText(this, "Not Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
 		} else if (connectionState == Ugi.ConnectionStates.CONNECTING) {
 			Toast.makeText(this, "Connecting + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
@@ -82,7 +83,7 @@ public class UgroKitActivity extends Activity implements
 				Toast.makeText(this, "Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
 				isConnected = true;
 			}
-		}
+		}*/
 		calculateStatus();
 	}
 
