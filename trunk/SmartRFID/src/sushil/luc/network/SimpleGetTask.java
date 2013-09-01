@@ -40,6 +40,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 		public static final String ItemReturned = "ItemReturned";
 		public static final String ItemAvailable ="ItemAvailable";
 		public static final String UpdateItemHistory = "UpdateItemHistory";
+        public static final String TagNewItem= "TagNewItem";
 		
 		
 		public SimpleGetTask(Ticket t, String Operation)
@@ -94,9 +95,10 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	        		data = updateItemReturned(i);
 	        	if (operation.equals(ItemStaged))
 	        		data = updateItemStaged(i);
-	        	
 	        	if(operation.equals(UpdateItemHistory));
 	        		data = updateItemHistory(i,text);
+                if(operation.equals(TagNewItem));
+                    data = tagNewItem(i);
 	        	
 	        	if(data==null)
 	        	{
@@ -217,6 +219,13 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
             Log.i("SGT",url);
 	        return get;
 		}
+
+        private HttpGet tagNewItem(Item i) {
+            String url = MainActivity.HOST_URL+"/api/items/insertRfid.php?itemId="+i.getId()+"&rfid="+i.getRFID();
+            HttpGet get= new HttpGet(url);
+            Log.i("SGT",url);
+            return get;
+        }
 	    
 	    private List<HttpGet> updateAllItems (Ticket t)
 	    {

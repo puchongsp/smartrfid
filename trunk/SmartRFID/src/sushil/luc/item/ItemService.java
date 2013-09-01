@@ -273,6 +273,11 @@ public class ItemService {
     	return returnedItems;
     }
 
+    public void tagNewItem(Item item) {
+        SimpleGetTask getTask = new SimpleGetTask( SimpleGetTask.TagNewItem, item);
+        getTask.execute();
+    }
+
     public void sendToRepair(Item item) {
     	
     	// Update Database
