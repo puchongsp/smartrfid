@@ -127,7 +127,7 @@ public class ItemService {
 
 	         //     String URL = "http://rfidproject.azurewebsites.net/api/items/query?limit="+limit+"&skip=0&orderBy=0&filters=2";
 
-	              String URL = MainActivity.HOST_URL + "/api/items/query.php?limit="+limit+"&skip=0&orderBy=0&filters=2";
+	              String URL = MainActivity.HOST_URL + "/api/items/queryNewItems.php?limit="+limit;
 
 	              networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
 	
