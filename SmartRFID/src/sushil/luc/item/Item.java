@@ -88,7 +88,7 @@ public class Item implements Cloneable{
     			}
     			this.Quantity = String.valueOf(itemDto.getTicketItemInfo().getQuantity());
     		}
-    		
+    		Log.i("ITEM","R:"+itemDto.getItemStatus().isReturned()+" - S:"+itemDto.getItemStatus().isStaged()+" C:"+itemDto.getItemStatus().isChecked());
     		// map the DTO status to our status
     		if (itemDto.getItemStatus()!=null)
     		{

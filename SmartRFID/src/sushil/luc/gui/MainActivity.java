@@ -125,7 +125,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	 * If the connection from the ugrokit changes, this methode gives feedback to the user
 	 */
 	public void connectionStateChanged(Ugi.ConnectionStates connectionState) {
-		if (connectionState == Ugi.ConnectionStates.NOT_CONNECTED) {
+		/*if (connectionState == Ugi.ConnectionStates.NOT_CONNECTED) {
 			Toast.makeText(this, "Not Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
 		} else if (connectionState == Ugi.ConnectionStates.CONNECTING) {
 			Toast.makeText(this, "Connecting + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
@@ -137,7 +137,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 			{
 				Toast.makeText(this, "Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
 			}
-		}
+		}*/
 		// update the Status
 		super.calculateStatus();
 		notifiySatusUpdate();
@@ -149,7 +149,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
         if (currenttab.getText().equals(ItemInfoTabName)) {
             List<String> iteminfo = new LinkedList<String>();
 
-            if (i ==null) {
+            if (i!=null && i.getItemID()==null) {
                 // if the tag is not yet known yet
                 iteminfo.add("");
                 iteminfo.add("No Item found for the scanned RFID");
@@ -186,16 +186,23 @@ UgiInventoryDelegate.InventoryTagChangedListener{
         
         if (currenttab.getText().equals(ReturnItemsTabName))
         {
-        	if(i != null) {
+        	if(i!=null && i.getItemID() != null && i.getStatus().equals(ItemStatus.Staged)) {
           	  // if we found some infos for the tag, tell the view
               ((ReturnItemFragment)returnItemsFragment).returnItem(i);
-          }
+             }
+            else
+            {
+               if ( !i.getStatus().equals(ItemStatus.Staged))
+                    Toast.makeText(this,"Item was not rented to a client",Toast.LENGTH_SHORT).show();
+                else
+                   Toast.makeText(this,"RFID tag not connected to an Item",Toast.LENGTH_SHORT).show();
+            }
         }
         
         if (currenttab.getText().equals(RepairItemTabName))
         {
-        	Log.d("MainActivity", "before");
-            Log.d("MainActivity", i.getStatus().toString());
+        	//Log.d("MainActivity", "before");
+            ///Log.d("MainActivity", i.getStatus().toString());
             if (i !=null && i.getStatus().equals(ItemStatus.Returned))
             {
             	repairItemFragment.setItem(i);
