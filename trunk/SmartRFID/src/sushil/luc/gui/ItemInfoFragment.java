@@ -83,32 +83,68 @@ public class ItemInfoFragment extends Fragment {
     		String Category, String SubCategory, String CreationDate, String Type, String InventoryTotal, String InventoryOnHand, String InventoryOut)
     {
     	
-    	Item_ID.setVisibility(View.VISIBLE);
- 		Item_Name.setVisibility(View.VISIBLE);
- 		Item_RFID.setVisibility(View.VISIBLE);
- 		Item_Location.setVisibility(View.VISIBLE);
- 		Item_Status.setVisibility(View.VISIBLE);
- 		Item_Category.setVisibility(View.VISIBLE);
- 		Item_SubCategory.setVisibility(View.VISIBLE);
- 		Item_CreationDate.setVisibility(View.VISIBLE);
- 		Item_Type.setVisibility(View.VISIBLE);
- 		Item_InventoryTotal.setVisibility(View.VISIBLE);
- 		Item_InventoryOnHand.setVisibility(View.VISIBLE);
- 		Item_InventoryOut.setVisibility(View.VISIBLE);
-    	
-    	info.setText("Last scanned Item :");
-    	Item_ID.setText("Item Id: "+ItemId);
-    	Item_Name.setText("Item Name: "+ItemName);
-    	Item_RFID.setText("Item RFID: "+ItemRfid);
-    	Item_Status.setText("Status: "+ItemStatus);
-    	Item_Location.setText("Item Location: "+ItemLocation);
-    	Item_Category.setText("Category: "+Category);
- 		Item_SubCategory.setText("SubCategory: "+SubCategory);
- 		Item_CreationDate.setText("CreationDate: "+CreationDate);
- 		Item_Type.setText("Type: "+Type);
- 		Item_InventoryTotal.setText("Inventory Total: "+InventoryTotal);
- 		Item_InventoryOnHand.setText("Inventory on Hand: "+InventoryOnHand);
- 		Item_InventoryOut.setText("Inventory out: "+InventoryOut);
+    	if (ItemId.equals(""))
+    	{
+    		Item_ID.setVisibility(View.VISIBLE);
+	 		Item_Name.setVisibility(View.INVISIBLE);
+	 		Item_RFID.setVisibility(View.INVISIBLE);
+	 		Item_Location.setVisibility(View.INVISIBLE);
+	 		Item_Status.setVisibility(View.INVISIBLE);
+	 		Item_Category.setVisibility(View.INVISIBLE);
+	 		Item_SubCategory.setVisibility(View.INVISIBLE);
+	 		Item_CreationDate.setVisibility(View.INVISIBLE);
+	 		Item_Type.setVisibility(View.INVISIBLE);
+	 		Item_InventoryTotal.setVisibility(View.INVISIBLE);
+	 		Item_InventoryOnHand.setVisibility(View.INVISIBLE);
+	 		Item_InventoryOut.setVisibility(View.INVISIBLE);
+	 		
+	 		Item_Name.setText(ItemName);
+    	}
+    	else
+    	{
+	    	Item_ID.setVisibility(View.VISIBLE);
+	 		Item_Name.setVisibility(View.VISIBLE);
+	 		Item_RFID.setVisibility(View.VISIBLE);
+	 		Item_Location.setVisibility(View.VISIBLE);
+	 		Item_Status.setVisibility(View.VISIBLE);
+	 		Item_Category.setVisibility(View.VISIBLE);
+	 		Item_SubCategory.setVisibility(View.VISIBLE);
+	 		Item_CreationDate.setVisibility(View.VISIBLE);
+	 		Item_Type.setVisibility(View.VISIBLE);
+	 		Item_InventoryTotal.setVisibility(View.VISIBLE);
+	 		Item_InventoryOnHand.setVisibility(View.VISIBLE);
+	 		Item_InventoryOut.setVisibility(View.VISIBLE);
+	    	
+	    	info.setText("Last scanned Item :");
+	    	Item_ID.setText("Item Id: "+ItemId);
+	    	Item_Name.setText("Item Name: "+ItemName);
+	    	Item_RFID.setText("Item RFID: "+ItemRfid);
+	    	Item_Status.setText("Status: "+ItemStatus);
+	    	if (ItemLocation!=null)
+	    		Item_Location.setText("Item Location: "+ItemLocation);
+	    	else
+	    		Item_Location.setText("Item Location: ");
+	    	if (Category!=null)
+	    		Item_Category.setText("Category: "+Category);
+	    	else
+	    		Item_Category.setText("Category: ");
+	    	if (SubCategory!=null)
+	    		Item_SubCategory.setText("SubCategory: "+SubCategory);
+	    	else
+	    		Item_SubCategory.setText("SubCategory: ");
+	    	if (CreationDate!=null)
+	    		Item_CreationDate.setText("CreationDate: "+CreationDate);
+	    	else
+	    		Item_CreationDate.setText("CreationDate: ");
+	    	if (Type!=null)
+	    		Item_Type.setText("Type: "+Type);
+	    	else
+	    		Item_Type.setText("Type: ");
+	
+	    	Item_InventoryTotal.setText("Inventory Total: "+InventoryTotal);
+	    	Item_InventoryOnHand.setText("Inventory on Hand: "+InventoryOnHand);
+	 		Item_InventoryOut.setText("Inventory out: "+InventoryOut);
+    	}
     }
 	
 	

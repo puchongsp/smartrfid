@@ -59,14 +59,14 @@ public class ReturnItemFragment extends Fragment {
 
             group = new HashMap<String, String>();
 
-            group.put( KEY_LABEL,  tmp.getItemName() );
-            group.put( KEY_HELP, "Location "+tmp.getWarehouseLocation() );
+            group.put( KEY_LABEL,  tmp.getItemID() );
+            group.put( KEY_HELP, "Desc "+tmp.getItemName() );
 
             groupData.add(group);
         }
 
         returnItemListView = (ListView) view.findViewById(R.id.return_item_list_view);
-        MyItemListAdapter adapter = new MyItemListAdapter( getActivity().getApplicationContext(), groupData, android.R.layout.simple_list_item_2,
+        ReturnItemListAdapter adapter = new ReturnItemListAdapter( getActivity().getApplicationContext(), groupData, android.R.layout.simple_list_item_2,
                 new String[] { KEY_LABEL, KEY_HELP },
                 new int[]{ android.R.id.text1, android.R.id.text2 } , returnedItems);
 
