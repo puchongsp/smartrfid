@@ -115,7 +115,7 @@ public class NewItemManager extends RFIDManager{
 	{
 		if (currentItem!=null)
         {
-            if (item ==null)
+            if (item.getItemID()!=null)
             {
                 // The Tag is already in use, by another item
                 Toast.makeText(con, "Tag "+tag.getEpc().toString()+" already in use for another item", Toast.LENGTH_SHORT).show();
@@ -232,6 +232,8 @@ public class NewItemManager extends RFIDManager{
 	            // Tell the history
 	           // itemHistory.saveToHistory(currentItem);
 
+                ItemService.newItems.remove(currentItem);
+
 
 	            currentActivity.StopInventory();
 	            // tell the view to update. Delete the currently tagged Item
@@ -240,8 +242,9 @@ public class NewItemManager extends RFIDManager{
                 // Stop the rfid scan to save energy
                 currentActivity.updateView();
 
-                // stop all modes
-                currentActivity.stopAllModes();
+                  // stop all modes
+                  currentActivity.stopAllModes();
+
 
 
 	            

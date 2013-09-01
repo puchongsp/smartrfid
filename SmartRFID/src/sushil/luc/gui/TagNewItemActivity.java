@@ -87,18 +87,24 @@ public class TagNewItemActivity extends UgroKitActivity {
    public void onResume()
    {
 	   super.onResume();
-	   
-	   super.StartInventory();
-	   Log.d("TagNewItemAc", "onResume");
-	   super.mHandler.modeNewItem(true, this, item);
+
+       if (item.getRFID()==null)
+       {
+           super.StartInventory();
+           Log.d("TagNewItemAc", "onResume");
+           super.mHandler.modeNewItem(true, this, item);
+       }
    }
    
    public void onPause()
    {
 	   super.onPause();
-	   
-	   super.StopInventory();
-	   super.mHandler.modeNewItem(false,null, null);
+
+       if (item.getRFID()==null)
+       {
+	    super.StopInventory();
+	    super.mHandler.modeNewItem(false,null, null);
+       }
    }
     
     
@@ -115,7 +121,11 @@ public class TagNewItemActivity extends UgroKitActivity {
     	   Item_ID.setText("Item ID : "+item.getItemID());
            Item_Name.setText("Itemname : "+item.getItemName());
            Item_RFID.setText("RFID :");
-           Item_Location.setText("Location : "+item.getWarehouseLocation());
+           if(item.getWarehouseLocation()!=null)
+            Item_Location.setText("Location : "+item.getWarehouseLocation());
+           else
+               Item_Location.setText("Location : ");
+           
            if (item.getStatus()!=null)
            {
         	   Item_Status.setText("Status : "+item.getStatus().toString());

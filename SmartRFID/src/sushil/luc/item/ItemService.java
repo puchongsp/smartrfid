@@ -24,7 +24,7 @@ public class ItemService {
 
    // private static List<Item> items;
     private static List<Item> repairItems;
-    private static List<Item> newItems;
+    public static List<Item> newItems;
     private static List<Item> returnedItems;
 	
 	public ItemService() {
@@ -119,6 +119,8 @@ public class ItemService {
     
     public List<Item> getNewItems(final String caller)
     {
+
+
         int limit = 20;
     	if (newItems.size()<limit)
     	{
