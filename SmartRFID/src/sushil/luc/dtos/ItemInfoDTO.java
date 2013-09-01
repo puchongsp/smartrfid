@@ -1,16 +1,11 @@
 package sushil.luc.dtos;
 
 
-
-import java.util.Date;
-
-
-
 /**
  * Created by sushil
  */
 public class ItemInfoDTO {
-    private int $id;
+    private int id;
     private String identifier;
     private String statusNote;
     private String category;
@@ -23,11 +18,11 @@ public class ItemInfoDTO {
 
 
     public int getId() {
-        return $id;
+        return id;
     }
 
     public void setId(int id) {
-        this.$id = id;
+        this.id = id;
     }
 
     public String getIdentifier() {

@@ -23,6 +23,7 @@ import sushil.luc.msc.Customer;
 import sushil.luc.smartrfid.R;
 import sushil.luc.ticket.Ticket;
 import sushil.luc.ticket.TicketManagerAssembler;
+import sushil.luc.ticket.TicketService;
 import sushil.luc.utils.DateUtil;
 
 
@@ -59,8 +60,11 @@ public class TicketsFragment extends Fragment {
     
     public void onResume()
     {
-    	super.onResume();
+        if (TicketService.Tickets!=null)
+            Log.d("Ticketsfragment", ""+ TicketService.Tickets.size());
+        super.onResume();
     	fillTickets2List(myparent);
+
     }
 
     

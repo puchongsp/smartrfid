@@ -21,7 +21,7 @@ public class TicketService {
 
     private final String URL = MainActivity.HOST_URL + "/api/orders/query.php?limit=5";
 
-    private static List<Ticket> Tickets;
+    public static List<Ticket> Tickets;
 
 
 	public TicketService()

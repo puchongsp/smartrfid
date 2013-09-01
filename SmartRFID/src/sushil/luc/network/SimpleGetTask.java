@@ -151,7 +151,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    private HttpGet updateTicketChecked(Ticket t) {
 
 	    	
-	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getTicketID()+"&isStaged=0&isReturned=0";
+	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getId()+"&isStaged=0&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
 	    	Log.i("SGT",url);
 	        return get;
@@ -160,7 +160,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    private HttpGet updateTicketAvailable(Ticket t) {
 
 	    	
-	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=0&ticketId="+t.getTicketID()+"&isStaged=0&isReturned=0";
+	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=0&ticketId="+t.getId()+"&isStaged=0&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
             Log.i("SGT",url);
 	        return get;
@@ -169,7 +169,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    private HttpGet updateTicketStaged(Ticket t) {
 
 	    	
-	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getTicketID()+"&isStaged=1&isReturned=0";
+	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getId()+"&isStaged=1&isReturned=0";
 	    	HttpGet get= new HttpGet(url);
             Log.i("SGT",url);
 	        return get;
@@ -178,7 +178,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	    private HttpGet updateTicketReturned(Ticket t) {
 
 	    	
-	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getTicketID()+"&isStaged=1&isReturned=1";
+	    	String url = MainActivity.HOST_URL+"/api/tickets/update.php?isCheckedOut=1&ticketId="+t.getId()+"&isStaged=1&isReturned=1";
 	    	HttpGet get= new HttpGet(url);
             Log.i("SGT",url);
 	        return get;

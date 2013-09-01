@@ -1,17 +1,17 @@
 package sushil.luc.dtos;
 
 public class InventoryInfoDTO {
-	private int $id;
+	private int id;
 	private int type;
 	private double inventoryTotal;
 	private double inventoryOnHand;
 	private double inventoryOut;
 	
-	public int get$id() {
-		return $id;
+	public int getId() {
+		return id;
 	}
-	public void set$id(int $id) {
-		this.$id = $id;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public int getType() {
 		return type;

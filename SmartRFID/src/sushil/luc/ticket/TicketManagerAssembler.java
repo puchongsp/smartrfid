@@ -1,7 +1,6 @@
 package sushil.luc.ticket;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,7 +38,24 @@ public class TicketManagerAssembler implements TicketManager{
     public  List<Ticket> fetchTickets(boolean local)
     {
     	List<Ticket> alltickets;
-    	
+
+       /* List<Integer>remove = new LinkedList<Integer>();
+        int counter =0;
+        for (Ticket t: TicketService.Tickets)
+        {
+            if (t.getStatus().equals(TicketStatus.Checked))
+            {
+               remove.add(counter);
+            }
+            counter++;
+        }
+
+        for (Integer i: remove)
+        {
+            TicketService.Tickets.remove(i);
+            Log.d("TS", "remove"")
+        }*/
+
     	if (local)
     		alltickets = ticketserv.fetchLocalTickets();
     	else
@@ -68,6 +84,9 @@ public class TicketManagerAssembler implements TicketManager{
     public void saveTicket (Ticket t)
     {
     	ticketserv.saveToRemote(t);
+
+        if (t.getStatus().equals(TicketStatus.Checked))
+            TicketService.Tickets.remove(t);
     }
 
 }

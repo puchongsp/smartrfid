@@ -4,17 +4,17 @@ package sushil.luc.dtos;
  * Created by sushil
  */
 public class OrderStatusDTO {
-    private String $id;
+    private String id;
     private int isStaged;
     private int isCheckedOut;
     private int isReturned;
 
     public String getId() {
-        return $id;
+        return id;
     }
 
     public void setId(String id) {
-        this.$id = id;
+        this.id = id;
     }
 
     public int isStaged() {
