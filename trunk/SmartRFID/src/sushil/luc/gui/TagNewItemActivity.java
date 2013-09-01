@@ -1,24 +1,16 @@
 package sushil.luc.gui;
 
 import android.app.ActionBar;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.ugrokit.api.Ugi;
 
+import java.util.List;
+
 import sushil.luc.item.Item;
 import sushil.luc.item.ItemService;
-import sushil.luc.msc.RFIDActivity;
 import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.utils.DateUtil;

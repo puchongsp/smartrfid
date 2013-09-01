@@ -51,7 +51,7 @@ public class Item implements Cloneable{
     	if (itemDto!=null)
     	{
             this.id = itemDto.getId();
-    		this.ItemID = itemDto.getIdentifier();
+    		this.ItemID = itemDto.getItemInfo().getIdentifier();
     		if (itemDto.getItemInfo()!=null)
     		{
     			this.ItemName = itemDto.getItemInfo().getDescription();

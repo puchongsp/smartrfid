@@ -52,7 +52,8 @@ public class TicketService {
         final int limit = 5;
         
         if (Tickets.size()< limit)
-        {	
+        {
+            Tickets.clear();
         final NetworkHandler networkHandler = NetworkHandler.getInstance();
         networkHandler.setContext(context);
 
@@ -72,8 +73,8 @@ public class TicketService {
 
                       //  String ticketsUrl = "http://rfidproject.azurewebsites.net/api/tickets/query?limit="+limit+"&skip=0&orderBy=0&filters=0&addRfids=1&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
 
-                        String ticketsUrl = MainActivity.HOST_URL + "/api/tickets/query.php?limit="+limit+"&skip=0&orderBy=0&filters=0&addRfids=1&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
-
+                        String ticketsUrl = MainActivity.HOST_URL + "/api/tickets/query.php?limit="+limit+"&identifiers="+orderDto.getIdentifier(); //identifier id dticketid
+                        Log.i("TS",ticketsUrl);
                         try {
                             networkHandler.read(ticketsUrl,TicketDTO.class, new Callback<TicketDTO>() {
                                 @Override
