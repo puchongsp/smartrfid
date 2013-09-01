@@ -37,6 +37,8 @@ public class RepairItemFragment extends Fragment{
 	private static ListView ItemHistory;
 	private ItemService itemservice;
 	private static Activity parent;
+	private static ArrayList<String> adpaterData;
+	private static  ArrayAdapter<String> arrayAdapter;
 	
 	private static Item currentItem; 
 	
@@ -60,6 +62,8 @@ public class RepairItemFragment extends Fragment{
     	
     	itemservice = new ItemService();
     	parent = getActivity();
+    	adpaterData = new ArrayList<String>();
+    	arrayAdapter =null;
     	
     	btnSave.setOnClickListener(new View.OnClickListener() {
 			
@@ -68,12 +72,17 @@ public class RepairItemFragment extends Fragment{
 				String text = NewItemHistory.getText().toString();
 				if (currentItem!=null && text.isEmpty())
 				{
-					itemservice.updateItemHistory(currentItem, text);
 					
 					Toast.makeText(getActivity(), "Please insert a text", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
+					itemservice.updateItemHistory(currentItem, text);
+					
+					NewItemHistory.getText().clear();
+					// Update the list
+					adpaterData.add(text);
+					arrayAdapter.notifyDataSetChanged();
 					
 					Toast.makeText(getActivity(), "History saved", Toast.LENGTH_SHORT).show();
 				}
@@ -142,7 +151,6 @@ public class RepairItemFragment extends Fragment{
         	ItemName.setText("Item ID: "+currentItem.getItemID());
         	ItemInfo.setText("Desc: "+currentItem.getItemName()+ " RFID Nb: "+ currentItem.getRFID());
         	NewItemHistory.setHint("Insert a new history entry here");
-        	//TODO get the ItemHistory 
         	
         	itemservice.getItemHistory(currentItem, "RepairItemFragment");
     	}
@@ -150,13 +158,14 @@ public class RepairItemFragment extends Fragment{
 	
 	public static void updateHistory (List<ItemHistory> hist)
 	{
-		ArrayList<String> data = new ArrayList<String>();
+		adpaterData = new ArrayList<String>();
 		
 		for (ItemHistory ih : hist)
 		{
-			data.add(ih.getDesc());
+			adpaterData.add(ih.getDesc());
 		}
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(parent,android.R.layout.simple_list_item_1, data);
+        arrayAdapter = new ArrayAdapter<String>(parent,android.R.layout.simple_list_item_1, adpaterData);
+
         ItemHistory.setAdapter(arrayAdapter);
 	}
 	
