@@ -122,13 +122,14 @@ public class ItemService {
         int limit = 20;
     	if (newItems.size()<limit)
     	{
-	    	try {
+	    	//newItems.clear();
+            try {
 	              final NetworkHandler networkHandler = NetworkHandler.getInstance();
 
 	         //     String URL = "http://rfidproject.azurewebsites.net/api/items/query?limit="+limit+"&skip=0&orderBy=0&filters=2";
 
 	              String URL = MainActivity.HOST_URL + "/api/items/queryNewItems.php?limit="+limit;
-
+                  Log.i("IS","URL = "+URL);
 	              networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
 	
 					@Override

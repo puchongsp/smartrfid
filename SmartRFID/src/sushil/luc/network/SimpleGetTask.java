@@ -72,6 +72,7 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	        try {
 	        	HttpGet data = null;
 	        	List<HttpGet> data2 = null;
+                Log.i("OPERATION:",operation);
 	        	if (operation.equals(TicketChecked))
 	        	{
 	        		data = updateTicketChecked(t);
@@ -95,9 +96,9 @@ public class SimpleGetTask  extends AsyncTask<String, String, String>{
 	        		data = updateItemReturned(i);
 	        	if (operation.equals(ItemStaged))
 	        		data = updateItemStaged(i);
-	        	if(operation.equals(UpdateItemHistory));
+	        	if(operation.equals(UpdateItemHistory))
 	        		data = updateItemHistory(i,text);
-                if(operation.equals(TagNewItem));
+                if(operation.equals(TagNewItem))
                     data = tagNewItem(i);
 	        	
 	        	if(data==null)
