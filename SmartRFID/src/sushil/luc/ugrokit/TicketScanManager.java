@@ -208,7 +208,7 @@ public class TicketScanManager extends RFIDManager{
 			final TextView text = (TextView) dialog.findViewById(R.id.text);
 			text.setText("Found item : "+ info);
 
-			Button dialogCancelButton = (Button) dialog.findViewById(R.id.dialogButtonCancel);
+			final Button dialogCancelButton = (Button) dialog.findViewById(R.id.dialogButtonCancel);
 			dialogCancelButton.setText(" Cancel ");
 			// if button is clicked, close the custom dialog
 			dialogCancelButton.setOnClickListener(new OnClickListener() {
@@ -221,7 +221,7 @@ public class TicketScanManager extends RFIDManager{
 				}
 			});
 			
-			Button dialogOkButton = (Button) dialog.findViewById(R.id.dialogButtonOk);
+			final Button dialogOkButton = (Button) dialog.findViewById(R.id.dialogButtonOk);
 			dialogOkButton.setText(" Ok ");
 			// if button is clicked, close the custom dialog
 			dialogOkButton.setOnClickListener(new OnClickListener() {
@@ -255,12 +255,16 @@ public class TicketScanManager extends RFIDManager{
 						Log.d(LogTag, "Button Retest");
 						text.setText("Please "+name+" scan again." );
 						dialogRetestButton.setText(" Stop Retest ");
+						dialogOkButton.setVisibility(View.INVISIBLE);
+						dialogCancelButton.setVisibility(View.INVISIBLE);
 					}
 					else
 					{
 						retest =false;
 						text.setText("Please "+name+" scan again." );
 						dialogRetestButton.setText(" Retest ");
+						dialogOkButton.setVisibility(View.VISIBLE);
+						dialogCancelButton.setVisibility(View.VISIBLE);
 					}
 				}
 			});			
