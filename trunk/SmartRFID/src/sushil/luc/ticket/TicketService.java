@@ -19,7 +19,8 @@ public class TicketService {
 
   //  private final String URL = "http://rfidproject.azurewebsites.net/api/orders/query?limit=5";
 
-    private final String URL = MainActivity.HOST_URL + "/api/orders/query.php?limit=5";
+    int LIMIT = 10;
+    private final String URL = MainActivity.HOST_URL + "/api/orders/query.php?limit="+LIMIT ;
 
     public static List<Ticket> Tickets;
 
@@ -49,7 +50,7 @@ public class TicketService {
 	public List<Ticket> fetchAllTickets(final Context context) {
         Log.i("TS:", "Fetching tickets");
         
-        final int limit = 5;
+        final int limit = LIMIT;
         
         if (Tickets.size()< limit)
         {
