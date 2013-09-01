@@ -56,25 +56,25 @@
         android:id="@+id/show_items_scan_rfid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+         >
 
      <Button
          android:id="@+id/btn_send_to_repair"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="Needs Repair" />
+         android:text="Repair" />
 
      <Button
          android:id="@+id/btn_send_to_warehouse"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="To Warehouse" />
+         android:text="Warehouse" />
 
      <Button
          android:id="@+id/btn_cancel"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="Cancel" />
-
- </LinearLayout>
+</LinearLayout>
+ 
 </LinearLayout>

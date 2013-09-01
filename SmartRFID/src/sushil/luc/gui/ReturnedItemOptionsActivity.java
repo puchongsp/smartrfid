@@ -56,7 +56,10 @@ public class ReturnedItemOptionsActivity extends Activity{
         Item_ID.setText("Item ID : " + item.getItemID());
         Item_Name.setText("Itemname : " + item.getItemName());
         Item_RFID.setText("RFID :" + item.getRFID());
-        Item_Location.setText("Location : " + item.getWarehouseLocation());
+        if (item.getWarehouseLocation()!=null)
+        	Item_Location.setText("Location : " + item.getWarehouseLocation());
+        else
+        	Item_Location.setText("Location : ");
         Item_Status.setText("Status : " + item.getStatus().toString());
 
         btnRepair = (Button) findViewById(R.id.btn_send_to_repair);

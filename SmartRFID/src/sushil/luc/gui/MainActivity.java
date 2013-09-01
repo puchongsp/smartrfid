@@ -209,6 +209,13 @@ UgiInventoryDelegate.InventoryTagChangedListener{
                 Log.d("MainActivity", "inside");
             	super.StopInventory();
             }
+            else
+            {
+            	 if ( !i.getStatus().equals(ItemStatus.Returned))
+                     Toast.makeText(this,"Item was not send to repair",Toast.LENGTH_SHORT).show();
+                 else
+                    Toast.makeText(this,"RFID tag not connected to an Item",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 	@Override
