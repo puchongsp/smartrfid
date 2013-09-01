@@ -34,10 +34,10 @@ public class Ticket {
 	private String CreationDate;
 	private String DeliveryDate;
 	
-	public Ticket()
+	/*public Ticket()
 	{
 		this.Items = new ArrayList<Item>();
-	}
+	}*/
 
     public Ticket(TicketDTO ticketDTO, OrderDTO orderDTO){
         this.Items = new ArrayList<Item>();
