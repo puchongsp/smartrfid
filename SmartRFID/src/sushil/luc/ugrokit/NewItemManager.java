@@ -226,8 +226,9 @@ public class NewItemManager extends RFIDManager{
 			    
 			    // if the user clicks on the ID, we have to combine the item and the tag id
 			    Log.d(LogTag, "Selected Id was : "+selected_id);
-			    //TODO do connect to the database
+
 	            currentItem.setRFID(selected_id);
+                itemService.tagNewItem(currentItem);
 	            // Tell the history
 	           // itemHistory.saveToHistory(currentItem);
 
