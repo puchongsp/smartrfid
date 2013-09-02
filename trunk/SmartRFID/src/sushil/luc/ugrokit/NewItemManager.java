@@ -36,13 +36,12 @@ public class NewItemManager extends RFIDManager {
     private Item currentItem;
     private TagNewItemActivity currentActivity;
     private List<UgiTag> alreadyTestedTags;
-    //private ItemHistory itemHistory;
     private ItemService itemService;
 
     /**
      * Init the Manager
      *
-     * @param con
+     * @param con - context
      */
     public NewItemManager(Context con) {
         this.con = con;
@@ -163,7 +162,6 @@ public class NewItemManager extends RFIDManager {
                 stopAdding = true;
                 String selected_id = (String) d_tags.getItemAtPosition(position);
 
-                // if the user clicks on the ID, we have to combine the item and the tag id
                 Log.d(LogTag, "Selected Id was : " + selected_id);
 
                 currentItem.setRFID(selected_id);
@@ -171,10 +169,7 @@ public class NewItemManager extends RFIDManager {
 
                 ItemService.newItems.remove(currentItem);
 
-
                 currentActivity.StopInventory();
-                // tell the view to update. Delete the currently tagged Item
-
 
                 // Stop the rfid scan to save energy
                 currentActivity.updateView();
@@ -182,9 +177,8 @@ public class NewItemManager extends RFIDManager {
                 // stop all modes
                 currentActivity.stopAllModes();
 
-
                 Log.d(LogTag, "Did it");
-                //reset();
+
                 dialog.dismiss();
             }
         });
