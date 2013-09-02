@@ -15,10 +15,7 @@ import sushil.luc.msc.UgroKitActivity;
 import sushil.luc.smartrfid.R;
 import sushil.luc.utils.DateUtil;
 
-/**
- * Enable RFID and scan
- * set rfid to the item if detected
- */
+
 public class TagNewItemActivity extends UgroKitActivity {
 
     private TextView Item_ID;
@@ -59,7 +56,9 @@ public class TagNewItemActivity extends UgroKitActivity {
 		 actionbar.setSubtitle(currentStatus);
         
         ItemService itemService = new ItemService();
-
+        
+        
+        // get all the new Items ( no RFID yet assigned) from the database
         List<Item> newItems = itemService.getNewItems("TagNewItemActivity");
 
         item = newItems.get(position);
@@ -87,7 +86,7 @@ public class TagNewItemActivity extends UgroKitActivity {
    public void onResume()
    {
 	   super.onResume();
-
+	   // if we assigned already an rfid we don't need the scan mode anymore
        if (item.getRFID()==null)
        {
            super.StartInventory();
@@ -99,22 +98,29 @@ public class TagNewItemActivity extends UgroKitActivity {
    public void onPause()
    {
 	   super.onPause();
-
+	   
+	// if we assigned already an rfid we don't need the scan mode anymore
        if (item.getRFID()==null)
        {
-	    super.StopInventory();
-	    super.mHandler.modeNewItem(false,null, null);
+    	   // save power an turn the scan mode of
+    	   super.StopInventory();
+    	   super.mHandler.modeNewItem(false,null, null);
        }
    }
     
-    
+    /**
+     * Update the view after a rfid was assigned to the item
+     */
     public void updateView ()
     {
     	 Item_Scanning.setText("Item tagged Successfully!");
          Item_RFID.setText("RFID :"+item.getRFID());
     }
 
-       
+       /**
+        * Show the attributes of the given item in the view
+        * @param currentItem
+        */
        private void updateView (Item currentItem)
        {
     	   item = currentItem;
@@ -177,7 +183,7 @@ public class TagNewItemActivity extends UgroKitActivity {
 		}
 		
 		/**
-		 * Update the status bar
+		 * Update the status connction bar
 		 */
 		public void notifiySatusUpdate()
 		{
@@ -188,6 +194,7 @@ public class TagNewItemActivity extends UgroKitActivity {
 		public void onDestroy()
 		{
 			super.onDestroy();
+			// Turn of the rfid scanner and stop all modes
 			super.StopInventory();
 			super.mHandler.modeNewItem(false,null, null);
 			super.calculateStatus();

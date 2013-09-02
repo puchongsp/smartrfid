@@ -36,6 +36,11 @@ public class ReturnItemListAdapter extends SimpleAdapter {
         return row;
     }
     
+    /**
+     * Maps the color to a status
+     * @param position
+     * @return
+     */
     private int getColor (int position)
     {
     	int res =-1;

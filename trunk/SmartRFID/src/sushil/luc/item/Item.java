@@ -9,16 +9,6 @@ import sushil.luc.dtos.ItemDTO;
 
 public class Item implements Cloneable{
 
-    /*
-     * to map models vars with fields in json
-     */
-  /*  public static final String _ID = "itemIdentifier";
-    public static final String _NAME = "description";
-    public static final String _RFID = "rfid";
-    public static final String _LOCATION = "location";
-    public static final String _STATUS = "status";
-    //public static final String _DATE = "date";*/
-
     private int id;
 	private String ItemID;
 	private String ItemName;
@@ -39,14 +29,10 @@ public class Item implements Cloneable{
 	private String InventoryOut;
 	private String Quantity;
 	
-	
-	private List<String> RepairLogs;
-	
-	public Item()
-	{
-		this.RepairLogs = new LinkedList<String>();
-	}
-	
+	/**
+	 * create a new Item with the data from the dto file
+	 * @param itemDto
+	 */
     public Item(ItemDTO itemDto){
     	if (itemDto!=null)
     	{
@@ -119,6 +105,7 @@ public class Item implements Cloneable{
     		{
     			this.RFID = itemDto.getItemInfo().getRfidInfo().getRfidNumber();
     		}
+    		
     	}
     
         Log.d("Item", "ItemId "+this.ItemID+" ItemName "+this.ItemName+
@@ -164,12 +151,6 @@ public class Item implements Cloneable{
 	}
 	public void setStatus(ItemStatus status) {
 		Status = status;
-	}
-	public List<String> getRepairLogs() {
-		return RepairLogs;
-	}
-	public void setRepairLogs(List<String> repairLogs) {
-		RepairLogs = repairLogs;
 	}
 
 	public String getStopRentDate() {

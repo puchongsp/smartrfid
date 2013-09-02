@@ -29,7 +29,6 @@ public class Ticket_showItems extends UgroKitActivity{
 	private Ticket currentTicket;
 	private Context myparent;
 	private TicketManagerAssembler assembler ;
-//	private ItemHistory itemHistory;
 	private ActionBar actionbar;
     private MyItemListAdapter adapter;
 
@@ -40,7 +39,6 @@ public class Ticket_showItems extends UgroKitActivity{
 		setContentView(R.layout.ticket_show_items);
 		
 		myparent = this;
-	//	itemHistory = ItemHistory.getInstance();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -60,8 +58,10 @@ public class Ticket_showItems extends UgroKitActivity{
 			
 			assembler = new TicketManagerAssembler(myparent);
 			
+			// get the selected ticket
 			currentTicket = TicketManagerAssembler.ticketlist.get(positioninListview);
 			
+			// update the item list
 			fillItems2List();
 			
 			this.ItemList.setOnItemClickListener(new OnItemClickListener() {
@@ -89,9 +89,9 @@ public class Ticket_showItems extends UgroKitActivity{
     	String KEY_LABEL ="Big Text";
     	String KEY_HELP ="Help Text";
     	
-    	// -- list item hash re-used
     	Map<String, String> group;
     	
+    	// order the items according to their position in the warehouse
     	List<Item> allItems = assembler.getShortestRoute(currentTicket);
     	
     	for (int i =0; i<allItems.size();i++)
@@ -106,7 +106,7 @@ public class Ticket_showItems extends UgroKitActivity{
         	groupData.add(group);
     	}
     	
-    	// -- create an adapter, takes care of binding hash objects in our list to actual row views
+    	// a item status sensitif adapter. Maps status to color
     	adapter = new MyItemListAdapter( this, groupData, android.R.layout.simple_list_item_2,
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , allItems);
@@ -120,7 +120,6 @@ public class Ticket_showItems extends UgroKitActivity{
 	{
 		super.onResume();
 		super.StartInventory();
-		//TODO keep changes local->done
 		super.mHandler.modeTicketItemScan(true, currentTicket, this);
 
         if(adapter!=null)
@@ -135,7 +134,8 @@ public class Ticket_showItems extends UgroKitActivity{
         // check ticket again and update database
         currentTicket.calcTicketStatus();
         assembler.saveTicket(currentTicket);
-
+        
+        // stop all modes
         super.StopInventory();
 		super.stopAllModes();
 		super.calculateStatus();
@@ -149,7 +149,6 @@ public class Ticket_showItems extends UgroKitActivity{
 		super.StopInventory();
 		super.stopAllModes();
 		super.calculateStatus();
-		//assembler.saveTicket(currentTicket);
 		super.onPause();
 	}
 

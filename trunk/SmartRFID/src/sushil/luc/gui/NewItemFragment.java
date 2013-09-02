@@ -31,7 +31,7 @@ public class NewItemFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // bind the design
         view = inflater.inflate(R.layout.new_item_fragment, container, false);
 
         return view;
@@ -41,6 +41,7 @@ public class NewItemFragment extends Fragment {
     public void onResume() {
         super.onResume();
         context = getActivity().getApplicationContext();
+        // load the new items from the database
         loadNewItems();
     }
 
@@ -61,20 +62,22 @@ public class NewItemFragment extends Fragment {
             group = new HashMap<String, String>();
 
             group.put( KEY_LABEL,  tmp.getItemID() );
-            group.put( KEY_HELP, "Description : "+tmp.getItemName() );
+            group.put( KEY_HELP, "Desc: "+tmp.getItemName() );
 
 
             groupData.add(group);
         }
 
         mListView = (ListView) view.findViewById(R.id.new_item_list_view);
-
+        
+        // put all the items into an adapter which changes colors to the current item status
         adapter = new MyItemListAdapter( getActivity().getApplicationContext(), groupData, android.R.layout.simple_list_item_2,
                 new String[] { KEY_LABEL, KEY_HELP },
                 new int[]{ android.R.id.text1, android.R.id.text2 } , newItems);
 
         mListView.setAdapter(adapter);
-
+        
+        // onclick on an item, provides the possibility to open an activity to bind an rfid tag to an item
         mListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -85,7 +88,10 @@ public class NewItemFragment extends Fragment {
         });
     }
     
-    
+    /**
+     * Update the view with the List of new items
+     * @param updateNewItems
+     */
     public static void updateView(List<Item> updateNewItems)
     {
     	String KEY_LABEL ="Big Text";
@@ -99,12 +105,12 @@ public class NewItemFragment extends Fragment {
             group = new HashMap<String, String>();
 
             group.put( KEY_LABEL,  tmp.getItemID() );
-            group.put( KEY_HELP, "Description : "+tmp.getItemName() );
+            group.put( KEY_HELP, "Desc: "+tmp.getItemName() );
 
 
             groupData.add(group);
         }
-    	
+        // put all the items into an adapter which changes colors to the current item status
         adapter = new MyItemListAdapter( context, groupData, android.R.layout.simple_list_item_2,
                 new String[] { KEY_LABEL, KEY_HELP },
                 new int[]{ android.R.id.text1, android.R.id.text2 } , newItems);

@@ -45,11 +45,6 @@ public class MyTicketListAdapter extends SimpleAdapter {
 
 		switch (status)
 		{
-			/*case Closed:
-				res =Color.GREEN;
-				if (logging)
-					Log.d(MyLog, "Closed == Green");
-				break;*/
 			case Checked:
 				res =Color.GREEN;
 				if (logging)

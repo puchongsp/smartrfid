@@ -21,12 +21,13 @@ import sushil.luc.network.SimpleGetTask;
 import sushil.luc.ugrokit.RFIDManager;
 
 public class ItemService {
-
-   // private static List<Item> items;
     private static List<Item> repairItems;
     public static List<Item> newItems;
     private static List<Item> returnedItems;
 	
+    /**
+     * provides the functionality to query the database
+     */
 	public ItemService() {
         if(repairItems == null) {
             repairItems = new LinkedList<Item>();
@@ -72,7 +73,7 @@ public class ItemService {
     }
 
     /**
-     *
+     * Fetch the item by the given RFID
      * @param tag
      * @param activity
      * @param rfidManager
@@ -82,7 +83,6 @@ public class ItemService {
         final List<ItemDTO> itemDtos = new ArrayList<ItemDTO>(1);
         try {
             final NetworkHandler networkHandler = NetworkHandler.getInstance();
-          //  rfid = "000000000000000000000001";
 
           //  String URL = "http://rfidproject.azurewebsites.net/api/items/query?rfids="+rfid;
 
@@ -98,6 +98,7 @@ public class ItemService {
                     Log.i("ItemServiceCallback", "idf=" + myItemDto.getIdentifier());
 
                     itemDtos.add(myItemDto);
+                    // update the calling activites as soon as the result is available
                     if (activity!=null)
                     	activity.updateIteminfo(new Item(myItemDto));
                     if(rfidManager!=null)
@@ -117,14 +118,17 @@ public class ItemService {
         return item;
     }
     
+    /**
+     * Get all the items from the database, which do not have an rfid number assigned yet
+     * @param caller
+     * @return
+     */
     public List<Item> getNewItems(final String caller)
     {
-
 
         int limit = 20;
     	if (newItems.size()<limit)
     	{
-	    	//newItems.clear();
             try {
 	              final NetworkHandler networkHandler = NetworkHandler.getInstance();
 
@@ -142,6 +146,7 @@ public class ItemService {
 							if (!checkItem(item, newItems))
                                 newItems.add(item);
 						}
+						// Inform the caller about the newitems
 						if (caller.equals("NewItemFragment"))
 						{
 							Log.d("ItemService", "Call done "+newItems.size());
@@ -175,6 +180,12 @@ public class ItemService {
 		return check;
 	}
     
+	/**
+	 * Gets you the ItemHistory for a given item from the database
+	 * @param item
+	 * @param caller
+	 * @return
+	 */
 	public List<ItemHistory> getItemHistory (Item item, final String caller)
 	{
 		final List<ItemHistory> hist =new LinkedList<ItemHistory>();
@@ -195,7 +206,7 @@ public class ItemService {
 						ItemHistory itemhis = new ItemHistory(o);
 						hist.add(itemhis);
 					}
-					
+					// inform the caller about the result
 					if (caller.equals("RepairItemFragment"))
 					{						
 						RepairItemFragment.updateHistory(hist);
@@ -210,45 +221,11 @@ public class ItemService {
 		return hist;
 	}
 	
-	//NO NEEDED, Sorry for the extra work
-	/*
-    public List<Item> getRepairItems (final String caller)
-        {
-            int limit = 20;
-        	if (repairItems.size()<limit)
-        	{
-    	    	try {
-    	              final NetworkHandler networkHandler = NetworkHandler.getInstance();
-
-    	              String URL = MainActivity.HOST_URL + "/smartrfid/api/items/queryRepairItems.php?limit="+limit;
-
-    	              networkHandler.readList(URL, ItemDTO[].class, new Callback<List<ItemDTO>>() {
-    	
-    					@Override
-    					public void callback(List<ItemDTO> t) {
-    						for (ItemDTO o :t)
-    						{
-    							Item item = new Item(o);
-    							if (!checkItem(item, repairItems))
-    								repairItems.add(item);
-    						}
-    						if (caller.equals("RepairItemsFragment"))
-    						{
-    							Log.d("ItemService", "Call done "+repairItems.size());
-    							RepairItemFragment.updateView(repairItems);
-    						}
-    					}
-    	              });
-    	
-    	          } catch (Exception e) {
-    	              e.printStackTrace();
-    	          }
-        	}
-              Log.d("ItemService", "repairItems size :"+repairItems.size()); 
-        	  return repairItems;
-
-    }*/
-	
+	/**
+	 * Check if a given Item i is contained in the returnItems list
+	 * @param i
+	 * @return
+	 */
 	private boolean containsReturnedItem (Item i)
     {
         boolean res = false;
@@ -261,26 +238,35 @@ public class ItemService {
         return res;
     }
 
-	
+	/**
+	 * Return an item, but changes only local
+	 * @param item
+	 */
     public void returnItem(Item item) {
-       // item.setStatus(ItemStatus.Returned);
-       /* if(item != null && item.getItemID() == null){
-            return;
-        }*/
         if (!containsReturnedItem(item)  )
             returnedItems.add(item);
     }
     
+    /**
+     * get all the localy returned items
+     * @return
+     */
     public List<Item> getReturnedItems()
     {
     	return returnedItems;
     }
-
+    
+    /** Tell the database that the given Item item has changed his rfid
+     * @param item
+     */
     public void tagNewItem(Item item) {
         SimpleGetTask getTask = new SimpleGetTask( SimpleGetTask.TagNewItem, item);
         getTask.execute();
     }
-
+/**
+ * Tell the database that the given Item item has been send to repair
+ * @param item
+ */
     public void sendToRepair(Item item) {
     	
     	// Update Database
@@ -292,6 +278,10 @@ public class ItemService {
     		repairItems.add(item);
     }
 
+    /**
+     * Tell the database that the given Item item has been send to back to the warehouse
+     * @param item
+     */
     public void sendToWarehouse(Item item) {
     	
     	// Update Database
@@ -301,8 +291,14 @@ public class ItemService {
     	item.setStatus(ItemStatus.Available);
     }
     
+    /**
+     * updates the itemhistory of the given item with the given text
+     * @param item
+     * @param text
+     */
     public void updateItemHistory (Item item, String text)
     {
+    	// Update Database
     	SimpleGetTask getTask = new SimpleGetTask(SimpleGetTask.UpdateItemHistory, item,text);
     	getTask.execute();
     }

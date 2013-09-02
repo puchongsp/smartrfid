@@ -20,15 +20,12 @@ import sushil.luc.item.ItemStatus;
 import sushil.luc.msc.UgroKitActivity;
 
 public class MainActivity extends UgroKitActivity implements
-Ugi.ConnectionStateListener,
-UgiInventoryDelegate.InventoryTagChangedListener{
+	Ugi.ConnectionStateListener,
+	UgiInventoryDelegate.InventoryTagChangedListener{
 
 
     public static String HOST_URL = "http://sushilshilpakar.com.np/smartrfid";
     static MainActivity instance;
-
-    //public static String HOST_URL = "http://rfidproject.azurewebsites.net";
-    //public static String HOST_URL = "http://70.125.157.25";
 
 	public static Context appContext;
 	private static String log ="MainActivity";
@@ -39,7 +36,6 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	public static final String ItemInfoTabName ="Item Info";
 	public static final String RepairItemTabName ="Repair Items";
 	private ItemService service;
-	//public static String currentStatus;
 	
 	private TicketsFragment ticketsFragment;
 	private NewItemFragment newItemsFragment;
@@ -59,14 +55,14 @@ UgiInventoryDelegate.InventoryTagChangedListener{
         return instance;
     }
 
-/**
- * init the Tabs 
- */
+    /**
+     * init the Tabs 
+     */
 	public void onCreate(Bundle savedInstanceState) {
 	 super.onCreate(savedInstanceState);
 	 service= new ItemService();
 	 instance=this;
-     // setup action bar for tabs
+     // setup action bar for tabs and the Statusbar
 	 actionbar = getActionBar();
 	 actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 	 actionbar.setSubtitle(currentStatus);
@@ -116,6 +112,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	@Override
  	protected void onSaveInstanceState(Bundle outState)
  	{
+		// save the last selected tab
 		super.onSaveInstanceState(outState);
 		outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
  	}
@@ -125,32 +122,21 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 	 * If the connection from the ugrokit changes, this methode gives feedback to the user
 	 */
 	public void connectionStateChanged(Ugi.ConnectionStates connectionState) {
-		/*if (connectionState == Ugi.ConnectionStates.NOT_CONNECTED) {
-			Toast.makeText(this, "Not Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
-		} else if (connectionState == Ugi.ConnectionStates.CONNECTING) {
-			Toast.makeText(this, "Connecting + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
-		} else if (connectionState == Ugi.ConnectionStates.INCOMPATIBLE_READER) {
-			Toast.makeText(this, "Incompatible + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
-			
-		} else { 
-			if (connectionState == Ugi.ConnectionStates.CONNECTED)
-			{
-				Toast.makeText(this, "Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
-			}
-		}*/
-		// update the Status
+		// update the Connection Status
 		super.calculateStatus();
 		notifiySatusUpdate();
 	}
 
-
+	/**
+	 * Get the data from the latest scanned Item and call the appropriate functions. COnsider which tab is currently open
+	 */
     public void updateIteminfo(Item i) {
         Tab currenttab = actionbar.getSelectedTab();
         if (currenttab.getText().equals(ItemInfoTabName)) {
             List<String> iteminfo = new LinkedList<String>();
 
             if (i!=null && i.getItemID()==null) {
-                // if the tag is not yet known yet
+                // if the rfid tag is not yet linked to an item 
                 iteminfo.add("");
                 iteminfo.add("No Item found for the scanned RFID");
                 iteminfo.add("");
@@ -186,6 +172,7 @@ UgiInventoryDelegate.InventoryTagChangedListener{
         
         if (currenttab.getText().equals(ReturnItemsTabName))
         {
+        	// Only items which were previously staged (rent by a client) can be returned
         	if(i!=null && i.getItemID() != null && i.getStatus().equals(ItemStatus.Staged)) {
           	  // if we found some infos for the tag, tell the view
               ((ReturnItemFragment)returnItemsFragment).returnItem(i);
@@ -201,10 +188,10 @@ UgiInventoryDelegate.InventoryTagChangedListener{
         
         if (currenttab.getText().equals(RepairItemTabName))
         {
-        	//Log.d("MainActivity", "before");
-            ///Log.d("MainActivity", i.getStatus().toString());
+        	// Check if the Item is actually in the Return status
             if (i !=null && i.getStatus().equals(ItemStatus.Returned))
             {
+            	// Update the Fragment
             	repairItemFragment.setItem(i);
                 Log.d("MainActivity", "inside");
             	super.StopInventory();
@@ -220,14 +207,13 @@ UgiInventoryDelegate.InventoryTagChangedListener{
     }
 	@Override
 	/**
-	 * This methode is called as soon as the ugrokit discovers a new Tag. If found the same tag twice immediately after each other, this function is not called
+	 * This methode is called as soon as the ugrokit discovers a new Tag. 
+	 * If found the same tag twice immediately after each other, this function is not called
 	 * Has to be handled here, because Tabs implement Fragment and we need an activity
 	 */
 	public void inventoryTagChanged(UgiTag tag, boolean count) {
 		
 		returnItemsFragment = TabListenerReturnItems.getFragment();
-		//ticketsFragment = TabListenerTickets.getFragment();
-		//newItemsFragment = TabListenerNewItems.getFragment();
 		itemInfoFragment = TabListenerItemInfo.getFragment();
 		repairItemFragment = TabListenerRepairItem.getFragment();
 		
@@ -241,55 +227,38 @@ UgiInventoryDelegate.InventoryTagChangedListener{
 		{
 			currentTagId = tag.getEpc().toString();
 			
-			// search information about the new tag
 			Log.d(log, currentTagId);
-			
+			// search information about the new tag
 			service.fetchItemFromRfid(tag, this, null);
-            /*
-                This method calls updateItemInfo();
-             */
+
         }
 
 			// if the current tab is the Return Item tab
 		if (currenttab.getText().equals(ReturnItemsTabName)) {
             Log.d(log, "Return Items");
-            // collect infos for the scanned tag
+            
             currentTagId = tag.getEpc().toString();
             Log.d(log, currentTagId);
         
-            // this calls updateItemInfo()
+         // collect infos for the scanned tag
             service.fetchItemFromRfid(tag, this, null);
             
-           /* Item item = service.fetchItemFromRfid(currentTagId, this);
-          
-            if(item != null) {
-            	  // if we found some infos for the tag, tell the view
-                ((ReturnItemFragment)returnItemsFragment).returnItem(item);
-            }*/
         }
 		
 		if (currenttab.getText().equals(RepairItemTabName))
 			{
 			 	Log.d(log, "Repair Items");
-	            // collect infos for the scanned tag
+	            
 	            currentTagId = tag.getEpc().toString();
 	            Log.d(log, currentTagId);
-	            
+	         // collect infos for the scanned tag
 	            service.fetchItemFromRfid(tag, this, null);
-	            /*
-	            Item item = service.fetchItemFromRfid(currentTagId, this);
-	            
-	            
-	            if (item !=null && item.getStatus().equals(ItemStatus.Repair))
-	            {
-	            	repairItemFragment.setItem(item);
-	            	super.StopInventory();
-	            }*/
+
 	            	
 			}
 	}
 	/**
-	 * Update the status bar
+	 * Update the status bar with the new connection info
 	 */
 	public void notifiySatusUpdate()
 	{

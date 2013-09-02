@@ -43,8 +43,10 @@ public class ReturnedItemOptionsActivity extends Activity{
 
         itemService = new ItemService();
 
+        // get all the returned items
         List<Item> returnedItems = itemService.getReturnedItems();
-
+        
+        // get the selected returned item
         item = returnedItems.get(position);
 
         Item_ID = (TextView) findViewById(R.id.item_id);
@@ -66,8 +68,7 @@ public class ReturnedItemOptionsActivity extends Activity{
         btnRepair.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println ("Repair");
-              
+                // Item needs some repaire
                 itemService.sendToRepair(item);
 
                 finish();
@@ -78,7 +79,7 @@ public class ReturnedItemOptionsActivity extends Activity{
         btnToWarehouse.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+            	// Item is good to go. Send it back to the warehouse
                 itemService.sendToWarehouse(item);
 
                 finish();
