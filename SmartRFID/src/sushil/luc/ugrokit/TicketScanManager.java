@@ -199,6 +199,7 @@ public class TicketScanManager extends RFIDManager{
 	{
 		 	stillopen =true;
 		 	dialog = new Dialog(this.con);
+            dialog.setCancelable(false);
 			dialog.setContentView(R.layout.dialog_ticket_scan);
 			dialog.setTitle("Tag discovered");
 			
