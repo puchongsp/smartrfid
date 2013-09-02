@@ -14,9 +14,6 @@ public class DateUtil {
     }
 
     public static Date stringToDate(String str){
-    	// 2013-05-10T21:13:06
-    	//String s = str.replace("T", " ");
-       // DateFormat dateFormat = new SimpleDateFormat("yyyy-dd-mm HH:mm:ss");
     	DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     	
         Date date = null;

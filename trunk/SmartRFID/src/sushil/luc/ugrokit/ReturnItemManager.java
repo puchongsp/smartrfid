@@ -1,42 +1,15 @@
 package sushil.luc.ugrokit;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
-import sushil.luc.smartrfid.R;
-
-import android.app.Dialog;
-import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.ugrokit.api.UgiEpc;
-import com.ugrokit.api.UgiTag;
-
-
 /**
  * Is not used anymore, because there is a problem with Activity and Fragment
  * Solved in the MainActivity class
- * @author Luc
  *
+ * @author Luc
  */
 public class ReturnItemManager {
 
 /*	private Context con;
-	private Dialog dialog;
+    private Dialog dialog;
 	private String LogTag = "ReturnItem";
 	public boolean initial;
 	private ListView d_tags;

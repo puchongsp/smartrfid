@@ -1,37 +1,12 @@
 package sushil.luc.ugrokit;
 
-import java.util.ArrayList;
-
-import sushil.luc.smartrfid.R;
-
-import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.ugrokit.api.UgiEpc;
-import com.ugrokit.api.UgiTag;
-
 public class TruckerCheckManager {
 
-	/**
-	 * Not needed in this project
-	 * 
-	 */
-	/*private Context con;
+    /**
+     * Not needed in this project
+     *
+     */
+    /*private Context con;
 	private Dialog dialog;
 	private String LogTag = "TruckerCheck";
 	public boolean initial;
