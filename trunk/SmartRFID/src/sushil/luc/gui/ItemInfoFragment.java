@@ -1,14 +1,13 @@
 package sushil.luc.gui;
 
-import sushil.luc.smartrfid.R;
 import android.app.Fragment;
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import sushil.luc.smartrfid.R;
 
 public class ItemInfoFragment extends Fragment {
 	
@@ -98,8 +97,9 @@ public class ItemInfoFragment extends Fragment {
 	 		Item_InventoryTotal.setVisibility(View.INVISIBLE);
 	 		Item_InventoryOnHand.setVisibility(View.INVISIBLE);
 	 		Item_InventoryOut.setVisibility(View.INVISIBLE);
-	 		
-	 		Item_Name.setText(ItemName);
+            info.setVisibility(View.INVISIBLE);
+
+            Item_ID.setText(ItemName);
     	}
     	else
     	{
@@ -116,6 +116,7 @@ public class ItemInfoFragment extends Fragment {
 	 		Item_InventoryTotal.setVisibility(View.VISIBLE);
 	 		Item_InventoryOnHand.setVisibility(View.VISIBLE);
 	 		Item_InventoryOut.setVisibility(View.VISIBLE);
+            info.setVisibility(View.VISIBLE);
 	    	
 	    	info.setText("Last scanned Item :");
 	    	Item_ID.setText("Item Id: "+ItemId);

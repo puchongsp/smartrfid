@@ -132,6 +132,7 @@ public class MainActivity extends UgroKitActivity implements
 	 */
     public void updateIteminfo(Item i) {
         Tab currenttab = actionbar.getSelectedTab();
+        Log.d("MainActivity", currenttab.getText().toString());
         if (currenttab.getText().equals(ItemInfoTabName)) {
             List<String> iteminfo = new LinkedList<String>();
 
