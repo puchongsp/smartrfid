@@ -11,6 +11,10 @@ import com.sun.jersey.api.client.WebResource;
 
 import sushil.luc.gui.MainActivity;
 
+/**
+ * Asynchronous HTTP Get that runs in background
+ * fetches JSON data and convert it to appropriate class / Model
+ */
 public class GetTask extends AsyncTask<String, String, String>{
 
 	private final String url;
@@ -18,11 +22,18 @@ public class GetTask extends AsyncTask<String, String, String>{
     ProgressDialog dialog;
     private Context context;
 
+    /**
+     *
+     * @param context
+     * @param url
+     * @param callback
+     */
 	GetTask(Context context, String url, Callback<String> callback){
 		this.url = url;
 		this.callback = callback;
         this.context = context;
 	}
+
 
     @Override
     protected void onPreExecute() {
@@ -33,6 +44,11 @@ public class GetTask extends AsyncTask<String, String, String>{
         dialog.show();
     }
 
+    /**
+     *
+     * @param params
+     * @return
+     */
 	@Override
 	protected String doInBackground(String... params) {
         try{
@@ -46,6 +62,10 @@ public class GetTask extends AsyncTask<String, String, String>{
         }
 	}
 
+    /**
+     *
+     * @param result
+     */
 	@Override
 	protected void onPostExecute(String result){
         if(result.equals("Error")){
