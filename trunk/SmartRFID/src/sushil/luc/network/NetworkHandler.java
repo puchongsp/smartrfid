@@ -16,7 +16,7 @@ public class NetworkHandler {
 	  private static NetworkHandler instance;
 	  private Context context;
 
-    
+
 	  public static synchronized NetworkHandler getInstance() {
 	    if (instance == null) {
 	      instance = new NetworkHandler();

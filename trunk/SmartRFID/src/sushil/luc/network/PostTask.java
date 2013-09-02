@@ -1,6 +1,5 @@
 package sushil.luc.network;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -18,7 +17,6 @@ public class PostTask extends AsyncTask<String, String, String> {
 	private final String url;
 	private final String requestBody;
 	private final Callback<String> callback;
-    ProgressDialog dialog;
     private Context context;
 
 	PostTask(Context context, String url, String requestBody, Callback<String> callback) {
@@ -28,14 +26,6 @@ public class PostTask extends AsyncTask<String, String, String> {
         this.context = context;
 	}
 
-    @Override
-    protected void onPreExecute() {
-//        dialog = new ProgressDialog(context);
-//        dialog.setMessage("Fetching data from remote database...");
-//        dialog.setIndeterminate(true);
-//        dialog.setCancelable(false);
-//        dialog.show();
-    }
 
 	@Override
 	protected String doInBackground(String... params) {
@@ -64,7 +54,6 @@ public class PostTask extends AsyncTask<String, String, String> {
         } else {
             callback.callback(result);
         }
-        //dialog.dismiss();
         super.onPostExecute(result);
 	}
 }
