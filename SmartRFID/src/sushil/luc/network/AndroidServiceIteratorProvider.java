@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * Using Jersey as JSON file parser
+ * This class binds jersey libraries in runtime
+ * @param <T>
+ */
 public class AndroidServiceIteratorProvider<T> extends ServiceIteratorProvider<T> {
 	 
 	  private static final String TAG = AndroidServiceIteratorProvider.class.getSimpleName();
