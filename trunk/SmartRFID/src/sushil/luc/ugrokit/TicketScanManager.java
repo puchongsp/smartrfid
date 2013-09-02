@@ -64,9 +64,8 @@ public class TicketScanManager extends RFIDManager {
     }
 
     public void handle2(Item item, UgiTag tag) {
-        //this.discoveredtags.add(tag);
+
         String name = item.getItemName();
-        //this.IdtoName.put(tag.getEpc(), name);
         Log.d(LogTag, "handle Tag " + tag.getEpc().toString());
         String info = name + " (" + tag.getEpc() + ")";
         // If the tag was already handled we don't have to check it again
