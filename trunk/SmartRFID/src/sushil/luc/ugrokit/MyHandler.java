@@ -17,17 +17,10 @@ import sushil.luc.ticket.Ticket;
 public class MyHandler {
 
     private static UgiTag lastTag;
-    //private UgiTag ticketScanLastTag;
     private TicketScanManager ts_manager;
-    //private ItemInfoManager ii_manager;
     private NewItemManager ni_manager;
-    //private TruckerCheckManager tc_manager;
-    //private ReturnItemManager ri_manager;
     private boolean modeTicketItemScan;
-    //private boolean modeItemInfo;
     private boolean modeNewItem;
-    //private boolean modeTruckerCheck;
-    //private boolean modeReturnItem;
 
     /**
      * Init all the different handlers
@@ -36,10 +29,7 @@ public class MyHandler {
      */
     public MyHandler(Context con) {
         ts_manager = new TicketScanManager(con);
-        //	ii_manager = new ItemInfoManager();
         ni_manager = new NewItemManager(con);
-        //tc_manager = new TruckerCheckManager(con);
-        //	ri_manager = new ReturnItemManager(con);
         lastTag = null;
     }
 
@@ -55,19 +45,7 @@ public class MyHandler {
         modeTicketItemScan = mode;
     }
 
-	/*public void modeItemInfo( boolean mode)
-	{
-		modeItemInfo = mode;
-	}*/
-    /**
-     * Turn on the Trucker scan Mode
-     * @param mode true = on, false =off
-     */
-/*	public void modeTruckerCheck( boolean mode)
-	{
-		tc_manager.reset();
-		modeTruckerCheck = mode;
-	}*/
+	
 
     /**
      * Tag new Items
@@ -82,11 +60,6 @@ public class MyHandler {
         modeNewItem = mode;
     }
 	
-/*	public void modeReturnItem( boolean mode)
-	{
-		ri_manager.reset();
-		modeReturnItem = mode;
-	}*/
 
     /**
      * If a new tag was found tell the handler. The handler calls the function of the correct Manager
@@ -98,21 +71,13 @@ public class MyHandler {
 
         if (modeTicketItemScan)
             TicketScan(current);
-	/*	if (modeItemInfo)
-			ItemInfoScan(current);*/
+
         if (modeNewItem)
             NewItemScan(current);
-/*		if (modeTruckerCheck)
-			TruckerCheckScan(current);*/
-	/*	if (modeReturnItem)
-			ReturnItemScan(current);*/
+
 
     }
-	/*
-	public String getLastEpc()
-	{
-		return lastTag.getEpc().toString();		
-	}*/
+
 
     /**
      * Give the ticket manager the new tag
@@ -126,10 +91,7 @@ public class MyHandler {
             modeTicketItemScan = false;
     }
 	
-	/*private void ItemInfoScan (UgiTag tag)
-	{
-		ii_manager.handleTag(tag);
-	}*/
+
 
     /**
      * Give the New Item Manager the new tag
@@ -140,17 +102,5 @@ public class MyHandler {
 
         ni_manager.handleTag(tag);
     }
-    /**
-     * Give the Trucker Check manager the new tag
-     * @param tag
-     */
-/*	private void TruckerCheckScan (UgiTag tag)
-	{
-		tc_manager.handleTag(tag);
-	}*/
-	
-	/*private void ReturnItemScan (UgiTag tag)
-	{
-		ri_manager.handleTag(tag);
-	}*/
+ 
 }

@@ -25,6 +25,9 @@ public class TicketService {
     public static List<Ticket> Tickets;
 
 
+    /**
+     * Create a new instance of the Ticketservice
+     */
 	public TicketService()
 	{
 		if (Tickets!=null)
@@ -37,7 +40,10 @@ public class TicketService {
 		}
 	}
 
-
+/**
+ * get all the open local tickets
+ * @return
+ */
 	public List<Ticket> fetchLocalTickets()
 	{
 		return Tickets;
@@ -60,7 +66,6 @@ public class TicketService {
 
         // First get order then get ticket by id
         final List<OrderDTO> orderDTOList = new ArrayList<OrderDTO>();
-        //final List<TicketDTO> ticketDTOList = new ArrayList<TicketDTO>();
 
         try {
             Log.i("TS:","url = "+URL);
@@ -82,7 +87,6 @@ public class TicketService {
                                 public void callback(final TicketDTO myTicketDTO) {
                                 	if (myTicketDTO.getItems()!=null)
                                 		Log.i("TS:", "size of items in ticket = "+myTicketDTO.getItems().size());
-                                    //ticketDTOList.add(myTicketDTO);
                                     // map each orderdto,ticketdto to Tickets model
                                     if(!doesTicketExist(myTicketDTO)) {
                                         Tickets.add(new Ticket(myTicketDTO, orderDto));
@@ -104,24 +108,11 @@ public class TicketService {
         return Tickets;
 	}
 
-/*	
-	public void saveToRemote(Ticket t)
-	{
-		int i =0;
-		boolean found=false;
-		while ( (i< Tickets.size()) && !(found))
-		{
-			if (Tickets.get(i).getTicketID().equals(t.getTicketID()))
-				found =true;
-			else
-				i++;
-		}
-		if (found)
-		{
-			Tickets.set(i, t);
-		}
-	}*/
-
+/**
+ * Checks if the given dto file is already on in our local ticket list
+ * @param myTicketDTO
+ * @return
+ */
     public boolean doesTicketExist(TicketDTO myTicketDTO) {
         boolean ticketExists = false;
         for(Ticket ticket : Tickets) {
@@ -133,20 +124,11 @@ public class TicketService {
         return ticketExists;
     }
     
-    /**
-     * Sets all the Items from the Ticket to picked up
-     * @return false if there was a problem, true if everything was fine
-     */
-    /*public boolean ticketCollected (Ticket t, Context context)
-    {
-    	final NetworkHandler networkHandler = NetworkHandler.getInstance();
-        networkHandler.setContext(context);
-        
-        boolean res = networkHandler.updateTicketFullyCollected(t);
-        
-    	return res;
-    }*/
     
+    /**
+     * Saves the Status of the ticket to the database
+     * @param t
+     */
     public void saveToRemote(Ticket t)
     {
     	SimpleGetTask gettask;
