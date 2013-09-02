@@ -152,6 +152,7 @@ public class NewItemManager extends RFIDManager{
 	 */
 	public void showDialog(final UgiTag tag) {
 		dialog = new Dialog(this.con);
+        dialog.setCancelable(false);
 		dialog.setContentView(R.layout.dialog_new_item);
 		dialog.setTitle("New Tag discovered");
 
