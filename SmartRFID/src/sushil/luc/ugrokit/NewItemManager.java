@@ -54,7 +54,6 @@ public class NewItemManager extends RFIDManager {
         this.currentItem = null;
         this.currentActivity = null;
         this.alreadyTestedTags = new LinkedList<UgiTag>();
-        //this.itemHistory = ItemHistory.getInstance();
         this.itemService = new ItemService();
     }
 

@@ -15,17 +15,6 @@ import sushil.luc.msc.Customer;
 
 public class Ticket {
 
-    /*
-     * to map models vars with fields in json
-     */
-  /*  public static final String _ID = "id";
-    public static final String _CUSTOMER = "customer";
-    public static final String _ITEMS = "items";
-    public static final String _STATUS = "status";
-    public static final String _CREATED_DATE = "created_date";
-    public static final String _DELIVERY_DATE = "delivery_date";*/
-
-
     private int id;
 	private String TicketID;
 	private Customer TicketCustomer;
@@ -34,11 +23,11 @@ public class Ticket {
 	private String CreationDate;
 	private String DeliveryDate;
 	
-	/*public Ticket()
-	{
-		this.Items = new ArrayList<Item>();
-	}*/
-
+	/**
+	 * creates a new ticket from the given DTO files
+	 * @param ticketDTO
+	 * @param orderDTO
+	 */
     public Ticket(TicketDTO ticketDTO, OrderDTO orderDTO){
         this.Items = new ArrayList<Item>();
         this.id = ticketDTO.getId();
@@ -48,9 +37,6 @@ public class Ticket {
         Customer customer = new Customer(customerDto, orderDTO.getInfo());
 
         this.TicketCustomer = customer;
-        
-        // Call the method  calcTicketStatus()
-        //this.Status = TicketStatus.Open; // Setting default ticket status;
         
         this.CreationDate = orderDTO.getInfo().getCreationDate();
         this.DeliveryDate = orderDTO.getInfo().getDeliveryDate();
@@ -64,7 +50,8 @@ public class Ticket {
 	            Items.add(tmp);
 	        }
         }
-
+        
+        // calc the status
         if (orderDTO.getStatus().isCheckedOut()==1 && orderDTO.getStatus().isReturned()==1 && orderDTO.getStatus().isStaged()==1)
             this.Status= TicketStatus.Closed;
         else
@@ -74,8 +61,7 @@ public class Ticket {
                 this.Status = TicketStatus.Checked;
             else
                 this.Status = TicketStatus.Open;
-        
-        //calcTicketStatus();
+      
     }
 
 	
@@ -119,18 +105,18 @@ public class Ticket {
 		return res;
 	}
 	
-	
+	/**
+	 * Sets the ticketstatus according to the statues of the items of the ticket
+	 */
 	public void calcTicketStatus ()
 	{
 		boolean res =true;
-	//	boolean onecollected =false;
 		for(int i=0; i<this.Items.size();i++)
 		{
 			Item tmp = this.Items.get(i);
 			if (tmp.getStatus().equals(ItemStatus.Checked))
 			{
 				res = res && true;
-	//			onecollected =true;
 			}
 			else
 			{
@@ -143,9 +129,6 @@ public class Ticket {
 			this.setStatus(TicketStatus.Checked);
 		}
 		else
-			//if (onecollected)
-			//	this.setStatus(TicketStatus.InProgress);
-			//else
 				this.setStatus(TicketStatus.Open);
 	}
 
@@ -211,7 +194,7 @@ public class Ticket {
 	/**
 	 * Get an Item from the Ticket by Ugitag
 	 * @param tag
-	 * @return null if there is no Item tag with the given tag. Otherwise the corresponding Item
+	 * @return null if there is no Item tagged with the given tag. Otherwise the corresponding Item
 	 */
 	public Item getItem(UgiTag tag)
 	{
