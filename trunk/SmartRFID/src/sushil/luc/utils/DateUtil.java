@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by sushil on 6/26/13.
+ * Utility class to convert date to string and vice-versa
  */
 public class DateUtil {
     public DateUtil(){
@@ -43,7 +43,13 @@ public class DateUtil {
         date.setTime(timestamp);
         return date;
     }
-    
+
+    /**
+     * Replace T character with spaces,
+     * if the format returned from API contains it
+     * @param Date
+     * @return
+     */
     public static String formatDate (String Date)
     {
     	String s = Date.replaceAll("T", " ");
