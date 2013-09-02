@@ -148,7 +148,7 @@ public class NewItemManager extends RFIDManager{
 
 	/**
 	 * Displays the Dialog to find all the available not yet used Tags
-	 * @param tag
+	 * @param tag 
 	 */
 	public void showDialog(final UgiTag tag) {
 		dialog = new Dialog(this.con);
