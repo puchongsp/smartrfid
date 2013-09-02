@@ -1,7 +1,8 @@
 package sushil.luc.dtos;
 
 /**
- * Created by sushil
+ * Data Transfer Object
+ * to store Customer Object from web api
  */
 public class CustomerDTO {
     private String id;
