@@ -16,6 +16,7 @@ public class NetworkHandler {
 	  private static NetworkHandler instance;
 	  private Context context;
 
+    
 	  public static synchronized NetworkHandler getInstance() {
 	    if (instance == null) {
 	      instance = new NetworkHandler();
@@ -31,6 +32,13 @@ public class NetworkHandler {
 	    ServiceFinder.setIteratorProvider(new AndroidServiceIteratorProvider());
 	  }
 
+    /**
+     * Reads single object
+     * @param url
+     * @param class1
+     * @param callback
+     * @param <T>
+     */
 	  public <T> void read(final String url, final Class<T> class1, final Callback<T> callback) {
           try {
               new GetTask(context, url, new Callback<String>() {
@@ -47,7 +55,14 @@ public class NetworkHandler {
               e.printStackTrace();
           }
       }
-	 
+
+    /**
+     * Reads an array of the object
+     * @param url
+     * @param clazz
+     * @param callback
+     * @param <T>
+     */
 	  public <T> void readList(final String url, final Class<T[]> clazz, final Callback<List<T>> callback) {
           try {
               new GetTask(context, url, new Callback<String>() {
@@ -65,7 +80,15 @@ public class NetworkHandler {
           }
 
       }
-	 
+
+    /**
+     * Write a single object to webserver
+     * @param url
+     * @param clazz
+     * @param t
+     * @param callback
+     * @param <T>
+     */
 	  public <T> void write(final String url, final Class<T> clazz, final T t, final Callback<T> callback) {
 	    final Gson gson = new GsonBuilder().create();
 	    new PostTask(context, url, gson.toJson(t), new Callback<String>() {
