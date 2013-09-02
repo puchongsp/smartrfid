@@ -11,7 +11,11 @@ public class Customer {
 	private String Name;
 	private String Address;
 	
-
+	/**
+	 * Create a new Customer object with the given DTO fie
+	 * @param customerDTO
+	 * @param orderInfoDTO
+	 */
     public Customer(CustomerDTO customerDTO, OrderInfoDTO orderInfoDTO) {
         this.CustomerID = customerDTO.getId();
         this.Name = customerDTO.getCustomerName();

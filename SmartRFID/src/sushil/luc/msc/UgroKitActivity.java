@@ -71,31 +71,19 @@ public class UgroKitActivity extends Activity implements
 	
 	@Override
 	public void connectionStateChanged(Ugi.ConnectionStates connectionState) {
-		/*if (connectionState == Ugi.ConnectionStates.NOT_CONNECTED) {
-			Toast.makeText(this, "Not Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
-		} else if (connectionState == Ugi.ConnectionStates.CONNECTING) {
-			Toast.makeText(this, "Connecting + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
-		} else if (connectionState == Ugi.ConnectionStates.INCOMPATIBLE_READER) {
-			Toast.makeText(this, "Incompatible + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
-		} else { 
-			if (connectionState == Ugi.ConnectionStates.CONNECTED)
-			{
-				Toast.makeText(this, "Connected + RFID started "+Ugi.singleton().getInStartInventory(), Toast.LENGTH_SHORT).show();
-				isConnected = true;
-			}
-		}*/
+
 		calculateStatus();
 	}
 
 
 	@Override
 	public void inventoryTagSubsequentFinds(UgiTag tag, int foundnb) {
-		//Log.d(LogTag, "inventoryTagSubsequentFinds "+tag.getEpc().toString());
+		// send the new tag to the handler
 		mHandler.setTag(tag);
 	}
 	
 	/**
-	 * Starts the inventory if the ugrokit is connected and the inventory is not yet started.
+	 * Starts the inventory if  the inventory is not yet started.
 	 */
 	public void StartInventory ()
 	{
@@ -188,7 +176,6 @@ public class UgroKitActivity extends Activity implements
 	 {
 		 mHandler.modeNewItem(false, null, null);
 		 mHandler.modeTicketItemScan(false, null, null);
-	//	 mHandler.modeTruckerCheck(false);
 	 }
 	 
 	 /**

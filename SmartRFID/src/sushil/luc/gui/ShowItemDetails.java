@@ -53,14 +53,13 @@ public class ShowItemDetails extends UgroKitActivity{
 		}
 		else
 		{
-		//	menuItemIdtoVersion = new HashMap<Integer, Integer>();
-		//	itemHistory= ItemHistory.getInstance();
 			
-			// init the action bar and assign the current status
+			// init the action bar and assign the current connection status
 			actionbar = getActionBar();
 			actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 			actionbar.setSubtitle(currentStatus);
 			
+			// get the previously selected ticket 
 			currentTicket = TicketManagerAssembler.ticketlist.get(positionInTicketListview);
 			
 			currentItem =currentTicket.getItems().get(positionInItemListview);
@@ -80,7 +79,7 @@ public class ShowItemDetails extends UgroKitActivity{
 			btnUnCheck.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// Set it back to Available
+					// Undo the status change Set it back to Available
 						currentItem.setStatus(ItemStatus.Available);
                         initButton();
                         Item_Status.setText("Status : "+currentItem.getStatus().toString());
@@ -118,11 +117,12 @@ public class ShowItemDetails extends UgroKitActivity{
 			else
 				Item_ReturnDate.setText("Return Date : ");
 			
-			
-			
 		}
 	}
 
+	/**
+	 * According to the ItemStatus the button is visible or not
+	 */
     private void initButton()
     {
         if (currentItem.getStatus().equals(ItemStatus.Checked))
@@ -164,48 +164,4 @@ public class ShowItemDetails extends UgroKitActivity{
 			if (actionbar!=null)
 				actionbar.setSubtitle(currentStatus);
 		}
-		
-		/*public boolean onPrepareOptionsMenu(Menu menu)
-		{
-			menu.clear();
-			menuItemIdtoVersion.clear();
-			
-			Map<Integer, String> map = itemHistory.getItemHistotyStates(currentItem);
-			
-			Set<Integer> versions =map.keySet();
-			int counter =0;
-			for (Integer v:versions)
-			{
-				menuItemIdtoVersion.put(Menu.FIRST+counter, v);
-				
-				String text = "Version "+v+" "+map.get(v); 
-				menu.add(menuGroupId, v, Menu.FIRST+counter, text);
-				 
-				 counter++;
-			}
-		   
-			if (counter==0)
-				Toast.makeText(getApplicationContext(), "No History available", Toast.LENGTH_SHORT).show();
-			
-			
-			return super.onPrepareOptionsMenu(menu);
-		}
-			
-
-		   @Override
-		    public boolean onOptionsItemSelected(MenuItem item) {
-			   
-			  int menuId = item.getItemId();
-			  
-			  int version = menuItemIdtoVersion.get(menuId);
-			  
-			  Item oldItem = itemHistory.rollback(currentItem, version);
-			  
-			  currentTicket.getItems().remove(currentItem);
-			  
-			  currentTicket.getItems().add(oldItem);
-			  
-		 
-			  return super.onOptionsItemSelected(item);
-		}*/
 }

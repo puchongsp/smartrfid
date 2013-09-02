@@ -65,7 +65,7 @@ public class ItemInfoFragment extends Fragment {
     }
     
     /**
-     * 
+     * Update the different Textviews with the provided data
      * @param ItemId
      * @param ItemName
      * @param ItemRfid
@@ -85,6 +85,7 @@ public class ItemInfoFragment extends Fragment {
     	
     	if (ItemId.equals(""))
     	{
+    		// No Item found for the scanned RFID
     		Item_ID.setVisibility(View.VISIBLE);
 	 		Item_Name.setVisibility(View.INVISIBLE);
 	 		Item_RFID.setVisibility(View.INVISIBLE);
@@ -102,7 +103,8 @@ public class ItemInfoFragment extends Fragment {
     	}
     	else
     	{
-	    	Item_ID.setVisibility(View.VISIBLE);
+	    	// An item was found for the scanned rfid, update the view
+    		Item_ID.setVisibility(View.VISIBLE);
 	 		Item_Name.setVisibility(View.VISIBLE);
 	 		Item_RFID.setVisibility(View.VISIBLE);
 	 		Item_Location.setVisibility(View.VISIBLE);

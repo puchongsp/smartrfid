@@ -24,9 +24,9 @@ public class ReturnItemFragment extends Fragment {
     private ListView returnItemListView;
     private View view;
     private ItemService itemService;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.return_items_fragment, container, false);
         
         itemService = new ItemService();
@@ -39,14 +39,21 @@ public class ReturnItemFragment extends Fragment {
         super.onResume();
         populateItems();
     }
-
+/**
+ * Set a new returned Item and update the view
+ * @param item
+ */
     public void returnItem(Item item){
+    	// set an item to returned
         itemService.returnItem(item);
         populateItems();
     }
 
+    /**
+     * update the view
+     */
     private void populateItems() {
-
+    	// get all the returned items from the database
         List<Item> returnedItems = itemService.getReturnedItems();
 
         String KEY_LABEL ="Big Text";
@@ -66,6 +73,7 @@ public class ReturnItemFragment extends Fragment {
         }
 
         returnItemListView = (ListView) view.findViewById(R.id.return_item_list_view);
+        // Create an adapter which adapts the color according to the item status
         ReturnItemListAdapter adapter = new ReturnItemListAdapter( getActivity().getApplicationContext(), groupData, android.R.layout.simple_list_item_2,
                 new String[] { KEY_LABEL, KEY_HELP },
                 new int[]{ android.R.id.text1, android.R.id.text2 } , returnedItems);

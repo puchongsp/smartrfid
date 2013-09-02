@@ -8,12 +8,15 @@ public class ItemHistory {
 	private String timestamp;
 	private int id;
 	
+	/**
+	 * Creates a new ItemHistory file with the data from the dto file
+	 * @param dto
+	 */
 	public ItemHistory (RepairHistoryDTO dto)
 	{
 		this.desc = dto.getDescription();
 		this.timestamp = dto.getTimestamp();
 		this.id = dto.getId();
-		
 	}
 
 	public String getDesc() {

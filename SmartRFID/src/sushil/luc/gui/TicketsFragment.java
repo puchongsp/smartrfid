@@ -42,7 +42,6 @@ public class TicketsFragment extends Fragment {
 
     	TicketList = (ListView) view.findViewById(R.id.TicketList);
     	
-    	
     	TicketList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -63,11 +62,15 @@ public class TicketsFragment extends Fragment {
         if (TicketService.Tickets!=null)
             Log.d("Ticketsfragment", ""+ TicketService.Tickets.size());
         super.onResume();
+        // fill the list with tickets
     	fillTickets2List(myparent);
 
     }
 
-    
+    /**
+     * Fill the list with tickets
+     * @param parent
+     */
     private void fillTickets2List (Context parent)
     {
     	TicketList.setAdapter(null);
@@ -77,11 +80,11 @@ public class TicketsFragment extends Fragment {
     	String KEY_LABEL ="Big Text";
     	String KEY_HELP ="Help Text";
     	
-    	// -- list item hash re-used
     	Map<String, String> group;
     	
     	TicketManagerAssembler assembler = new TicketManagerAssembler(getActivity().getApplicationContext());
     	
+    	// fetch the open tickets from the database
     	List<Ticket> alltickets = assembler.fetchTickets(false);
     	
     	for (int i =0; i<alltickets.size();i++)
@@ -95,6 +98,7 @@ public class TicketsFragment extends Fragment {
         	
         	int collected = 0;
         	
+        	// calc how many items are already collected
         	for (Item tmpItem :items)
         	{
         		if (tmpItem.getStatus()!=null && tmpItem.getStatus().equals(ItemStatus.Checked))
@@ -110,13 +114,16 @@ public class TicketsFragment extends Fragment {
         	groupData.add(group);
     	}
     	
-    	// -- create an adapter, takes care of binding hash objects in our list to actual row views
+    	// adapter maps Ticket Status to a color
     	MyTicketListAdapter adapter = new MyTicketListAdapter( parent, groupData, android.R.layout.simple_list_item_2, 
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , alltickets);
     	TicketList.setAdapter(adapter);
     }
     
+    /**
+     * Updates the TicketList
+     */
     public static void updateView()
     {
     	TicketList.setAdapter(null);
@@ -126,11 +133,10 @@ public class TicketsFragment extends Fragment {
     	String KEY_LABEL ="Big Text";
     	String KEY_HELP ="Help Text";
     	
-    	// -- list item hash re-used
     	Map<String, String> group;
     	
     	TicketManagerAssembler assembler = new TicketManagerAssembler(myparent);
-    	
+    	// fetch the open tickets from the database
     	List<Ticket> alltickets = assembler.fetchTickets(true);
     	Log.d("Ticketsfragment", ""+alltickets.size());
     	
@@ -144,7 +150,7 @@ public class TicketsFragment extends Fragment {
         	List<Item> items = tmp.getItems();
         	
         	int collected = 0;
-        	
+        	// calc how many items are already collected
         	for (Item tmpItem :items)
         	{
         		if (tmpItem.getStatus()!=null && tmpItem.getStatus().equals(ItemStatus.Checked))
@@ -160,7 +166,7 @@ public class TicketsFragment extends Fragment {
         	groupData.add(group);
     	}
     	
-    	// -- create an adapter, takes care of binding hash objects in our list to actual row views
+    	// adapter maps Ticket Status to a color
     	MyTicketListAdapter adapter = new MyTicketListAdapter( myparent, groupData, android.R.layout.simple_list_item_2, 
     	                                                   new String[] { KEY_LABEL, KEY_HELP },
     	                                                   new int[]{ android.R.id.text1, android.R.id.text2 } , alltickets);

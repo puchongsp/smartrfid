@@ -44,7 +44,7 @@ public class RepairItemFragment extends Fragment{
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        
     	View view = inflater.inflate(R.layout.repair_item_fragment, container, false);
     	
     	ItemName = (TextView) view.findViewById(R.id.ItemName);
@@ -72,15 +72,17 @@ public class RepairItemFragment extends Fragment{
 				String text = NewItemHistory.getText().toString();
 				if (currentItem!=null && text.isEmpty())
 				{
-					
+					// DO nothing if there is no text
 					Toast.makeText(getActivity(), "Please insert a text", Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
+					// send the comment to the database
 					itemservice.updateItemHistory(currentItem, text);
 					
 					NewItemHistory.getText().clear();
-					// Update the list
+					
+					// Update the listview
 					adpaterData.add(text);
 					arrayAdapter.notifyDataSetChanged();
 					
@@ -94,6 +96,7 @@ public class RepairItemFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
+				// do nothing with cancel
 				reset();
 			}
 		});
@@ -102,7 +105,7 @@ public class RepairItemFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				
+				// send the item back to the warehouse. The item is fixed
 				itemservice.sendToWarehouse(currentItem);
 				Toast.makeText(getActivity(), "Item fixed, put it back in the warehouse", Toast.LENGTH_SHORT).show();
 				reset();
@@ -119,12 +122,19 @@ public class RepairItemFragment extends Fragment{
 		super.onResume();
 	}
 	
+	/**
+	 * Sets the Item and triggers a screen refresh
+	 * @param i
+	 */
 	public void setItem( Item i )
 	{
 		currentItem=i;
 		initScreen();
 	}
 	
+	/**
+	 * Checks if an item is currently available and adapts the screen accordingly
+	 */
 	private void initScreen()
 	{
     	if (currentItem==null)
@@ -149,13 +159,17 @@ public class RepairItemFragment extends Fragment{
         	HistoryInfo.setVisibility(View.VISIBLE);
         	
         	ItemName.setText("Item ID: "+currentItem.getItemID());
-        	ItemInfo.setText("Desc: "+currentItem.getItemName()+ " RFID Nb: "+ currentItem.getRFID());
+        	ItemInfo.setText("Desc: "+currentItem.getItemName()+ " RFID: "+ currentItem.getRFID());
         	NewItemHistory.setHint("Insert a new history entry here");
         	
+        	// Load the Itemhistory from the database
         	itemservice.getItemHistory(currentItem, "RepairItemFragment");
     	}
 	}
-	
+	/**
+	 * Update the ListView adapter with the newest item history data
+	 * @param hist
+	 */
 	public static void updateHistory (List<ItemHistory> hist)
 	{
 		adpaterData = new ArrayList<String>();
@@ -169,6 +183,9 @@ public class RepairItemFragment extends Fragment{
         ItemHistory.setAdapter(arrayAdapter);
 	}
 	
+	/**
+	 * Set the screen back to the initial state
+	 */
 	private void reset()
 	{
 		currentItem=null;
