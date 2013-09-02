@@ -9,6 +9,10 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+/**
+ * Asynchronous HTTP Post that runs in background and
+ * fetches JSON data and convert it to appropriate class / Model
+ */
 public class PostTask extends AsyncTask<String, String, String> {
 
 	private final String url;

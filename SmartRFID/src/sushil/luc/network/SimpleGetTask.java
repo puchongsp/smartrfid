@@ -22,6 +22,9 @@ import sushil.luc.gui.MainActivity;
 import sushil.luc.item.Item;
 import sushil.luc.ticket.Ticket;
 
+/**
+ * Simple Get operations to send data as a URL parameter
+ */
 public class SimpleGetTask  extends AsyncTask<String, String, String>{
 		
 		private Ticket t;
