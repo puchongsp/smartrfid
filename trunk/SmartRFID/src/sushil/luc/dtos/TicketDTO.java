@@ -3,7 +3,8 @@ package sushil.luc.dtos;
 import java.util.List;
 
 /**
- * Created by sushil
+ * Data Transfer Object
+ * to store Ticket Object received from web api
  */
 public class TicketDTO {
     private int id;

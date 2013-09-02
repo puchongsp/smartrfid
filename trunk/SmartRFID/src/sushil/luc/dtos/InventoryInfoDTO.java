@@ -1,5 +1,9 @@
 package sushil.luc.dtos;
 
+/**
+ * Data Transfer Object
+ * to store Inventory Info Object from web api
+ */
 public class InventoryInfoDTO {
 	private int id;
 	private int type;

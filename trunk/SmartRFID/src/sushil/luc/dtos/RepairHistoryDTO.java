@@ -1,7 +1,8 @@
 package sushil.luc.dtos;
 
 /**
- * Created by sushil on 8/30/13.
+ * Data Transfer Object
+ * to store repairHistory Object received from web api
  */
 public class RepairHistoryDTO {
     private int id;
